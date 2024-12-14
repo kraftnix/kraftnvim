@@ -16,7 +16,7 @@
   # see :help nixCats.flake.outputs
   outputs = { self, nixpkgs, nixCats, ... }@inputs: let
     inherit (nixCats) utils;
-    systems = [ "x86_64-linux" ];
+    systems = [ "x86_64-linux" "aarch64-linux" ];
     luaPath = "${./.}";
     forEachSystem = utils.eachSystem systems;
     # will not apply to module imports
