@@ -54,7 +54,5 @@ in
     };
   };
 
-  packages = lib.genAttrs systems (system: {
-    vimPlugins = vimPlugins (getPkgs system) (getPkgs system);
-  });
+  vimPlugins = lib.genAttrs systems (system: vimPlugins (getPkgs system) (getPkgs system));
 }

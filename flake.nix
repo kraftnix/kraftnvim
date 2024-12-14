@@ -386,7 +386,8 @@
     pkgs = import nixpkgs { inherit system; };
   in
   {
-    packages = utils.mkAllWithDefault defaultPackage // packages.packages.${system};
+    vimPlugins = packages.vimPlugins.${system};
+    packages = utils.mkAllWithDefault defaultPackage;
     devShells.default = pkgs.mkShell {
       name = defaultPackageName;
       packages = [ defaultPackage pkgs.nvfetcher ];
@@ -394,6 +395,7 @@
       shellHook = ''
       '';
     };
+    checks = self.packages.${system} // self.vimPlugins.${system};
   }) // (let
     # we also export a nixos module to allow reconfiguration from configuration.nix
     nixosModule = utils.mkNixosModules {
