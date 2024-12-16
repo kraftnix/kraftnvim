@@ -231,15 +231,15 @@
   };
   telescope-luasnip = {
     pname = "telescope-luasnip";
-    version = "33211dad80f48bb26eeed5fbfbb9cd244d3e9300";
+    version = "07a2a2936a7557404c782dba021ac0a03165b343";
     src = fetchFromGitHub {
       owner = "benfowler";
       repo = "telescope-luasnip.nvim";
-      rev = "33211dad80f48bb26eeed5fbfbb9cd244d3e9300";
+      rev = "07a2a2936a7557404c782dba021ac0a03165b343";
       fetchSubmodules = false;
-      sha256 = "sha256-9UZ/GDB5Jf7IwdEqiCniqT6w51HMnYCWnoAxnbcC1g4=";
+      sha256 = "sha256-9XsV2hPjt05q+y5FiSbKYYXnznDKYOsDwsVmfskYd3M=";
     };
-    date = "2024-12-07";
+    date = "2024-12-14";
   };
   telescope-menufacture = {
     pname = "telescope-menufacture";
@@ -303,14 +303,14 @@
   };
   yazi-nvim = {
     pname = "yazi-nvim";
-    version = "14ba86dbfa97361428ef2413f0cb207e968cc58e";
+    version = "e7e0a1d8de1466546efc8e5e8fa7b436d3088ba7";
     src = fetchFromGitHub {
       owner = "mikavilpas";
       repo = "yazi.nvim";
-      rev = "14ba86dbfa97361428ef2413f0cb207e968cc58e";
+      rev = "e7e0a1d8de1466546efc8e5e8fa7b436d3088ba7";
       fetchSubmodules = false;
-      sha256 = "sha256-RNyrkT23isFfxo+Y2F6yDseDjYepaWes0ApGUste7Ck=";
+      sha256 = "sha256-1/r0dZ3ojMzzldqaInGPFcDv/LI6DsFJR6r4b5YXvOA=";
     };
-    date = "2024-12-07";
+    date = "2024-12-15";
   };
 }
