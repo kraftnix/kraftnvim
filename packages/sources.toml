@@ -45,10 +45,6 @@ fetch.github = "natecraddock/sessions.nvim"
 src.git = "https://github.com/is0n/fm-nvim"
 fetch.github = "is0n/fm-nvim"
 
-[yazi-nvim]
-src.git = "https://github.com/mikavilpas/yazi.nvim"
-fetch.github = "mikavilpas/yazi.nvim"
-
 [magma-nvim]
 src.git = "https://github.com/dccsillag/magma-nvim"
 fetch.github = "dccsillag/magma-nvim"

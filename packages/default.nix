@@ -20,7 +20,6 @@ let
       "neozoom-nvim"
       "sessions-nvim"
       "fm-nvim"
-      "yazi-nvim"
       "portal-nvim"
       "magma-nvim"
       "telescope-tabs"
@@ -43,7 +42,38 @@ let
       "nvim-devdocs"
     ]);
   getVimSources = prev: replaceDots (prev.callPackage (import ./_sources/generated.nix) { });
-  vimPlugins = final: prev: allVimPlugins prev (getVimSources final);
+  vimPlugins = final: prev: let 
+    vp = allVimPlugins prev (getVimSources final);
+    up = final.vimPlugins;
+  in vp // {
+    nvim-devdocs = vp.nvim-devdocs.overrideAttrs {
+      dependencies = with up; [ plenary-nvim telescope-nvim ];
+    };
+    telescope-live-grep-args-nvim = vp.telescope-live-grep-args-nvim.overrideAttrs {
+      dependencies = with up; [ plenary-nvim telescope-nvim ];
+    };
+    browser-bookmarks-nvim = vp.browser-bookmarks-nvim.overrideAttrs {
+      dependencies = with up; [ sqlite-lua ];
+    };
+    easypick-nvim = vp.easypick-nvim.overrideAttrs {
+      dependencies = with up; [ plenary-nvim telescope-nvim ];
+    };
+    telescope-all-recent = vp.telescope-all-recent.overrideAttrs {
+      dependencies = with up; [ plenary-nvim telescope-nvim sqlite-lua ];
+    };
+    commander-nvim = vp.commander-nvim.overrideAttrs {
+      dependencies = with up; [ telescope-nvim ];
+    };
+    telescope-undo = vp.telescope-undo.overrideAttrs {
+      dependencies = with up; [ plenary-nvim telescope-nvim ];
+    };
+    telescope-tabs = vp.telescope-tabs.overrideAttrs {
+      dependencies = with up; [ plenary-nvim telescope-nvim ];
+    };
+    cmp-nixpkgs = vp.cmp-nixpkgs.overrideAttrs {
+      dependencies = with up; [ nvim-cmp ];
+    };
+  };
   systems = [ "x86_64-linux" ];
 in
 {

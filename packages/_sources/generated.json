@@ -221,7 +221,7 @@
     },
     "one-small-step-for-vimkind-nvim": {
         "cargoLocks": null,
-        "date": "2024-12-04",
+        "date": "2024-12-22",
         "extract": null,
         "name": "one-small-step-for-vimkind-nvim",
         "passthru": null,
@@ -233,11 +233,11 @@
             "name": null,
             "owner": "jbyuki",
             "repo": "one-small-step-for-vimkind",
-            "rev": "7f47c3297eeed1364be3c6ad915b1df2beb2b2f4",
-            "sha256": "sha256-KC6vWmW3mS9vsgoZAgrCRtqBt5KyvfBwfKYsrMeebic=",
+            "rev": "5d2edc8937978585881d97a8fec4c2903fa4d72c",
+            "sha256": "sha256-TF8My2/5fFuH/lYkzgpSngjpy+jl+/nN7v5/8GeqyMI=",
             "type": "github"
         },
-        "version": "7f47c3297eeed1364be3c6ad915b1df2beb2b2f4"
+        "version": "5d2edc8937978585881d97a8fec4c2903fa4d72c"
     },
     "portal-nvim": {
         "cargoLocks": null,
@@ -501,7 +501,7 @@
     },
     "yazi-nvim": {
         "cargoLocks": null,
-        "date": "2024-12-15",
+        "date": "2025-01-06",
         "extract": null,
         "name": "yazi-nvim",
         "passthru": null,
@@ -513,10 +513,10 @@
             "name": null,
             "owner": "mikavilpas",
             "repo": "yazi.nvim",
-            "rev": "e7e0a1d8de1466546efc8e5e8fa7b436d3088ba7",
-            "sha256": "sha256-1/r0dZ3ojMzzldqaInGPFcDv/LI6DsFJR6r4b5YXvOA=",
+            "rev": "c57c94cd2cf838f72f3d9a1bc898af9ae364c065",
+            "sha256": "sha256-/1/X3nZZoLTRVqdqIcgL9/F4x+Iddved4bQbO+Iy39c=",
             "type": "github"
         },
-        "version": "e7e0a1d8de1466546efc8e5e8fa7b436d3088ba7"
+        "version": "c57c94cd2cf838f72f3d9a1bc898af9ae364c065"
     }
 }

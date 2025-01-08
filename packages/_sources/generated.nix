@@ -135,15 +135,15 @@
   };
   one-small-step-for-vimkind-nvim = {
     pname = "one-small-step-for-vimkind-nvim";
-    version = "7f47c3297eeed1364be3c6ad915b1df2beb2b2f4";
+    version = "5d2edc8937978585881d97a8fec4c2903fa4d72c";
     src = fetchFromGitHub {
       owner = "jbyuki";
       repo = "one-small-step-for-vimkind";
-      rev = "7f47c3297eeed1364be3c6ad915b1df2beb2b2f4";
+      rev = "5d2edc8937978585881d97a8fec4c2903fa4d72c";
       fetchSubmodules = false;
-      sha256 = "sha256-KC6vWmW3mS9vsgoZAgrCRtqBt5KyvfBwfKYsrMeebic=";
+      sha256 = "sha256-TF8My2/5fFuH/lYkzgpSngjpy+jl+/nN7v5/8GeqyMI=";
     };
-    date = "2024-12-04";
+    date = "2024-12-22";
   };
   portal-nvim = {
     pname = "portal-nvim";
@@ -303,14 +303,14 @@
   };
   yazi-nvim = {
     pname = "yazi-nvim";
-    version = "e7e0a1d8de1466546efc8e5e8fa7b436d3088ba7";
+    version = "c57c94cd2cf838f72f3d9a1bc898af9ae364c065";
     src = fetchFromGitHub {
       owner = "mikavilpas";
       repo = "yazi.nvim";
-      rev = "e7e0a1d8de1466546efc8e5e8fa7b436d3088ba7";
+      rev = "c57c94cd2cf838f72f3d9a1bc898af9ae364c065";
       fetchSubmodules = false;
-      sha256 = "sha256-1/r0dZ3ojMzzldqaInGPFcDv/LI6DsFJR6r4b5YXvOA=";
+      sha256 = "sha256-/1/X3nZZoLTRVqdqIcgL9/F4x+Iddved4bQbO+Iy39c=";
     };
-    date = "2024-12-15";
+    date = "2025-01-06";
   };
 }
