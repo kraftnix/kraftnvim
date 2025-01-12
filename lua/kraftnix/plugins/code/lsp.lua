@@ -206,9 +206,12 @@ return {
         -- },
       })
 
-      local cmp_caps = {}
-      if vim.g.enable_cmp then
-        cmp_caps = require('cmp_nvim_lsp').default_capabilities()
+      local completion_capabilities = {}
+      if nixCats('cmp') then
+        completion_capabilities = require('cmp_nvim_lsp').default_capabilities()
+      end
+      if nixCats('blink') then
+        completion_capabilities = require('blink.cmp').get_lsp_capabilities()
       end
 
       -- https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion
@@ -216,7 +219,7 @@ return {
       local capabilities = vim.tbl_deep_extend(
         'force',
         vim.lsp.protocol.make_client_capabilities(),
-        cmp_caps,
+        completion_capabilities,
         -- File watching is disabled by default for neovim.
         -- See: https://github.com/neovim/neovim/pull/22405
         { workspace = { didChangeWatchedFiles = { dynamicRegistration = true } } }

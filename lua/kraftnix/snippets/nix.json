@@ -1,0 +1,12 @@
+{
+  "autocmd (FileType)": {
+    "body": [
+      "mkOption {",
+      "  description = \"${1:}\";",
+      "  type = ${2:types.str};",
+      "  default = ${3:\"\"};",
+      "};"
+    ],
+    "prefix": "mkOption"
+  }
+}

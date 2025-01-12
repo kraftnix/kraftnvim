@@ -147,6 +147,16 @@
             toggleterm-nvim # toggle terminals in floating windows (old)
             terminal-nvim # toggle terminals
           ];
+          blink = with pkgs.vimPlugins; [
+            blink-cmp
+            blink-compat
+          ];
+          snippets = with pkgs.vimPlugins; [
+            luasnip # luasnip snippets
+            nvim-scissors
+            sniprun # run snippets with a binding (lua + rust)
+            friendly-snippets # extra snippet source
+          ];
           cmp = with pkgs.vimPlugins; [
             # cmp stuff
             cmp-nvim-lua
@@ -165,9 +175,6 @@
             cmp-rg # rg source, searches well across buffers
             cmp-under-comparator # lowers priority of __ in completions (comparator)
             cmp_luasnip # complete luasnip snippets in cmp (source)
-            luasnip # luasnip snippets
-            sniprun # run snippets with a binding (lua + rust)
-            friendly-snippets # extra snippet source
             wilder-nvim # cmdline/search completion (use cmp now)
             cpsm # wilder dependency
           ];
@@ -334,8 +341,9 @@
       telescope = true;
       treesitter = true;
       debug = true;
-      cmp = true;
-      cmpCmdline = true;
+      # cmp = true;
+      # cmpCmdline = true;
+      blink = true;
       extra = true;
       always = true;
 
