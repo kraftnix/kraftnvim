@@ -1,7 +1,7 @@
 local h = KraftnixHelper
 return {
   'chrisgrieser/nvim-scissors',
-  dir = "~/repos/chrisgrieser/nvim-scissors",
+  -- dir = "~/repos/chrisgrieser/nvim-scissors",
   keycommands_meta = {
     group_name = 'Scissors',
     description = 'Snippets generation + editing',

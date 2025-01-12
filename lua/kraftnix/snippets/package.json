@@ -5,5 +5,5 @@
     "snippets": [
       { "language": [ "nix" ], "path": "./nix.json" }
     ]
-  },
+  }
 }
