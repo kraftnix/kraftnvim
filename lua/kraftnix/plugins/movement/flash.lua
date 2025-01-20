@@ -6,12 +6,12 @@ return {
     opts = {},
     keycommands = {
 
-      { "<leader>jj", h.lr('flash', 'jump'), desc = "Flash Jump", modes = { "n", "x", "o" } },
-      { "<leader>js", h.lr('flash', 'treesitter'), desc = "Flash Treesitter", modes = { "n", "x", "o" } },
-      { '<leader>jc', h.lr('flash', 'jump', {continue=true}), 'Flash: continue search' }, -- awesome
+      { "<c-s><c-s>", h.lr('flash', 'jump'), desc = "Flash Jump", modes = { "n", "x", "o" } },
+      { "<c-s><c-f>", h.lr('flash', 'treesitter'), desc = "Flash Treesitter", modes = { "n", "x", "o" } },
+      { '<c-s><c-r>', h.lr('flash', 'jump', {continue=true}), 'Flash: continue search' }, -- awesome
 
       -- awesome
-      { '<leader>jw',
+      { '<c-s><c-w>',
         function ()
           require('flash').jump({
             pattern = vim.fn.expand("<cword>"),
@@ -20,7 +20,7 @@ return {
         'Flash: search under word'
       },
 
-      { '<leader>jl',
+      { '<c-s><c-l>',
         h.lr('flash', 'jump', {
           search = { mode = "search", max_length = 0 },
           label = { after = { 0, 0 } },
@@ -29,7 +29,7 @@ return {
         'Flash: jump to a line'
       },
 
-      { '<leader>ja',
+      { '<c-s><c-j>',
         function()
           require("flash").jump({
             pattern = ".", -- initialize pattern with any char
@@ -50,7 +50,7 @@ return {
         desc = 'Flash: select any word'
       },
 
-      { "<leader>jd",
+      { "<c-s><c-d>",
         function()
           require("flash").jump({
             action = function(match, state)
@@ -66,7 +66,7 @@ return {
       },
 
       -- More advanced example that also highlights diagnostics:
-      { "<leader>jD",
+      { "<c-s><c-h>",
         function()
           require("flash").jump({
             matcher = function(win)
