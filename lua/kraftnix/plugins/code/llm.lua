@@ -1,4 +1,6 @@
 local h = KraftnixHelper
+local ollamaModel = os.getenv("OLLAMA_MODEL") or "qwen2.5-coder:7b"
+-- "llama3.1:7b"
 return {
   {
     "David-Kunz/gen.nvim",
@@ -29,7 +31,7 @@ return {
       h.mapSkipGen { "<leader>as", 'Gen Summarize', 'Open Gen :-> Summarize' },
     },
     opts = {
-      model = "llama3.1:7b", -- The default model to use.
+      model = ollamaModel, -- The default model to use.
       quit_map = "q", -- set keymap for close the response window
       retry_map = "<c-r>", -- set keymap to re-send the current prompt
       accept_map = "<c-cr>", -- set keymap to replace the previous selection with the last result
@@ -55,10 +57,12 @@ return {
     },
     config = function (_, opts)
       local gen = require('gen')
-      local ollamaPort = os.getenv("OLLAMA_PORT") or opts.port
-      local ollamaHost = os.getenv("OLLAMA_HOST") or opts.host
+      local ollamaPort = os.getenv("OLLAMA_PORT") or opts.port or "11434"
+      local ollamaHost = os.getenv("OLLAMA_HOST") or opts.host or "localhost"
+      ollamaModel = os.getenv("OLLAMA_MODEL") or "qwen2.5-coder:7b"
       opts['port'] = ollamaPort
       opts['host'] = ollamaHost
+      opts['model'] = ollamaModel
       gen.setup(opts)
       gen.prompts['Fix_Code'] = {
         prompt = "Fix the following code. Only ouput the result in format ```$filetype\n...\n```:\n```$filetype\n$text\n```",

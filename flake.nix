@@ -62,7 +62,6 @@
           nodePackages.dockerfile-language-server-nodejs
           docker-compose-language-service
           zk
-
         ];
         kickstart-debug = [
           delve
@@ -150,6 +149,8 @@
           blink = with pkgs.vimPlugins; [
             blink-cmp
             blink-compat
+            blink-ripgrep-nvim
+            # minuet-ai-nvim
           ];
           snippets = with pkgs.vimPlugins; [
             luasnip # luasnip snippets

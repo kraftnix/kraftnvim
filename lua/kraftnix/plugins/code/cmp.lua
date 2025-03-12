@@ -410,6 +410,7 @@ local blink = {
   dependencies = {
     -- cmp
     'saghen/blink.compat',
+    "mikavilpas/blink-ripgrep.nvim",
     'hrsh7th/cmp-cmdline',
     'dmitmel/cmp-cmdline-history',
 
@@ -432,13 +433,25 @@ local blink = {
     snippets = {
       -- preset = 'luasnip'
     },
+    -- cmdline = {
+    --   enabled = true,
+    --   completion = {
+    --     ghost_text = {
+    --       enabled = true,
+    --     },
+    --     menu = {
+    --       auto_show = true,
+    --     },
+    --   },
+    -- },
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer' },
+      default = { 'lsp', 'path', 'snippets', 'ripgrep', 'buffer', 'omni', },
       per_filetype = {
         cmdline = { 'cmdline', 'cmdline_cmp', 'cmdline_history', 'path' },
       },
       providers = {
         lsp = {
+          fallbacks = { 'ripgrep', 'buffer' },
           override = {
             get_trigger_characters = function(self)
               local trigger_characters = self:get_trigger_characters()
@@ -451,6 +464,15 @@ local blink = {
           opts = {
             search_paths = {vim.fn.expand("$HOME/.config/nvim/lua/kraftnix/snippets")},
           },
+        },
+        ripgrep = {
+          module = "blink-ripgrep",
+          name = "Ripgrep",
+        },
+        minuet = {
+          name = 'minuet',
+          module = 'minuet.blink',
+          score_offset = 100,
         },
         cmdline_cmp = {
           name = "cmdline",
@@ -465,6 +487,12 @@ local blink = {
     keymap = {
       preset = 'default',
       ['<CR>'] = { 'select_and_accept', 'fallback' },
+      ['<A-y>'] = {
+        function(cmp)
+          cmp.show { providers = { 'minuet' } }
+        end,
+        'fallback'
+      },
       ['<C-space>'] = {
         function(cmp)
           if cmp.is_visible() then
@@ -493,6 +521,12 @@ local blink = {
       ['<A-9>'] = { function(cmp) cmp.accept({ index = 9 }) end },
       ['<A-0>'] = { function(cmp) cmp.accept({ index = 10 }) end },
     },
+    -- information = {
+    --   -- snippets = { preset = 'default' },
+    --   -- signature = { enabled = true },
+    -- },
+    fuzzy = { implementation = 'prefer_rust_with_warning' },
+    -- accept = { auto_brackets = { enabled = true }, },
     completion = {
       trigger = {
         show_on_keyword = true,
@@ -523,7 +557,7 @@ local blink = {
       },
       documentation = {
         auto_show = true,
-        auto_show_delay_ms = 500,
+        auto_show_delay_ms = 200,
         window = {
           border = 'single'
         }
@@ -538,7 +572,7 @@ local blink = {
             { "kind_icon" },
             { "label", "label_description", gap = 1 },
             { "kind" },
-            -- { "source_name" },
+            { "source_name" },
             { "extra_info" },
           },
           components = {
