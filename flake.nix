@@ -239,6 +239,7 @@
             nvim-autopairs # pair up brackets/quotes etc.
             nvim-surround       # easily change pairs (i.e. "" -> '')
             flash-nvim # jump around with f,t,s
+            quickselect-nvim # jump to matches like wezterm quickselect mode
             harpoon # mark buffers and jump between them
             portal-nvim # jump around lists with keys
             neoscroll-nvim # animated/speed scrolling (laggy over SSH tho)

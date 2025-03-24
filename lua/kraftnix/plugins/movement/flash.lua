@@ -7,7 +7,7 @@ return {
     keycommands = {
 
       { "<c-s><c-s>", h.lr('flash', 'jump'), desc = "Flash Jump", modes = { "n", "x", "o" } },
-      { "<c-s><c-f>", h.lr('flash', 'treesitter'), desc = "Flash Treesitter", modes = { "n", "x", "o" } },
+      { "<c-s><c-k>", h.lr('flash', 'treesitter'), desc = "Flash Treesitter", modes = { "n", "x", "o" } },
       { '<c-s><c-r>', h.lr('flash', 'jump', {continue=true}), 'Flash: continue search' }, -- awesome
 
       -- awesome
@@ -15,6 +15,25 @@ return {
         function ()
           require('flash').jump({
             pattern = vim.fn.expand("<cword>"),
+          })
+        end,
+        'Flash: search under word'
+      },
+
+      { '<c-s><c-f>',
+        function ()
+          require('flash').jump({
+            pattern = ".",
+            -- pattern = "/",
+            search = {
+              mode = function(pattern)
+                -- return word pattern and proper skip pattern
+                -- return ([[\<%s\w*\>]]):format(pattern), ([[\<%s]]):format(pattern)
+                return "github:[%w-_%.%?%.:/%+=&]+", "github:"
+              end,
+            },
+            -- select the range
+            jump = { pos = "range" },
           })
         end,
         'Flash: search under word'
@@ -35,12 +54,9 @@ return {
             pattern = ".", -- initialize pattern with any char
             search = {
               mode = function(pattern)
-                -- remove leading dot
-                if pattern:sub(1, 1) == "." then
-                  pattern = pattern:sub(2)
-                end
                 -- return word pattern and proper skip pattern
                 return ([[\<%s\w*\>]]):format(pattern), ([[\<%s]]):format(pattern)
+                -- return ([[\<.[\w\/\.]*\>]]), ([[\<.[\w\/\.]*\>]])
               end,
             },
             -- select the range

@@ -15,15 +15,15 @@
   };
   cmp-nixpkgs = {
     pname = "cmp-nixpkgs";
-    version = "274942f43d4b3ab84a5a13d7493abafc2d836503";
+    version = "2d195fefb5eaa25bfe6ee79e41d45bb1e415dad5";
     src = fetchFromGitHub {
       owner = "gravndal";
       repo = "cmp-nixpkgs";
-      rev = "274942f43d4b3ab84a5a13d7493abafc2d836503";
+      rev = "2d195fefb5eaa25bfe6ee79e41d45bb1e415dad5";
       fetchSubmodules = false;
-      sha256 = "sha256-f9WnjSihWnL7ScA0EZ32IsHZUV+vXbq6mjQavWMAWl4=";
+      sha256 = "sha256-n2mkYAjgJdDxgfmuzBN1+lmz1Bk56ZSHjUTsndGGBh8=";
     };
-    date = "2024-09-30";
+    date = "2025-03-14";
   };
   commander-nvim = {
     pname = "commander-nvim";
@@ -135,15 +135,15 @@
   };
   one-small-step-for-vimkind-nvim = {
     pname = "one-small-step-for-vimkind-nvim";
-    version = "5d2edc8937978585881d97a8fec4c2903fa4d72c";
+    version = "b9def31568d20b16f7da9479a4174d165046fe8a";
     src = fetchFromGitHub {
       owner = "jbyuki";
       repo = "one-small-step-for-vimkind";
-      rev = "5d2edc8937978585881d97a8fec4c2903fa4d72c";
+      rev = "b9def31568d20b16f7da9479a4174d165046fe8a";
       fetchSubmodules = false;
-      sha256 = "sha256-TF8My2/5fFuH/lYkzgpSngjpy+jl+/nN7v5/8GeqyMI=";
+      sha256 = "sha256-+OY9B/VY1s/i00tuG9KduU6xqnZJuf9hii80WMomJL8=";
     };
-    date = "2024-12-22";
+    date = "2025-01-19";
   };
   portal-nvim = {
     pname = "portal-nvim";
@@ -156,6 +156,18 @@
       sha256 = "sha256-QCdyJ5in3Dm4IVlBUtbGWRZxl87gKHhRiGmZcIGEHm0=";
     };
     date = "2024-04-01";
+  };
+  quickselect-nvim = {
+    pname = "quickselect-nvim";
+    version = "3e98669803f37957ebc1092eb17a6ec2393127cb";
+    src = fetchFromGitHub {
+      owner = "ausgefuchster";
+      repo = "quickselect.nvim";
+      rev = "3e98669803f37957ebc1092eb17a6ec2393127cb";
+      fetchSubmodules = false;
+      sha256 = "sha256-1GugI92ZhlUl7Dp9UcIx7/zH0AdNJg6vmhaGCe8xIa0=";
+    };
+    date = "2024-12-21";
   };
   sessions-nvim = {
     pname = "sessions-nvim";
@@ -171,15 +183,15 @@
   };
   telescope-all-recent = {
     pname = "telescope-all-recent";
-    version = "267e9e5fd13a6e9a4cc6ffe00452d446d040401d";
+    version = "e437f60ea468268e49ffdc0c9ed7c5ba384e63cf";
     src = fetchFromGitHub {
       owner = "prochri";
       repo = "telescope-all-recent.nvim";
-      rev = "267e9e5fd13a6e9a4cc6ffe00452d446d040401d";
+      rev = "e437f60ea468268e49ffdc0c9ed7c5ba384e63cf";
       fetchSubmodules = false;
-      sha256 = "sha256-EYU7HazKcABAGnJ3iqGqM2n+XTo64L1uqoopL/XuLFg=";
+      sha256 = "sha256-Dq0eahhshmgdrof9eG3rBNm06UCCsjMYNkBs4KE/cEQ=";
     };
-    date = "2024-05-19";
+    date = "2025-03-19";
   };
   telescope-changes = {
     pname = "telescope-changes";
@@ -219,15 +231,15 @@
   };
   telescope-live-grep-args-nvim = {
     pname = "telescope-live-grep-args-nvim";
-    version = "649b662a8f476fd2c0289570764459e95ebaa3f3";
+    version = "b80ec2c70ec4f32571478b501218c8979fab5201";
     src = fetchFromGitHub {
       owner = "nvim-telescope";
       repo = "telescope-live-grep-args.nvim";
-      rev = "649b662a8f476fd2c0289570764459e95ebaa3f3";
+      rev = "b80ec2c70ec4f32571478b501218c8979fab5201";
       fetchSubmodules = false;
-      sha256 = "sha256-KpTS3lt9QjPndNJSLnOHCb0fS9zolT3mzQMhK6aP5v0=";
+      sha256 = "sha256-VmX7K21v3lErm7f5I7/1rJ/+fSbFxZPrbDokra9lZpQ=";
     };
-    date = "2024-07-28";
+    date = "2025-02-24";
   };
   telescope-luasnip = {
     pname = "telescope-luasnip";
@@ -243,15 +255,15 @@
   };
   telescope-menufacture = {
     pname = "telescope-menufacture";
-    version = "8c547e82a703fe90c7f69af04d0b4e47a59cc971";
+    version = "751aca3f022039874790024b3cf25d643e335612";
     src = fetchFromGitHub {
       owner = "molecule-man";
       repo = "telescope-menufacture";
-      rev = "8c547e82a703fe90c7f69af04d0b4e47a59cc971";
+      rev = "751aca3f022039874790024b3cf25d643e335612";
       fetchSubmodules = false;
-      sha256 = "sha256-ofJWh+B7EKgu1pwaJJ0VfKCMCdsL5HY5Z2NG1b29OxU=";
+      sha256 = "sha256-KgQTFVIab6bAtZ1I67IMrk8qxKWWfiUgGDX72n1jJsc=";
     };
-    date = "2024-06-01";
+    date = "2025-01-13";
   };
   telescope-tabs = {
     pname = "telescope-tabs";
@@ -267,15 +279,15 @@
   };
   telescope-undo = {
     pname = "telescope-undo";
-    version = "2971cc9f193ec09e0c5de3563f99cbea16b63f10";
+    version = "928d0c2dc9606e01e2cc547196f48d2eaecf58e5";
     src = fetchFromGitHub {
       owner = "debugloop";
       repo = "telescope-undo.nvim";
-      rev = "2971cc9f193ec09e0c5de3563f99cbea16b63f10";
+      rev = "928d0c2dc9606e01e2cc547196f48d2eaecf58e5";
       fetchSubmodules = false;
-      sha256 = "sha256-+n1TOhdeEf/ddmngaWLVHKR0r3O/iPULFTPkygHh5DE=";
+      sha256 = "sha256-KKCBr5l6U2OoJ/rVkMP7pVeO5M6phx2MOrxc5yIn6L4=";
     };
-    date = "2024-11-05";
+    date = "2025-01-31";
   };
   terminal-nvim = {
     pname = "terminal-nvim";
@@ -300,17 +312,5 @@
       sha256 = "sha256-R+B56/vf8bsOiQqvnJBUBfMQuJY1cMjXeDmXuj6ji3Q=";
     };
     date = "2024-12-07";
-  };
-  yazi-nvim = {
-    pname = "yazi-nvim";
-    version = "c57c94cd2cf838f72f3d9a1bc898af9ae364c065";
-    src = fetchFromGitHub {
-      owner = "mikavilpas";
-      repo = "yazi.nvim";
-      rev = "c57c94cd2cf838f72f3d9a1bc898af9ae364c065";
-      fetchSubmodules = false;
-      sha256 = "sha256-/1/X3nZZoLTRVqdqIcgL9/F4x+Iddved4bQbO+Iy39c=";
-    };
-    date = "2025-01-06";
   };
 }

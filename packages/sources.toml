@@ -100,3 +100,7 @@ fetch.github = "rebelot/terminal.nvim"
 [vim-doge]
 src.git = "https://github.com/kkoomen/vim-doge"
 fetch.github = "kkoomen/vim-doge"
+
+[quickselect-nvim]
+src.git = "https://github.com/ausgefuchster/quickselect.nvim"
+fetch.github = "ausgefuchster/quickselect.nvim"
