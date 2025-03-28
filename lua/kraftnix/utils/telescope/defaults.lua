@@ -12,13 +12,13 @@ M.vimgrep_core = {
 }
 
 -- show all hidden
-M.vimgrep_hidden = vim.tbl_flatten({
+M.vimgrep_hidden = vim.iter({
   M.vimgrep_core,
   {'--hidden'},
-})
+}):flatten():totable()
 
 -- or filter out .gitignore but don't include .git
-M.vimgrep_hidden_no_git = vim.tbl_flatten({
+M.vimgrep_hidden_no_git = vim.iter({
   M.vimgrep_core,
   {
     '--glob',
@@ -29,13 +29,13 @@ M.vimgrep_hidden_no_git = vim.tbl_flatten({
     -- follow symlinks
     '-L',
   }
-})
+}):flatten():totable()
 
 -- or filter out .gitignore but don't include .git and follow symlinks
-M.vimgrep_hidden_no_git = vim.tbl_flatten({
+M.vimgrep_hidden_no_git = vim.iter({
   M.vimgrep_hidden_no_git,
   { '-L', }
-})
+}):flatten():totable()
 
 
 ----- Find Files ------

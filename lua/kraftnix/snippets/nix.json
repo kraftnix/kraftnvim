@@ -3,8 +3,8 @@
     "body": [
       "mkOption {",
       "  description = \"${1:}\";",
-      "  type = ${2:types.str};",
-      "  default = ${3:\"\"};",
+      "  default = ${2:\"\"};",
+      "  type = ${3:types.str};",
       "};"
     ],
     "prefix": "mkOption"
