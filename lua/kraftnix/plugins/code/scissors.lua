@@ -15,7 +15,7 @@ return {
     -- { '<leader>sa', 'v$:ScissorsAddNewSnippet<cr>', "Add new snippet", nil, mode = { "x", "n", "v" }, is_nvim_command = true },
     { nil, 'v$:ScissorsAddNewSnippet<cr>', "Add new snippet", nil, mode = { "x", "n", "v" }, is_nvim_command = true },
     -- { '<leader>sa', 'V:ScissorsAddNewSnippet<cr>', "Add new snippet", nil, mode = "v", is_nvim_command = true },
-    { '<leader>se', ':ScissorsEditSnippet', "Edit scissors snippets.", nil },
+    { '<leader>Se', ':ScissorsEditSnippet', "Edit scissors snippets.", nil },
   },
 	opts = {
     editSnippetPopup = {
@@ -46,6 +46,6 @@ return {
   -- workaround for keycommands issue
   config = function(_, opts)
     require('scissors').setup(opts)
-    vim.keymap.set({"n", "v", "x"}, '<leader>sa', 'v$:ScissorsAddNewSnippet<cr>', { noremap = true, silent = true, desc = 'Add new snippet' })
+    vim.keymap.set({"n", "v", "x"}, '<leader>Sa', 'v$:ScissorsAddNewSnippet<cr>', { noremap = true, silent = true, desc = 'Add new snippet' })
   end
 }

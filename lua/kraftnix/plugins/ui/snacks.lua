@@ -36,7 +36,7 @@ local keycommands = {
   -- search
   { '<leader>s"', function() Snacks.picker.registers() end, "Registers", 'SnacksPickerRegisters' },
   { '<leader>s/', function() Snacks.picker.search_history() end, "Search History", 'SnacksPickerSearchHistory' },
-  { "<leader>sA", function() Snacks.picker.autocmds() end, "Autocmds", 'SnacksPickerAutocmds' },
+  { "<leader>sa", function() Snacks.picker.autocmds() end, "Autocmds", 'SnacksPickerAutocmds' },
   { "<leader>sb", function() Snacks.picker.lines() end, "Buffer Lines" },
   { "<leader>sc", function() Snacks.picker.command_history() end, "Command History" },
   { "<leader>sC", function() Snacks.picker.commands() end, "Commands", 'SnacksPickerCommands' },
@@ -47,7 +47,7 @@ local keycommands = {
   { "<leader>si", function() Snacks.picker.icons() end, "Icons", 'SnacksPickerIcons' },
   { "<leader>sj", function() Snacks.picker.jumps() end, "Jumps", 'SnacksPickerJumps' },
   { "<leader>sK", function() Snacks.picker.keymaps() end, "Keymaps", 'SnacksPickerKeymaps' },
-  { "<leader>sL", function() Snacks.picker.loclist() end, "Location List", 'SnacksPickerLoclist' },
+  { "<leader>sl", function() Snacks.picker.loclist() end, "Location List", 'SnacksPickerLoclist' },
   { "<leader>sm", function() Snacks.picker.marks() end, "Marks", 'SnacksPickerMarks' },
   { "<leader>sM", function() Snacks.picker.man() end, "Man Pages", 'SnacksPickerMan' },
   { "<leader>sp", function() Snacks.picker.lazy() end, "Search for Plugin Spec", 'SnacksPickerLazy' },

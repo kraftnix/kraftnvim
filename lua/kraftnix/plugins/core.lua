@@ -132,7 +132,7 @@ return {
 
   { "cshuaimin/ssr.nvim",
     keycommands = {
-      { "<leader>sR",
+      { "<leader>rNs",
         h.lr("ssr", 'open'),
         "Structural Replace",
         "StructuralReplace",

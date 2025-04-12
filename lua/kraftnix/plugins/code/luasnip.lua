@@ -14,11 +14,11 @@ return {
     }
   },
   keycommands = {
-    { '<leader>slf', 'Telescope luasnip', "Luasnip [S]nippets." },
-    { '<leader>sle', h.lr("luasnip.loaders", 'edit_snippet_files'), "Edit LuaSnip Snippets." },
-    { '<leader>sls', h.lr("luasnip", 'log.open'), "Open LuaSnip log" },
-    { '<leader>slp', h.lr("luasnip", 'log.ping'), "Ping LuaSnip log to check it is working." },
-    { '<leader>slr', h.lr("luasnip.loaders.from_lua", 'load', {paths = "./lua/kraftnix/snippets"}), "Reload local lua snippets" },
+    { '<leader>Slf', 'Telescope luasnip', "Luasnip [S]nippets." },
+    { '<leader>Sle', h.lr("luasnip.loaders", 'edit_snippet_files'), "Edit LuaSnip Snippets." },
+    { '<leader>Sls', h.lr("luasnip", 'log.open'), "Open LuaSnip log" },
+    { '<leader>Slp', h.lr("luasnip", 'log.ping'), "Ping LuaSnip log to check it is working." },
+    { '<leader>Slr', h.lr("luasnip.loaders.from_lua", 'load', {paths = "./lua/kraftnix/snippets"}), "Reload local lua snippets" },
   },
   opts = {},
   config = function (_, opts)
