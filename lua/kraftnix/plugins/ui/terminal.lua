@@ -42,6 +42,7 @@ return {
 
   -- currently using a forked version
   { 'rebelot/terminal.nvim',
+    enabled = nixCats('terminal_nvim'),
     dir = '~/repos/rebelot/terminal.nvim',
     -- nix_name = 'terminal-nvim',
     keycommands_meta = {
@@ -92,6 +93,7 @@ return {
     opts = {
       -- layout = { open_cmd = "tabe name=scratchpad" },
       layout = { open_cmd = "tabe" },
+      -- layout = { open_cmd = "float" },
       cmd = { vim.o.shell },
       autoclose = false,
     },

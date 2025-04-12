@@ -83,6 +83,7 @@
           nvim-web-devicons
 
           ## UI
+          snacks-nvim # A collection of QoL plugins for Neovim 
           lualine-nvim # status/tabline
           dressing-nvim # pretty/glossy vim.ui.{select|input}
           nvim-web-devicons # nerd fonts for nvim
@@ -342,6 +343,12 @@
       test = true;
       telescope = true;
       treesitter = true;
+      mini_starter = false;
+      snacks_dashboard = true;
+      snacks_terminal = false; # will use when i can figure out how to style terminal better
+      terminal_nvim = true;
+      # snacks_terminal = true;
+      # terminal_nvim = false;
       debug = true;
       # cmp = true;
       # cmpCmdline = true;

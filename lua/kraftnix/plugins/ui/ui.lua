@@ -163,6 +163,8 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     keycommands = {
       { '<leader>lfc', 'TodoTrouble', 'Add all todo items to quickfix list' },
+      { "<leader>lft", function() Snacks.picker.todo_comments() end, "Todo Picker", "TodoPicker" },
+      { "<leader>lfT", function () Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } }) end, "Todo/Fix/Fixme", "TodoPickerFix" },
       { ']T', h.lr('todo-comments', 'jump_next'), 'TODO Comment next' },
       { '[T', h.lr('todo-comments', 'jump_prev'), 'TODO Comment prev' },
     },

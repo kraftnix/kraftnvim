@@ -63,6 +63,7 @@ return {
       { '<leader><space>', 'Legendary', '[ ] Open Legendary', nil },
       { '<leader><C-space>', 'Telescope commander', '[ ] Open commander', nil },
       { '<leader>f<space>', "Telescope", '[f]ind [T]elescope all builtins/extensions', nil },--gd but low prio
+      { '<leader>st', "Telescope", '[f]ind [T]elescope all builtins/extensions', nil },--gd but low prio
       { '<leader>?', 'Telescope oldfiles', '[?] Find recently opened files', 'TelescopeOldFiles' },
       { '<leader>f:', "Telescope commands", '[f:] Telescope Command Picker', 'TelescopeCommands' },--useful
       { '<leader>f;', "Telescope command_history", '[f;] Command History', 'TelescopeCommandHistory' }, --gd-ish
