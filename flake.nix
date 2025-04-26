@@ -147,6 +147,9 @@
             toggleterm-nvim # toggle terminals in floating windows (old)
             terminal-nvim # toggle terminals
           ];
+          colorful-menu = with pkgs.vimPlugins; [
+            colorful-menu-nvim
+          ];
           blink = with pkgs.vimPlugins; [
             blink-cmp
             blink-compat
@@ -353,6 +356,7 @@
       # cmp = true;
       # cmpCmdline = true;
       blink = true;
+      colorful-menu = true;
       extra = true;
       always = true;
 
