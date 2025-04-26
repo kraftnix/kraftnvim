@@ -18,6 +18,9 @@ let
     # cmp = true;
     # cmpCmdline = true;
     blink = true;
+    gitlinker_callbacks = {
+      "gitea.home.lan" = "get_gitea_type_url";
+    };
     colorful-menu = true;
     extra = true;
     always = true;

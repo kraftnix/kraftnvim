@@ -10,16 +10,25 @@ return {
       local opts = require 'gitlinker.opts'
       local hosts = require 'gitlinker.hosts'
       local actions = require 'gitlinker.actions'
-
+      local callbacks = {
+        ["gitlab.com"] = hosts.get_gitlab_type_url,
+        ["codeberg.org"] = hosts.get_gitea_type_url,
+      }
+      local nixCatsCallbacks = nixCats('gitlinker_callbacks')
+      for url, callback_type in pairs(nixCatsCallbacks) do
+        if hosts[callback_type] then
+          callbacks[url] = hosts[callback_type]
+        else
+          print("Failed to find callback_type("..callback_type..") for url("..url..")")
+        end
+      end
       gl.setup({
-        callbacks = {
-          ["gitea.home.lan"] = hosts.get_gitea_type_url,
-        },
+        callbacks = callbacks,
         opts = {
           action_callback = function(url)
             -- yank to unnamed register
             vim.api.nvim_command('let @" = \'' .. url .. '\'')
-            -- copy to the system clipboard using OSC52
+            -- and copy to the system clipboard using OSC52
             vim.fn.OSCYank(url)
           end,
         },
