@@ -43,7 +43,7 @@ return {
         lualine_a = {
           { 'tabs',
             mode = 2,
-            max_length = 4*vim.o.columns/5,
+            max_length = 6*vim.o.columns/7,
             use_mode_colors = true,
             draw_empty = true,
             fmt = function(name, context)
