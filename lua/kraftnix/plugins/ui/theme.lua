@@ -23,7 +23,10 @@ end
 return {
 
   -- highlight any #red or #aabbcc style colour
-  'nvchad/nvim-colorizer.lua',
+  { "catgoose/nvim-colorizer.lua",
+    event = "BufReadPre",
+    opts = { },
+  },
 
   mapColour ({
     "folke/tokyonight.nvim",
