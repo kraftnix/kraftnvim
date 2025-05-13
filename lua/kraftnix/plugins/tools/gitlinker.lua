@@ -1,7 +1,7 @@
 return {
   { 'ruifm/gitlinker.nvim',
     dependencies = {
-      'ojroques/vim-oscyank',
+      'ojroques/nvim-osc52',
       'nvim-lua/plenary.nvim',
     },
     config = function ()
@@ -29,7 +29,7 @@ return {
             -- yank to unnamed register
             vim.api.nvim_command('let @" = \'' .. url .. '\'')
             -- and copy to the system clipboard using OSC52
-            vim.fn.OSCYank(url)
+            require('osc52').copy(url)
           end,
         },
       })

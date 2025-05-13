@@ -232,7 +232,7 @@ in
           comment-nvim # comments with easy motion
           todo-comments-nvim # highlight comments
           sqlite-lua # sqlite API (used by other plugins)
-          vim-oscyank # yank out of neovim through ssh/tmux with OSC52 escape
+          nvim-osc52 # yank out of neovim through ssh/tmux with OSC52 escape
           vim-suda # sudo write file with w!!
           vim-sleuth # detect tabstop and shiftwidth automatically
 
