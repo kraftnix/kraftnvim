@@ -198,7 +198,8 @@ in
           playground
 
           nvim-treesitter.withAllGrammars
-          ((pkgs.neovimUtils.grammarToPlugin pkgs.tree-sitter-grammars.tree-sitter-nu).overrideAttrs { installQueries = true; })
+          # old override, no longer needed
+          # ((pkgs.neovimUtils.grammarToPlugin pkgs.tree-sitter-grammars.tree-sitter-nu).overrideAttrs { installQueries = true; })
         ];
         telescope = with pkgs.vimPlugins; [
           telescope-nvim # picker
