@@ -278,7 +278,8 @@ return {
         -- autostart = false,
         autostart = true,
         -- cmd = { "nixd", "--inlay-hints=true", "--semantic-tokens=true", "--log=verbose" },
-        cmd = { "nixd", "--inlay-hints=true", "--semantic-tokens=true" },
+        -- cmd = { "nixd", "--inlay-hints=true", "--semantic-tokens=true" },
+        cmd = { "nixd", "--inlay-hints=true", "--semantic-tokens=true", "--nixpkgs-worker-stderr=~/.local/share/nvim/nixd-worker.log", "--option-worker-stderr=~/.local/share/nvim/nixd-worker.log'" },
         on_attach = on_attach,
         capabilities = capabilities,
         settings = {

@@ -13,18 +13,6 @@
     };
     date = "2024-03-26";
   };
-  cmp-nixpkgs = {
-    pname = "cmp-nixpkgs";
-    version = "2d195fefb5eaa25bfe6ee79e41d45bb1e415dad5";
-    src = fetchFromGitHub {
-      owner = "gravndal";
-      repo = "cmp-nixpkgs";
-      rev = "2d195fefb5eaa25bfe6ee79e41d45bb1e415dad5";
-      fetchSubmodules = false;
-      sha256 = "sha256-n2mkYAjgJdDxgfmuzBN1+lmz1Bk56ZSHjUTsndGGBh8=";
-    };
-    date = "2025-03-14";
-  };
   commander-nvim = {
     pname = "commander-nvim";
     version = "84101e8eb1613a72bbdec655b734f891d8a00694";

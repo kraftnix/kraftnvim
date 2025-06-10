@@ -89,10 +89,6 @@ fetch.github = "nvim-telescope/telescope-live-grep-args.nvim"
 src.git = "https://github.com/dhruvmanila/browser-bookmarks.nvim"
 fetch.github = "dhruvmanila/browser-bookmarks.nvim"
 
-[cmp-nixpkgs]
-src.git = "https://github.com/gravndal/cmp-nixpkgs"
-fetch.github = "gravndal/cmp-nixpkgs"
-
 [terminal-nvim]
 src.git = "https://github.com/rebelot/terminal.nvim"
 fetch.github = "rebelot/terminal.nvim"

@@ -16,7 +16,6 @@ let
     (import ./vim-plugin.nix nixpkgs sources [
       # "nvim-nu"
       "browser-bookmarks-nvim"
-      "cmp-nixpkgs"
       "commander-nvim"
       "easypick-nvim"
       "fm-nvim"
@@ -70,9 +69,6 @@ let
     };
     telescope-tabs = vp.telescope-tabs.overrideAttrs {
       dependencies = with up; [ plenary-nvim telescope-nvim ];
-    };
-    cmp-nixpkgs = vp.cmp-nixpkgs.overrideAttrs {
-      dependencies = with up; [ nvim-cmp ];
     };
   };
   systems = [ "x86_64-linux" ];

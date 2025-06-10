@@ -20,27 +20,6 @@
         },
         "version": "06cfcb53bf3012792f36eb8eb6cd08f782c9b329"
     },
-    "cmp-nixpkgs": {
-        "cargoLocks": null,
-        "date": "2025-03-14",
-        "extract": null,
-        "name": "cmp-nixpkgs",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "gravndal",
-            "repo": "cmp-nixpkgs",
-            "rev": "2d195fefb5eaa25bfe6ee79e41d45bb1e415dad5",
-            "sha256": "sha256-n2mkYAjgJdDxgfmuzBN1+lmz1Bk56ZSHjUTsndGGBh8=",
-            "sparseCheckout": [],
-            "type": "github"
-        },
-        "version": "2d195fefb5eaa25bfe6ee79e41d45bb1e415dad5"
-    },
     "commander-nvim": {
         "cargoLocks": null,
         "date": "2024-06-07",

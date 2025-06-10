@@ -28,19 +28,26 @@ return {
     -- this really doesn't work nicely with nix
     snippetDir = vim.fn.expand("$HOME/.config/nvim/lua/kraftnix/snippets"),
     jsonFormatter = "jq",
-    telescope = {
-      -- By default, the query only searches snippet prefixes. Set this to
-      -- `true` to also search the body of the snippets.
-      alsoSearchSnippetBody = true,
+    snippetSelection = {
+      picker = "auto", ---@type "auto"|"telescope"|"snacks"|"vim.ui.select"
 
-      -- accepts the common telescope picker config
-      opts = {
-        layout_strategy = "vertical",
-        layout_config = {
-          -- horizontal = { width = 0.9 },
-          -- preview_width = 0.6,
+      telescope = {
+        -- By default, the query only searches snippet prefixes. Set this to
+        -- `true` to also search the body of the snippets.
+        alsoSearchSnippetBody = true,
+
+        -- accepts the common telescope picker config
+        opts = {
+          layout_strategy = "vertical",
+          layout_config = {
+            horizontal = { width = 0.9 },
+            preview_width = 0.6,
+          },
         },
       },
+
+      -- `snacks` picker configurable via snacks config, 
+      -- see https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
     },
 	},
   -- workaround for keycommands issue

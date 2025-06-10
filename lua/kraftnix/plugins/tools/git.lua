@@ -33,7 +33,7 @@ return {
     opts = {
       -- See `:help gitsigns.txt`
       numhl = true,
-      linehl = true,
+      linehl = false, -- disable line highlights by default due to conflicts with other highlights
       -- word_diff = true,
       preview_config = {
         border = "rounded"
