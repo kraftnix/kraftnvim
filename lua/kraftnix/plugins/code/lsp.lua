@@ -289,7 +289,7 @@ return {
               expr = 'import '..config_flake..'.inputs.nixpkgs { }',
             },
             formatting = {
-              command = { "nix fmt" },
+              command = { "nixfmt" },
             },
             options = {
               nixos = {
