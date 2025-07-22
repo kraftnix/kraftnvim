@@ -103,7 +103,36 @@ return {
         end
       end
 
+      local function trimFinalNewlineMulti(str)
+        return string.gsub(str, "[\r\n]*$", "")
+      end
+
+      local function get_notes_commit_message(mode, user_opts)
+        return function ()
+          local url = get_buf_range_url(mode, {print_url = false, action_callback = false})
+          local commit = vim.fn.system([[git log -1 --pretty=%B]])
+          local snippet = trimFinalNewlineMulti(commit).." [commit 🖋️]("..url..")"
+          user_opts = vim.tbl_deep_extend("force", opts.get(), user_opts or {})
+          if user_opts.action_callback then
+            user_opts.action_callback(snippet)
+          end
+          if user_opts.print_url then
+            vim.notify(snippet)
+          end
+          return snippet
+        end
+      end
+
       local keymaps = {
+        -- copy commit snippet for notes
+        { '<leader>gyn',
+          {
+            n = get_notes_commit_message('n'),
+            v = get_notes_commit_message('v'),
+          },
+          description = 'Copy commit markdown snippet for notes',
+          opts = { silent = true, noremap = true },
+        },
         -- copy url of current buffer
         { '<leader>gyy',
           { n = gl.get_buf_range_url, v = gl.get_buf_range_url },
