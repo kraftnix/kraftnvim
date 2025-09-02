@@ -337,7 +337,14 @@ return {
 
       -- python lsp
       lspconfig.pyright.setup({
-        cmd = { "pyright" },
+        -- cmd = { "pyright" },
+        on_attach = on_attach,
+        capabilities = capabilities,
+      })
+      lspconfig.ruff.setup({
+        cmd = { "ruff", "server" },
+        filetypes = { 'python' },
+        root_markers = { 'pyproject.toml', 'ruff.toml', '.ruff.toml', '.git' },
         on_attach = on_attach,
         capabilities = capabilities,
       })
