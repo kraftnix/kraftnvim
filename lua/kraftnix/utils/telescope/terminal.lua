@@ -27,7 +27,8 @@ local function handle_term(bufnr, action_type)
     elseif action_type == TERM_ACTIONS.target then
       t.set_target(terminal.index)
     elseif action_type == TERM_ACTIONS.force_kill then
-      t.kill(terminal.index, true)
+      -- t.kill(terminal.index, true)
+      t.kill(terminal.index)
     elseif action_type == TERM_ACTIONS.kill then
       local reply = vim.fn.input('Really kill? (y/n):')
       if reply == 'y' then
@@ -41,10 +42,30 @@ local function handle_term(bufnr, action_type)
   end
 end
 
+---Get current terminals
+---@return Terminal[]
+local function get_terminals()
+    local active_terminals = require("terminal.active_terminals")
+    return active_terminals:get_sorted_terminals()
+end
+
+---Get current terminals
+---@return Terminal[]
+local function get_terminal_ids()
+    local active_terminals = require("terminal.active_terminals")
+    local terminals = active_terminals:get_sorted_terminals()
+    return vim.iter(terminals):map(function(term)
+        return {
+          index = term:get_index(),
+          term = term
+        }
+  end):totable()
+end
+
 -- queries `terminal.lua` for current terminals
 local function telescope_terminals_finder ()
   return require("telescope.finders").new_table({
-    results = require('terminal').get_terminal_ids(),
+    results = get_terminal_ids(),
     entry_maker = function(chunk)
       local prefix_text = tostring(chunk.index) .. ": "
       local full_text = prefix_text .. chunk.term.title
@@ -55,6 +76,7 @@ local function telescope_terminals_finder ()
       -- vim.print('bufwinid: '.. vim.fn.bufwinid(chunk.term.bufnr))
       -- -- local final_lnum  vim.fn.line('.', vim.fn.bufwinid(chunk.term.bufnr))
       -- local final_lnum = bufinfo.linecount
+      local final_lnum = chunk.index
       -- -- vim.print(vim.fn.getjumplist())
       -- vim.print(final_lnum)
       return {

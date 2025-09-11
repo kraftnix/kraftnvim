@@ -43,7 +43,7 @@ return {
   -- currently using a forked version
   { 'rebelot/terminal.nvim',
     enabled = nixCats('terminal_nvim'),
-    dir = '~/repos/rebelot/terminal.nvim',
+    -- dir = '~/repos/rebelot/terminal.nvim',
     -- nix_name = 'terminal-nvim',
     keycommands_meta = {
       group_name = 'Terminal',
@@ -82,7 +82,7 @@ return {
     keys = {
       { '<c-q>', function()
         tm'toggle'()
-        vim.cmd 'tabp' --fix tab location
+        -- vim.cmd 'tabp' --fix tab location
       end, noremap = true, mode = "t", desc = "Toggle terminal while in term mode" },
       { [[<c-\><c-\>]], '<Esc>', noremap = true, mode = "t", desc = "Terminal: enable escape" },
       { '<Esc>', [[<c-\><c-n>]], noremap = true, mode = "t", desc = "Terminal: allow escape passthrough" },
