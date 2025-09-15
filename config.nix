@@ -17,6 +17,8 @@ let
     debug = true;
     # cmp = true;
     # cmpCmdline = true;
+    # terminal-manager = "terminal.nvim";
+    terminal-manager = "toggleterm";
     blink = true;
     oscyank = true;
     gitlinker_callbacks = {
