@@ -67,7 +67,7 @@ in
         nodePackages.bash-language-server
         pyright
         nodePackages.yaml-language-server
-        nodePackages.dockerfile-language-server-nodejs
+        dockerfile-language-server
         docker-compose-language-service
         zk
       ];
