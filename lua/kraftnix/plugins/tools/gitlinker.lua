@@ -111,7 +111,21 @@ return {
         return function ()
           local url = get_buf_range_url(mode, {print_url = false, action_callback = false})
           local commit = vim.fn.system([[git log -1 --pretty=%B]])
-          local snippet = trimFinalNewlineMulti(commit).." [commit 🖋️]("..url..")"
+          local lines = {}
+          for s in commit:gmatch("[^\r\n]+") do
+              table.insert(lines, s)
+          end
+          local recombined = ""
+          local i = 0
+          for _,l in ipairs(lines) do
+            if i == 0 then
+              recombined = l.." [commit 🖋️]("..url..")"
+            else
+              recombined = recombined.."\n"..l
+            end
+            i = i + 1
+          end
+          local snippet = trimFinalNewlineMulti(recombined)
           user_opts = vim.tbl_deep_extend("force", opts.get(), user_opts or {})
           if user_opts.action_callback then
             user_opts.action_callback(snippet)
