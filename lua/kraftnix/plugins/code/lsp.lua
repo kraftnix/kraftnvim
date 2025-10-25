@@ -77,6 +77,16 @@ return {
     }
   },
 
+  { -- An Emacs-style scratch buffer for executing Lua inside Neovim 
+    "mghaight/replua.nvim",
+    options = {
+      print_prefix = "-- -> ",
+      result_prefix = "-- => ",
+      newline_after_result = true,
+      persist_env = true,
+    }
+  },
+
   -- output buffer of neovim lua repl that you can send local buffer to
   { 'bfredl/nvim-luadev',
     cmd = 'Luadev',
@@ -229,21 +239,24 @@ return {
       -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
       -- bash
-      lspconfig.bashls.setup({
+      vim.lsp.enable('bashls')
+      vim.lsp.config('bashls', {
         cmd = { "bash-language-server" },
         on_attach = on_attach,
         capabilities = capabilities,
       })
 
       -- -- golang
-      lspconfig.gopls.setup({
+      vim.lsp.enable('gopls')
+      vim.lsp.config('gopls', {
         cmd = { "gopls" },
         on_attach = on_attach,
         capabilities = capabilities,
       })
 
       -- lua
-      lspconfig.lua_ls.setup({
+      vim.lsp.enable('lua_ls')
+      vim.lsp.config('lua_ls', {
         cmd = { "lua-language-server" },
         on_attach = on_attach,
         capabilities = capabilities,
@@ -274,7 +287,8 @@ return {
       -- nix lsp
       local config_flake = '(builtins.getFlake "git+file:///home/'..user..'/config")'
       local curr_flake_let_in = 'let currFlake = builtins.getFlake ("git+file://" + toString ./.); in'
-      lspconfig.nixd.setup({
+      vim.lsp.enable('nixd')
+      vim.lsp.config('nixd', {
         -- autostart = false,
         autostart = true,
         -- cmd = { "nixd", "--inlay-hints=true", "--semantic-tokens=true", "--log=verbose" },
@@ -331,17 +345,20 @@ return {
       --   }
       -- })
 
-      lspconfig.nushell.setup({
+      vim.lsp.enable('nushell')
+      vim.lsp.config('nushell', {
         cmd = { "nu", "--lsp" }
       })
 
       -- python lsp
-      lspconfig.pyright.setup({
+      vim.lsp.enable('pyright')
+      vim.lsp.config('pyright', {
         -- cmd = { "pyright" },
         on_attach = on_attach,
         capabilities = capabilities,
       })
-      lspconfig.ruff.setup({
+      vim.lsp.enable('ruff')
+      vim.lsp.config('ruff', {
         cmd = { "ruff", "server" },
         filetypes = { 'python' },
         root_markers = { 'pyproject.toml', 'ruff.toml', '.ruff.toml', '.git' },
@@ -350,26 +367,30 @@ return {
       })
 
       -- rust lsp
-      lspconfig.rust_analyzer.setup({
+      vim.lsp.enable('rust_analyzer')
+      vim.lsp.config('rust_analyzer', {
         cmd = { "rust-analyzer" },
         on_attach = on_attach,
         capabilities = capabilities,
       })
 
       -- dockerfile lsp
-      lspconfig.dockerls.setup({
+      vim.lsp.enable('dockerls')
+      vim.lsp.config('dockerls', {
         on_attach = on_attach,
         capabilities = capabilities,
       })
 
       -- dockerfile lsp
-      lspconfig.docker_compose_language_service.setup({
+      vim.lsp.enable('docker_compose_language_service')
+      vim.lsp.config('docker_compose_language_service', {
         on_attach = on_attach,
         capabilities = capabilities,
       })
 
       -- yaml lsp
-      lspconfig.yamlls.setup({
+      vim.lsp.enable('yamlls')
+      vim.lsp.config('yamlls', {
         on_attach = on_attach,
         capabilities = capabilities,
         settings = {
@@ -382,7 +403,8 @@ return {
       })
 
       -- zk (zettelkasten note taking) lsp
-      lspconfig.zk.setup({
+      vim.lsp.enable('zk')
+      vim.lsp.config('zk', {
         on_attach = on_attach,
         capabilities = capabilities,
       })
