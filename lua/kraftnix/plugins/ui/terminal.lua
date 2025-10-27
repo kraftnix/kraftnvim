@@ -22,7 +22,7 @@ return {
     enabled = termManager == 'toggleterm',
     keys = {
       { "<C-Q>", ":ToggleTerm<cr>", noremap = true, mode = { "n", "x" } },
-      { "<C-Q>", "<c-\\><c-n><cmd>ToggleTerm<cr>", noremap = true, mode = { "t" } },
+      { "<C-Q>", ":ToggleTerm<cr>", noremap = true, mode = { "t" } },
       { '<C-\\><C-\\>', '<Esc>', noremap = true, mode = "t", desc = "Terminal: enable escape" },
       { '<Esc>', '<c-\\><c-n>', noremap = true, mode = "t", desc = "Terminal: allow escape passthrough" },
     },
