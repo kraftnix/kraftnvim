@@ -51,15 +51,15 @@
   };
   gitlinker-nvim = {
     pname = "gitlinker-nvim";
-    version = "7c1fae10e39fba627a433a0d7126683c79af289f";
+    version = "f2d547c0419aa43d63bc32f35b85f7462d6bc4da";
     src = fetchFromGitHub {
-      owner = "linrongbin16";
+      owner = "kraftnix";
       repo = "gitlinker.nvim";
-      rev = "7c1fae10e39fba627a433a0d7126683c79af289f";
+      rev = "f2d547c0419aa43d63bc32f35b85f7462d6bc4da";
       fetchSubmodules = false;
-      sha256 = "sha256-J7WG0xoVI9NKrOrgA7zTdD/Q4gSh+Hhg/wAIh/1RmDA=";
+      sha256 = "sha256-tGsxpy6ySP8CjQt5V12DuFx+fGDgEWRmah2CnIUro3c=";
     };
-    date = "2025-09-26";
+    date = "2025-10-28";
   };
   magma-nvim = {
     pname = "magma-nvim";

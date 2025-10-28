@@ -142,7 +142,11 @@ return {
       end
 
       require('gitlinker').setup({
-        router = router
+        router = router,
+        -- clipboard_override = require('osc52').copy
+        clipboard_override = function(url)
+          require('vim.ui.clipboard.osc52').copy('+')({url})
+        end
       })
 
       local keymaps = {
