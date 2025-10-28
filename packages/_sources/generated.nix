@@ -49,6 +49,18 @@
     };
     date = "2022-10-10";
   };
+  gitlinker-nvim = {
+    pname = "gitlinker-nvim";
+    version = "7c1fae10e39fba627a433a0d7126683c79af289f";
+    src = fetchFromGitHub {
+      owner = "linrongbin16";
+      repo = "gitlinker.nvim";
+      rev = "7c1fae10e39fba627a433a0d7126683c79af289f";
+      fetchSubmodules = false;
+      sha256 = "sha256-J7WG0xoVI9NKrOrgA7zTdD/Q4gSh+Hhg/wAIh/1RmDA=";
+    };
+    date = "2025-09-26";
+  };
   magma-nvim = {
     pname = "magma-nvim";
     version = "ff3deba8a879806a51c005e50782130246143d06";
@@ -123,15 +135,15 @@
   };
   one-small-step-for-vimkind-nvim = {
     pname = "one-small-step-for-vimkind-nvim";
-    version = "91b4e0fb0d640def73812aceb22dafb99261dd67";
+    version = "8fdbb4ed7bd20f92d3c1344b1e619af9017c743d";
     src = fetchFromGitHub {
       owner = "jbyuki";
       repo = "one-small-step-for-vimkind";
-      rev = "91b4e0fb0d640def73812aceb22dafb99261dd67";
+      rev = "8fdbb4ed7bd20f92d3c1344b1e619af9017c743d";
       fetchSubmodules = false;
-      sha256 = "sha256-aDqBD24KvFT1JxlAVnie7RRIwOlboU8jmKhHfhOh+Ns=";
+      sha256 = "sha256-Re0lwbhHYfi+nqTux9GXFuWYRV4LMbN5LVffZLbo26U=";
     };
-    date = "2025-07-19";
+    date = "2025-10-14";
   };
   portal-nvim = {
     pname = "portal-nvim";
@@ -207,15 +219,15 @@
   };
   telescope-lazy-nvim = {
     pname = "telescope-lazy-nvim";
-    version = "810f7859c98e88b9c4e45de16cb5317207c9b3e8";
+    version = "0f017103b2946fc0c14498f769ea0ec8ba964cd1";
     src = fetchFromGitHub {
       owner = "tsakirist";
       repo = "telescope-lazy.nvim";
-      rev = "810f7859c98e88b9c4e45de16cb5317207c9b3e8";
+      rev = "0f017103b2946fc0c14498f769ea0ec8ba964cd1";
       fetchSubmodules = false;
-      sha256 = "sha256-jAe07086TQvWB2MLOjlwTw25E97GIDSQDqhesu+t62s=";
+      sha256 = "sha256-h7SK6BowB2SsYMbdWeTrfLSnhDYSeJ667hEwa2FWqi8=";
     };
-    date = "2024-11-08";
+    date = "2025-10-10";
   };
   telescope-live-grep-args-nvim = {
     pname = "telescope-live-grep-args-nvim";
@@ -279,15 +291,15 @@
   };
   terminal-nvim = {
     pname = "terminal-nvim";
-    version = "95cdb0c22cd2d2f8c2b33a55ec07f0bcbd6cad9e";
+    version = "2bd1545caf89d075b6bc2a1a5c56ff177edcf3f6";
     src = fetchFromGitHub {
       owner = "rebelot";
       repo = "terminal.nvim";
-      rev = "95cdb0c22cd2d2f8c2b33a55ec07f0bcbd6cad9e";
+      rev = "2bd1545caf89d075b6bc2a1a5c56ff177edcf3f6";
       fetchSubmodules = false;
-      sha256 = "sha256-zgBXhyWFO2RqIAmieM+kctutBl9oBesjaYnrdZap5i4=";
+      sha256 = "sha256-L+BNITHwcPVJBzeIDWl4+S+jQPnmLrwQ6UbimTfMZfk=";
     };
-    date = "2024-10-14";
+    date = "2025-10-01";
   };
   vim-doge = {
     pname = "vim-doge";

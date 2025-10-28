@@ -22,7 +22,7 @@ let
     blink = true;
     oscyank = true;
     gitlinker_callbacks = {
-      "gitea.home.lan" = "get_gitea_type_url";
+      "gitea.home.lan" = "forgejo";
     };
     colorful-menu = true;
     extra = true;

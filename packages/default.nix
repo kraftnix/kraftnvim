@@ -40,7 +40,20 @@ let
       "telescope-undo"
       "terminal-nvim"
       "vim-doge"
-    ]);
+    ]) // {
+      gitlinker-nvim = nixpkgs.vimUtils.buildVimPlugin (
+        sources.gitlinker-nvim // {
+          version = builtins.substring 0 8 sources.gitlinker-nvim.version;
+          dependencies = [ nixpkgs.vimPlugins.plenary-nvim ];
+          patchPhase = ''
+            substituteInPlace spec_init.lua \
+              --replace-fail \
+              'os.getenv("PLENARY_DIR") or "/tmp/plenary.nvim"' \
+              '"${nixpkgs.vimPlugins.plenary-nvim}"'
+          '';
+        }
+      );
+    };
   getVimSources = prev: replaceDots (prev.callPackage (import ./_sources/generated.nix) { });
   vimPlugins = final: prev: let 
     vp = allVimPlugins prev (getVimSources final);
