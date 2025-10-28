@@ -12,22 +12,26 @@ return {
       end
 
       --- @param lk gitlinker.Linker
-      local function get_commit(lk)
-        local repo = (string_endswith(lk.repo, ".git") and lk.repo:sub(1, #lk.repo - 4) or lk.repo)
-        return "https://"
-          ..lk.host.."/"
-          ..lk.org.."/"
-          ..repo.."/commit/"
-          ..lk.rev
+      local function get_commit(host)
+        return function (lk)
+          local repo = (string_endswith(lk.repo, ".git") and lk.repo:sub(1, #lk.repo - 4) or lk.repo)
+          return "https://"
+            ..host.."/"
+            ..lk.org.."/"
+            ..repo.."/commit/"
+            ..lk.rev
+        end
       end
 
       --- @param lk gitlinker.Linker
-      local function get_repo(lk)
-        local repo = (string_endswith(lk.repo, ".git") and lk.repo:sub(1, #lk.repo - 4) or lk.repo)
-        return "https://"
-          ..lk.host.."/"
-          ..lk.org.."/"
-          ..repo
+      local function get_repo(host)
+        return function (lk)
+          local repo = (string_endswith(lk.repo, ".git") and lk.repo:sub(1, #lk.repo - 4) or lk.repo)
+          return "https://"
+            ..host.."/"
+            ..lk.org.."/"
+            ..repo
+        end
       end
 
       local function trimFinalNewlineMulti(str)
@@ -35,29 +39,31 @@ return {
       end
 
       --- @param lk gitlinker.Linker
-      local function get_commit_md_note(lk)
-        local repo = (string_endswith(lk.repo, ".git") and lk.repo:sub(1, #lk.repo - 4) or lk.repo)
-        local url = "https://"
-          ..lk.host.."/"
-          ..lk.org.."/"
-          ..repo.."/commit/"
-          ..lk.rev
-        local commit = vim.fn.system([[git log -1 --pretty=%B]])
-        local lines = {}
-        for s in commit:gmatch("[^\r\n]+") do
-            table.insert(lines, s)
-        end
-        local recombined = ""
-        local i = 0
-        for _,l in ipairs(lines) do
-          if i == 0 then
-            recombined = l.." [commit 🖋️]("..url..")"
-          else
-            recombined = recombined.."\n"..l
+      local function get_commit_md_note(host)
+        return function (lk)
+          local repo = (string_endswith(lk.repo, ".git") and lk.repo:sub(1, #lk.repo - 4) or lk.repo)
+          local url = "https://"
+            ..host.."/"
+            ..lk.org.."/"
+            ..repo.."/commit/"
+            ..lk.rev
+          local commit = vim.fn.system([[git log -1 --pretty=%B]])
+          local lines = {}
+          for s in commit:gmatch("[^\r\n]+") do
+              table.insert(lines, s)
           end
-          i = i + 1
+          local recombined = ""
+          local i = 0
+          for _,l in ipairs(lines) do
+            if i == 0 then
+              recombined = l.." [commit 🖋️]("..url..")"
+            else
+              recombined = recombined.."\n"..l
+            end
+            i = i + 1
+          end
+          return trimFinalNewlineMulti(recombined)
         end
-        return trimFinalNewlineMulti(recombined)
       end
 
       local router = {
@@ -74,13 +80,22 @@ return {
 
         },
         commit = {
-          ["github.com"] = get_commit,
+          ["bitbucket.org"] = get_commit("bitbucket.org"),
+          ["codeberg.org"] = get_commit("codeberg.org"),
+          ["github.com"] = get_commit("github.com"),
+          ["gitlab.com"] = get_commit("gitlab.com"),
         },
         commit_note = {
-          ["github.com"] = get_commit_md_note,
+          ["bitbucket.org"] = get_commit_md_note("bitbucket.org"),
+          ["codeberg.org"] = get_commit_md_note("codeberg.org"),
+          ["github.com"] = get_commit_md_note("github.com"),
+          ["gitlab.com"] = get_commit_md_note("gitlab.com"),
         },
         repo_url = {
-
+          ["bitbucket.org"] = get_repo("bitbucket.org"),
+          ["codeberg.org"] = get_repo("codeberg.org"),
+          ["github.com"] = get_repo("github.com"),
+          ["gitlab.com"] = get_repo("gitlab.com"),
         }
       }
 
@@ -118,9 +133,9 @@ return {
           router['browse'][url] = h['browse']
           router['current_branch'][url] = h['current_branch']
           router['default_branch'][url] = h['default_branch']
-          router['commit'][url] = get_commit
-          router['commit_note'][url] = get_commit_md_note
-          router['repo_url'][url] = get_repo
+          router['commit'][url] = get_commit(url)
+          router['commit_note'][url] = get_commit_md_note(url)
+          router['repo_url'][url] = get_repo(url)
         else
           print("Failed to find callback_type("..callback_type..") for url("..url..")")
         end
