@@ -44,7 +44,7 @@ Add to devshell or package
 ```nix
 { inputs, pkgs, ... }: {
   environment.systemPackages = [
-    inputs.kraftnvim.packages.${pkgs.system}.kraftnvimStable
+    inputs.kraftnvim.packages.${pkgs.stdenv.hostPlatform.system}.kraftnvimStable
   ];
 }
 ```

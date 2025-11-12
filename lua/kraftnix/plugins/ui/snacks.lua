@@ -149,7 +149,7 @@ if nixCats('snacks_dashboard') then
         width = 100,
         icon = " ",
         section = "terminal",
-        cmd = 'atuin search --limit 5 -c . --format "{command}"',
+        cmd = 'nu -c "atuin search --limit 5 -c . --format `{command}`"',
         -- cmd = 'atuin search --limit 5 -c . --human --format "{time} -\t[{duration}]\t- {command}"',
         -- cmd = 'nu -c \'atuin search --limit 5 -c . --human --format "{time}\t[{duration}]\t{command}" | lines | each {parse "{date}\t[{time}]\t{cmd}"} | flatten\'',
         height = 7,

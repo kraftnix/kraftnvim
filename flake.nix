@@ -67,7 +67,7 @@
     nixosModules.default = nixosModule;
     homeModules.default = homeModule;
 
-    inherit utils nixosModule homeModule;
+    inherit utils;
     passthru = {
       inherit packageDefinitions categoryDefinitions luaPath defaultPackageName extra_pkg_config nixpkgs dependencyOverlays;
     };

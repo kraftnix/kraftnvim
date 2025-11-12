@@ -144,6 +144,7 @@ return {
   { 'neovim/nvim-lspconfig',
     -- lazy = false,
     dependencies = {
+      'nvim-java/nvim-java',
       -- nvim_nu,
       -- cmp
       'hrsh7th/nvim-cmp',
@@ -200,6 +201,7 @@ return {
       { '<leader>lsr', "Telescope lsp_references",                '[ls]: list [r]eferences (telescope)',                 'TelescopeReferences' },
     },
     config = function()
+      require('java').setup()
       local lspconfig = require('lspconfig')
 
       local legendary = require('legendary')
@@ -242,6 +244,12 @@ return {
       vim.lsp.enable('bashls')
       vim.lsp.config('bashls', {
         cmd = { "bash-language-server" },
+        on_attach = on_attach,
+        capabilities = capabilities,
+      })
+
+      vim.lsp.enable('jdtls')
+      vim.lsp.config('jdtls', {
         on_attach = on_attach,
         capabilities = capabilities,
       })

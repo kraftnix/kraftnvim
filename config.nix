@@ -104,6 +104,7 @@ in
         urlview-nvim # picker (ui.select support) for URLs
 
         ## LSP
+        nvim-jdtls # java
         nvim-lspconfig # configure LSPs
         neodev-nvim # configure lua + neovim projects
         nvim-nu # old-school null-ls nushell LSP
@@ -352,7 +353,7 @@ in
       # see :help nixCats.flake.outputs.settings
       settings.wrapRc = true;
       settings.configDirName = "kraftnvim";
-      settings.neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+      settings.neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
       categories = categories // {
         configDirName = "kraftnvim";
       };
@@ -360,7 +361,7 @@ in
     kraftnvimLocal = { pkgs , ... }: {
       settings.wrapRc = false;
       # settings.configDirName = "kraftnvim";
-      settings.neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+      settings.neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
       categories = categories // {
         local = true;
       };
