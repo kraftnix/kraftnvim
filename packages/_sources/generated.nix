@@ -51,13 +51,13 @@
   };
   gitlinker-nvim = {
     pname = "gitlinker-nvim";
-    version = "f2d547c0419aa43d63bc32f35b85f7462d6bc4da";
+    version = "63cfbb7ba0465fa4a599f57c08c888abb188a595";
     src = fetchFromGitHub {
-      owner = "kraftnix";
+      owner = "linrongbin16";
       repo = "gitlinker.nvim";
-      rev = "f2d547c0419aa43d63bc32f35b85f7462d6bc4da";
+      rev = "63cfbb7ba0465fa4a599f57c08c888abb188a595";
       fetchSubmodules = false;
-      sha256 = "sha256-tGsxpy6ySP8CjQt5V12DuFx+fGDgEWRmah2CnIUro3c=";
+      sha256 = "sha256-CvDP73NwZe+VMztkHaBlIm/Y4Dj+0vZYfL6ymdnViN0=";
     };
     date = "2025-10-28";
   };
@@ -75,15 +75,15 @@
   };
   middleclass-nvim = {
     pname = "middleclass-nvim";
-    version = "aa8f88b31715d7a58cc52d4bc6721d55e6c84f92";
+    version = "359f0e2742f51ca77801b513ec91eb9029de8de4";
     src = fetchFromGitHub {
       owner = "kikito";
       repo = "middleclass";
-      rev = "aa8f88b31715d7a58cc52d4bc6721d55e6c84f92";
+      rev = "359f0e2742f51ca77801b513ec91eb9029de8de4";
       fetchSubmodules = false;
-      sha256 = "sha256-RMOzhMoUjQ7ddHYtPeqNgL1l+rQf4MxF9NL1F7/J9EM=";
+      sha256 = "sha256-31KF7rUPyO5mnMKRixvPpqdhNqnzx9ZC8zvNga+rdy0=";
     };
-    date = "2022-01-20";
+    date = "2025-11-03";
   };
   neozoom-nvim = {
     pname = "neozoom-nvim";
@@ -135,15 +135,15 @@
   };
   one-small-step-for-vimkind-nvim = {
     pname = "one-small-step-for-vimkind-nvim";
-    version = "8fdbb4ed7bd20f92d3c1344b1e619af9017c743d";
+    version = "87eeca2bd4d90a94eed1ef0dbc66885117e7bacb";
     src = fetchFromGitHub {
       owner = "jbyuki";
       repo = "one-small-step-for-vimkind";
-      rev = "8fdbb4ed7bd20f92d3c1344b1e619af9017c743d";
+      rev = "87eeca2bd4d90a94eed1ef0dbc66885117e7bacb";
       fetchSubmodules = false;
-      sha256 = "sha256-Re0lwbhHYfi+nqTux9GXFuWYRV4LMbN5LVffZLbo26U=";
+      sha256 = "sha256-/5/IZYedlfbKzj1vbmpLoerPe9kH8Ee/GvPDM8fGDBs=";
     };
-    date = "2025-10-14";
+    date = "2025-11-16";
   };
   portal-nvim = {
     pname = "portal-nvim";

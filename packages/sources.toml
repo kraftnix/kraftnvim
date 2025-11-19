@@ -102,8 +102,8 @@ src.git = "https://github.com/ausgefuchster/quickselect.nvim"
 fetch.github = "ausgefuchster/quickselect.nvim"
 
 [gitlinker-nvim]
-# src.git = "https://github.com/linrongbin16/gitlinker.nvim"
-# fetch.github = "linrongbin16/gitlinker.nvim"
-src.git = "https://github.com/kraftnix/gitlinker.nvim"
-fetch.github = "kraftnix/gitlinker.nvim"
-src.branch = "clipboard_override"
+src.git = "https://github.com/linrongbin16/gitlinker.nvim"
+fetch.github = "linrongbin16/gitlinker.nvim"
+# src.git = "https://github.com/kraftnix/gitlinker.nvim"
+# fetch.github = "kraftnix/gitlinker.nvim"
+# src.branch = "clipboard_override"

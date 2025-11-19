@@ -95,14 +95,14 @@
             "fetchSubmodules": false,
             "leaveDotGit": false,
             "name": null,
-            "owner": "kraftnix",
+            "owner": "linrongbin16",
             "repo": "gitlinker.nvim",
-            "rev": "f2d547c0419aa43d63bc32f35b85f7462d6bc4da",
-            "sha256": "sha256-tGsxpy6ySP8CjQt5V12DuFx+fGDgEWRmah2CnIUro3c=",
+            "rev": "63cfbb7ba0465fa4a599f57c08c888abb188a595",
+            "sha256": "sha256-CvDP73NwZe+VMztkHaBlIm/Y4Dj+0vZYfL6ymdnViN0=",
             "sparseCheckout": [],
             "type": "github"
         },
-        "version": "f2d547c0419aa43d63bc32f35b85f7462d6bc4da"
+        "version": "63cfbb7ba0465fa4a599f57c08c888abb188a595"
     },
     "magma-nvim": {
         "cargoLocks": null,
@@ -127,7 +127,7 @@
     },
     "middleclass-nvim": {
         "cargoLocks": null,
-        "date": "2022-01-20",
+        "date": "2025-11-03",
         "extract": null,
         "name": "middleclass-nvim",
         "passthru": null,
@@ -139,12 +139,12 @@
             "name": null,
             "owner": "kikito",
             "repo": "middleclass",
-            "rev": "aa8f88b31715d7a58cc52d4bc6721d55e6c84f92",
-            "sha256": "sha256-RMOzhMoUjQ7ddHYtPeqNgL1l+rQf4MxF9NL1F7/J9EM=",
+            "rev": "359f0e2742f51ca77801b513ec91eb9029de8de4",
+            "sha256": "sha256-31KF7rUPyO5mnMKRixvPpqdhNqnzx9ZC8zvNga+rdy0=",
             "sparseCheckout": [],
             "type": "github"
         },
-        "version": "aa8f88b31715d7a58cc52d4bc6721d55e6c84f92"
+        "version": "359f0e2742f51ca77801b513ec91eb9029de8de4"
     },
     "neozoom-nvim": {
         "cargoLocks": null,
@@ -232,7 +232,7 @@
     },
     "one-small-step-for-vimkind-nvim": {
         "cargoLocks": null,
-        "date": "2025-10-14",
+        "date": "2025-11-16",
         "extract": null,
         "name": "one-small-step-for-vimkind-nvim",
         "passthru": null,
@@ -244,12 +244,12 @@
             "name": null,
             "owner": "jbyuki",
             "repo": "one-small-step-for-vimkind",
-            "rev": "8fdbb4ed7bd20f92d3c1344b1e619af9017c743d",
-            "sha256": "sha256-Re0lwbhHYfi+nqTux9GXFuWYRV4LMbN5LVffZLbo26U=",
+            "rev": "87eeca2bd4d90a94eed1ef0dbc66885117e7bacb",
+            "sha256": "sha256-/5/IZYedlfbKzj1vbmpLoerPe9kH8Ee/GvPDM8fGDBs=",
             "sparseCheckout": [],
             "type": "github"
         },
-        "version": "8fdbb4ed7bd20f92d3c1344b1e619af9017c743d"
+        "version": "87eeca2bd4d90a94eed1ef0dbc66885117e7bacb"
     },
     "portal-nvim": {
         "cargoLocks": null,
