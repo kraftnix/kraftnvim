@@ -144,7 +144,7 @@ return {
   { 'neovim/nvim-lspconfig',
     -- lazy = false,
     dependencies = {
-      'nvim-java/nvim-java',
+      -- 'nvim-java/nvim-java', -- java attempt
       -- nvim_nu,
       -- cmp
       'hrsh7th/nvim-cmp',
@@ -201,7 +201,7 @@ return {
       { '<leader>lsr', "Telescope lsp_references",                '[ls]: list [r]eferences (telescope)',                 'TelescopeReferences' },
     },
     config = function()
-      require('java').setup()
+      -- require('java').setup() -- java attempt
       local lspconfig = require('lspconfig')
 
       local legendary = require('legendary')
