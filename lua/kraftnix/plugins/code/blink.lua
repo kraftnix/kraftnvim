@@ -73,14 +73,17 @@ if nixCats('blink') then
         },
         providers = {
           lsp = {
-            fallbacks = { 'ripgrep', 'buffer' },
+            fallbacks = { 'ripgrep', 'buffer', 'omni', 'path', },
             override = {
               get_trigger_characters = function(self)
                 local trigger_characters = self:get_trigger_characters()
-                vim.list_extend(trigger_characters, { '\n', '\t', ' ' })
+                -- add space, tab and enter to default trigger characters
+                -- vim.list_extend(trigger_characters, { '\n', '\t', ' ' })
                 return trigger_characters
               end
-            }
+            },
+            -- timeout_ms = 5000,
+            score_offset = 20
           },
           snippets = {
             opts = {
@@ -108,7 +111,7 @@ if nixCats('blink') then
       },
       keymap = {
         preset = 'default',
-        ['<CR>'] = { 'select_and_accept', 'fallback' },
+        -- ['<CR>'] = { 'select_and_accept', 'fallback' },
         ['<A-y>'] = {
           function(cmp)
             cmp.show { providers = { 'minuet' } }
@@ -125,7 +128,8 @@ if nixCats('blink') then
           end,
           'fallback'
         },
-        ['<C-g>'] = { function(cmp) cmp.show({ providers = {'lsp','snippets'} }) end },
+        ['<C-s>'] = { function(cmp) cmp.show({ providers = {'lsp'} }) end },
+        ['<C-f>'] = { function(cmp) cmp.show({ providers = {'snippets'} }) end },
         ['<C-e>'] = { 'cancel', 'fallback'},
         ['<C-j>'] = { 'select_next', 'fallback'},
         ['<C-k>'] = { 'select_prev', 'fallback'},
@@ -147,28 +151,37 @@ if nixCats('blink') then
       --   -- snippets = { preset = 'default' },
       --   -- signature = { enabled = true },
       -- },
-      fuzzy = { implementation = 'prefer_rust_with_warning' },
+      fuzzy = {
+        implementation = 'prefer_rust_with_warning',
+        sorts = {
+          -- 'exact',
+          --defaults
+          'score',
+          'sort_text',
+        }
+      },
       -- accept = { auto_brackets = { enabled = true }, },
       completion = {
         trigger = {
           show_on_keyword = true,
           show_in_snippet = true,
           show_on_trigger_character = true,
-          show_on_accept_on_trigger_character = true,
+          -- show_on_accept_on_trigger_character = true,
+          show_on_accept_on_trigger_character = false,
           show_on_insert_on_trigger_character = true,
           -- LSPs can indicate when to show the completion window via trigger characters
           -- however, some LSPs (i.e. tsserver) return characters that would essentially
           -- always show the window. We block these by default.
           show_on_blocked_trigger_characters = function()
+            -- NOTE: don't show in cmdline mode
             if vim.api.nvim_get_mode().mode == 'c' then return {} end
-
+            return { }
             -- you can also block per filetype, for example:
             -- if vim.bo.filetype == 'markdown' then
             --   return { ' ', '\n', '\t', '.', '/', '(', '[' }
             -- end
 
             -- return { ' ', '\n', '\t' }
-            return { }
           end,
         },
         keyword = {
