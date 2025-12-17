@@ -111,3 +111,7 @@ fetch.github = "linrongbin16/gitlinker.nvim"
 [tree-sitter-d2]
 src.git = "https://github.com/ravsii/tree-sitter-d2"
 fetch.github = "ravsii/tree-sitter-d2"
+
+[d2-vim]
+src.git = "https://github.com/terrastruct/d2-vim"
+fetch.github = "terrastruct/d2-vim"

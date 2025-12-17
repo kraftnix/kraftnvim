@@ -17,6 +17,7 @@ let
       # "nvim-nu"
       "browser-bookmarks-nvim"
       "commander-nvim"
+      "d2-vim"
       "easypick-nvim"
       "fm-nvim"
       "magma-nvim"
