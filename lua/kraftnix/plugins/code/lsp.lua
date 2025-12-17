@@ -32,7 +32,7 @@ local lazyLspMaps = function(ev)
     { '<leader>lwa', buf.add_workspace_folder,                           description = "[lw]orkspace add folder" },
     { '<leader>lwr', buf.remove_workspace_folder,                        description = "[lw]orkspace remove folder" },
     { '<leader>lwd', h.lr('trouble', 'toggle', 'workspace_diagnostics'), description = "[l]ist [w]orkspace [d]iagnostics" },
-    { '<leader>ldd', h.lr('trouble', 'toggle', 'document_diagnostics'),  description = "[l]ist [d]ocument [d]iagnostics" },
+    { '<leader>ldD', h.lr('trouble', 'toggle', 'document_diagnostics'),  description = "[l]ist [d]ocument [D]iagnostics" },
     {
       '<leader>lwl',
       function()
@@ -261,6 +261,15 @@ return {
         on_attach = on_attach,
         capabilities = capabilities,
       })
+
+      -- NOTE: afaict not supported upstream
+      -- vim.lsp.enable('d2')
+      -- vim.lsp.config('d2', {
+      --   cmd = { "env", "D2_LSP_MODE=1", "d2" },
+      --   filetypes = { "d2" },
+      --   on_attach = on_attach,
+      --   capabilities = capabilities,
+      -- })
 
       -- lua
       vim.lsp.enable('lua_ls')

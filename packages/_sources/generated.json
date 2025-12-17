@@ -295,7 +295,7 @@
     },
     "sessions-nvim": {
         "cargoLocks": null,
-        "date": "2024-07-08",
+        "date": "2025-11-30",
         "extract": null,
         "name": "sessions-nvim",
         "passthru": null,
@@ -307,12 +307,12 @@
             "name": null,
             "owner": "natecraddock",
             "repo": "sessions.nvim",
-            "rev": "f13158483e0b6255c6dfe473145ce4ee3495d844",
-            "sha256": "sha256-Wb43+v9l3XVLlroTHq/9ruJzuK/dNAsqNCL9kpLhFEk=",
+            "rev": "a67a29ef442a7bdcf99d96576190c47145dad65e",
+            "sha256": "sha256-O3wsxUiNUPyAYt1v47xL1eBoFHSskxM6VQ0sIEFXaW0=",
             "sparseCheckout": [],
             "type": "github"
         },
-        "version": "f13158483e0b6255c6dfe473145ce4ee3495d844"
+        "version": "a67a29ef442a7bdcf99d96576190c47145dad65e"
     },
     "telescope-all-recent": {
         "cargoLocks": null,
@@ -523,6 +523,27 @@
             "type": "github"
         },
         "version": "2bd1545caf89d075b6bc2a1a5c56ff177edcf3f6"
+    },
+    "tree-sitter-d2": {
+        "cargoLocks": null,
+        "date": "2025-10-22",
+        "extract": null,
+        "name": "tree-sitter-d2",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "ravsii",
+            "repo": "tree-sitter-d2",
+            "rev": "ffb66ce4c801a1e37ed145ebd5eca1ea8865e00f",
+            "sha256": "sha256-E8NcTrPsann8NMB8yLTbJghyf19chhpnKFlthuZ4l14=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "ffb66ce4c801a1e37ed145ebd5eca1ea8865e00f"
     },
     "vim-doge": {
         "cargoLocks": null,

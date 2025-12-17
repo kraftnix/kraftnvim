@@ -32,12 +32,15 @@ if nixCats('blink') then
     dependencies = {
       -- cmp
       'saghen/blink.compat',
-      "mikavilpas/blink-ripgrep.nvim",
       'hrsh7th/cmp-cmdline',
       'dmitmel/cmp-cmdline-history',
 
       -- misc
       'onsails/lspkind.nvim', -- icons
+
+      -- providers
+      'disrupted/blink-cmp-conventional-commits',
+      "mikavilpas/blink-ripgrep.nvim",
 
       -- snippets
       'l3mon4d3/luasnip',             -- write custom snippets
@@ -67,9 +70,10 @@ if nixCats('blink') then
       --   },
       -- },
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'ripgrep', 'buffer', 'omni', },
+        default = { 'lsp', 'path', 'snippets', 'omni', 'buffer', 'ripgrep', },
         per_filetype = {
           cmdline = { 'cmdline', 'cmdline_cmp', 'cmdline_history', 'path' },
+          gitcommit = { 'snippets', 'conventional_commits', 'omni', 'buffer', 'ripgrep' },
         },
         providers = {
           lsp = {
@@ -87,7 +91,7 @@ if nixCats('blink') then
           },
           snippets = {
             opts = {
-              search_paths = {vim.fn.expand("$HOME/.config/nvim/lua/kraftnix/snippets")},
+              search_paths = { vim.fn.expand("$HOME/.config/nvim/lua/kraftnix/snippets") },
             },
           },
           ripgrep = {
@@ -103,7 +107,17 @@ if nixCats('blink') then
             name = "cmdline",
             module = "blink.compat.source",
             score_offset = -3,
-          }
+          },
+          conventional_commits = {
+            name = 'Conventional Commits',
+            module = 'blink-cmp-conventional-commits',
+            enabled = function()
+              return vim.bo.filetype == 'gitcommit'
+            end,
+            ---@module 'blink-cmp-conventional-commits'
+            ---@type blink-cmp-conventional-commits.Options
+            opts = {},         -- none so far
+          },
         },
       },
       signature = {
@@ -111,7 +125,7 @@ if nixCats('blink') then
       },
       keymap = {
         preset = 'default',
-        -- ['<CR>'] = { 'select_and_accept', 'fallback' },
+        ['<CR>'] = { 'select_and_accept', 'fallback' },
         ['<A-y>'] = {
           function(cmp)
             cmp.show { providers = { 'minuet' } }
@@ -128,14 +142,14 @@ if nixCats('blink') then
           end,
           'fallback'
         },
-        ['<C-s>'] = { function(cmp) cmp.show({ providers = {'lsp'} }) end },
-        ['<C-f>'] = { function(cmp) cmp.show({ providers = {'snippets'} }) end },
-        ['<C-e>'] = { 'cancel', 'fallback'},
-        ['<C-j>'] = { 'select_next', 'fallback'},
-        ['<C-k>'] = { 'select_prev', 'fallback'},
-        ['<C-l>'] = { 'show_documentation', 'fallback'},
-        ['<C-u>'] = { 'scroll_documentation_up', 'fallback'},
-        ['<C-d>'] = { 'scroll_documentation_down', 'fallback'},
+        ['<C-s>'] = { function(cmp) cmp.show({ providers = { 'lsp' } }) end },
+        ['<C-f>'] = { function(cmp) cmp.show({ providers = { 'snippets' } }) end },
+        ['<C-e>'] = { 'cancel', 'fallback' },
+        ['<C-j>'] = { 'select_next', 'fallback' },
+        ['<C-k>'] = { 'select_prev', 'fallback' },
+        ['<C-l>'] = { 'show_documentation', 'fallback' },
+        ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
+        ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
         ['<A-1>'] = { function(cmp) cmp.accept({ index = 1 }) end },
         ['<A-2>'] = { function(cmp) cmp.accept({ index = 2 }) end },
         ['<A-3>'] = { function(cmp) cmp.accept({ index = 3 }) end },
@@ -175,7 +189,7 @@ if nixCats('blink') then
           show_on_blocked_trigger_characters = function()
             -- NOTE: don't show in cmdline mode
             if vim.api.nvim_get_mode().mode == 'c' then return {} end
-            return { }
+            return {}
             -- you can also block per filetype, for example:
             -- if vim.bo.filetype == 'markdown' then
             --   return { ' ', '\n', '\t', '.', '/', '(', '[' }
@@ -205,7 +219,7 @@ if nixCats('blink') then
             columns = {
               { "item_idx" },
               { "kind_icon" },
-              { "label", "label_description", gap = 1 },
+              { "label",      "label_description", gap = 1 },
               { "kind" },
               { "source_name" },
               { "extra_info" },
@@ -218,5 +232,5 @@ if nixCats('blink') then
     opts_extend = { "sources.default" },
   }
 else
-  return { }
+  return {}
 end

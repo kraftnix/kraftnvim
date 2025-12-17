@@ -39,6 +39,7 @@ let
       "telescope-tabs"
       "telescope-undo"
       "terminal-nvim"
+      "tree-sitter-d2"
       "vim-doge"
     ]) // {
       gitlinker-nvim = nixpkgs.vimUtils.buildVimPlugin (
@@ -83,6 +84,37 @@ let
     telescope-tabs = vp.telescope-tabs.overrideAttrs {
       dependencies = with up; [ plenary-nvim telescope-nvim ];
     };
+    tree-sitter-all = prev.tree-sitter.override {
+      extraGrammars.tree-sitter-d2 = {
+        src = prev.fetchFromGitHub {
+          owner = "ravsii";
+          repo = "tree-sitter-d2";
+          rev = "v0.7.2";
+          hash = "sha256-zx6ud3uh+0Z+cYdP2KkFA27Kb6fW/CSGpC1C4YmCIo0=";
+        };
+        generate = true;
+        # location = "lua/tree-sitter";
+      };
+    };
+    tree-sitter-d2-grammar = prev.tree-sitter.buildGrammar {
+      language = "d2";
+      # version = "0.7.2";
+      version = vp.tree-sitter-d2.version;
+      src = vp.tree-sitter-d2.src;
+      # src = prev.fetchFromGitHub {
+      #   owner = "ravsii";
+      #   repo = "tree-sitter-d2";
+      #   rev = "v0.7.2";
+      #   hash = "sha256-zx6ud3uh+0Z+cYdP2KkFA27Kb6fW/CSGpC1C4YmCIo0=";
+      # };
+      generate = true;
+      # location = "lua/tree-sitter";
+    };
+    nvim-treesitter-all = up.nvim-treesitter.withPlugins (
+      plugins:
+      up.nvim-treesitter.allGrammars
+      ++ [ final.vimPlugins.tree-sitter-d2-grammar ] # you had an extra buildGrammar here
+    );
   };
   systems = [ "x86_64-linux" ];
 in

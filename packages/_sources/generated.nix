@@ -171,15 +171,15 @@
   };
   sessions-nvim = {
     pname = "sessions-nvim";
-    version = "f13158483e0b6255c6dfe473145ce4ee3495d844";
+    version = "a67a29ef442a7bdcf99d96576190c47145dad65e";
     src = fetchFromGitHub {
       owner = "natecraddock";
       repo = "sessions.nvim";
-      rev = "f13158483e0b6255c6dfe473145ce4ee3495d844";
+      rev = "a67a29ef442a7bdcf99d96576190c47145dad65e";
       fetchSubmodules = false;
-      sha256 = "sha256-Wb43+v9l3XVLlroTHq/9ruJzuK/dNAsqNCL9kpLhFEk=";
+      sha256 = "sha256-O3wsxUiNUPyAYt1v47xL1eBoFHSskxM6VQ0sIEFXaW0=";
     };
-    date = "2024-07-08";
+    date = "2025-11-30";
   };
   telescope-all-recent = {
     pname = "telescope-all-recent";
@@ -300,6 +300,18 @@
       sha256 = "sha256-L+BNITHwcPVJBzeIDWl4+S+jQPnmLrwQ6UbimTfMZfk=";
     };
     date = "2025-10-01";
+  };
+  tree-sitter-d2 = {
+    pname = "tree-sitter-d2";
+    version = "ffb66ce4c801a1e37ed145ebd5eca1ea8865e00f";
+    src = fetchFromGitHub {
+      owner = "ravsii";
+      repo = "tree-sitter-d2";
+      rev = "ffb66ce4c801a1e37ed145ebd5eca1ea8865e00f";
+      fetchSubmodules = false;
+      sha256 = "sha256-E8NcTrPsann8NMB8yLTbJghyf19chhpnKFlthuZ4l14=";
+    };
+    date = "2025-10-22";
   };
   vim-doge = {
     pname = "vim-doge";

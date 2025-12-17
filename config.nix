@@ -8,6 +8,7 @@ let
     test = true;
     telescope = true;
     treesitter = true;
+    diagrams = true;
     mini_starter = false;
     snacks_dashboard = true;
     snacks_terminal = false; # will use when i can figure out how to style terminal better
@@ -70,6 +71,10 @@ in
         dockerfile-language-server
         docker-compose-language-service
         zk
+      ];
+      diagrams = with pkgs; [
+        d2
+        mermaid-cli
       ];
       kickstart-debug = [
         delve
@@ -142,6 +147,10 @@ in
       lint = with pkgs.vimPlugins; [
         nvim-lint
       ];
+      diagrams = with pkgs.vimPlugins; [
+        image-nvim
+        diagram-nvim
+      ];
       format = with pkgs.vimPlugins; [
         conform-nvim
       ];
@@ -163,6 +172,7 @@ in
           blink-cmp
           blink-compat
           blink-ripgrep-nvim
+          blink-cmp-conventional-commits
           # minuet-ai-nvim
         ];
         snippets = with pkgs.vimPlugins; [
@@ -201,10 +211,14 @@ in
           rainbow-delimiters-nvim # fancy rainbow brackets
           playground
 
-          nvim-treesitter.withAllGrammars
+          # nvim-treesitter.withAllGrammars
+          nvim-treesitter-all # includes d2 grammar
+          tree-sitter-d2
+
           # old override, no longer needed
           # ((pkgs.neovimUtils.grammarToPlugin pkgs.tree-sitter-grammars.tree-sitter-nu).overrideAttrs { installQueries = true; })
         ];
+        # ] ++ (builtins.attrValues nvim-treesitter.grammarPlugins);
         telescope = with pkgs.vimPlugins; [
           telescope-nvim # picker
           telescope-fzf-native-nvim # use fzf-native for faster search
