@@ -25,6 +25,18 @@
     };
     date = "2024-06-07";
   };
+  d2-vim = {
+    pname = "d2-vim";
+    version = "cb3eb7fcb1a2d45c4304bf2e91077d787b724a39";
+    src = fetchFromGitHub {
+      owner = "terrastruct";
+      repo = "d2-vim";
+      rev = "cb3eb7fcb1a2d45c4304bf2e91077d787b724a39";
+      fetchSubmodules = false;
+      sha256 = "sha256-HmDQfOIoSV93wqRe7O4FPuHEmAxwoP1+Ut+sKhB62jA=";
+    };
+    date = "2025-08-18";
+  };
   easypick-nvim = {
     pname = "easypick-nvim";
     version = "e623b38a0d8fb96446dd8dd3f38ccb545e1810a8";

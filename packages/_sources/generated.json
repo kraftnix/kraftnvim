@@ -41,6 +41,27 @@
         },
         "version": "84101e8eb1613a72bbdec655b734f891d8a00694"
     },
+    "d2-vim": {
+        "cargoLocks": null,
+        "date": "2025-08-18",
+        "extract": null,
+        "name": "d2-vim",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "terrastruct",
+            "repo": "d2-vim",
+            "rev": "cb3eb7fcb1a2d45c4304bf2e91077d787b724a39",
+            "sha256": "sha256-HmDQfOIoSV93wqRe7O4FPuHEmAxwoP1+Ut+sKhB62jA=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "cb3eb7fcb1a2d45c4304bf2e91077d787b724a39"
+    },
     "easypick-nvim": {
         "cargoLocks": null,
         "date": "2025-04-26",
