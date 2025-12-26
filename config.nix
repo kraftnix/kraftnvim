@@ -209,7 +209,6 @@ in
           nvim-treesitter-refactor # smart rename (current scope) + highlight scope + backup go to def/ref
           nvim-ts-context-commentstring # add commentstring context to treesitter
           rainbow-delimiters-nvim # fancy rainbow brackets
-          playground
 
           # nvim-treesitter.withAllGrammars
           nvim-treesitter-all # includes d2 grammar
