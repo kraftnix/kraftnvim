@@ -63,15 +63,15 @@
   };
   gitlinker-nvim = {
     pname = "gitlinker-nvim";
-    version = "63cfbb7ba0465fa4a599f57c08c888abb188a595";
+    version = "bbe2a1254fc8fce21f3bbf9a020266a1c49799f7";
     src = fetchFromGitHub {
       owner = "linrongbin16";
       repo = "gitlinker.nvim";
-      rev = "63cfbb7ba0465fa4a599f57c08c888abb188a595";
+      rev = "bbe2a1254fc8fce21f3bbf9a020266a1c49799f7";
       fetchSubmodules = false;
-      sha256 = "sha256-CvDP73NwZe+VMztkHaBlIm/Y4Dj+0vZYfL6ymdnViN0=";
+      sha256 = "sha256-aKSH5iTpwUlgKXBbI0CN6ByGZ1RcC7eDMXccHADoIcA=";
     };
-    date = "2025-10-28";
+    date = "2026-01-28";
   };
   magma-nvim = {
     pname = "magma-nvim";
@@ -147,15 +147,15 @@
   };
   one-small-step-for-vimkind-nvim = {
     pname = "one-small-step-for-vimkind-nvim";
-    version = "87eeca2bd4d90a94eed1ef0dbc66885117e7bacb";
+    version = "1af6ffb9b5229a856e8090fa2f690e0931a5aace";
     src = fetchFromGitHub {
       owner = "jbyuki";
       repo = "one-small-step-for-vimkind";
-      rev = "87eeca2bd4d90a94eed1ef0dbc66885117e7bacb";
+      rev = "1af6ffb9b5229a856e8090fa2f690e0931a5aace";
       fetchSubmodules = false;
-      sha256 = "sha256-/5/IZYedlfbKzj1vbmpLoerPe9kH8Ee/GvPDM8fGDBs=";
+      sha256 = "sha256-IqyNgMf8hH2KpRY8gTrqREMCZwMNfDRdH/joqhGhjxI=";
     };
-    date = "2025-11-16";
+    date = "2026-01-12";
   };
   portal-nvim = {
     pname = "portal-nvim";
