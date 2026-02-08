@@ -63,7 +63,7 @@ in
         lua-language-server
         nil
         nixd
-        nixfmt-rfc-style
+        nixfmt
         gopls
         nodePackages.bash-language-server
         pyright
