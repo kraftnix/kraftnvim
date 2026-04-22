@@ -27,7 +27,6 @@ return {
     },
     -- this really doesn't work nicely with nix
     snippetDir = vim.fn.expand("$HOME/.config/nvim/lua/kraftnix/snippets"),
-    jsonFormatter = "jq",
     snippetSelection = {
       picker = "auto", ---@type "auto"|"telescope"|"snacks"|"vim.ui.select"
 

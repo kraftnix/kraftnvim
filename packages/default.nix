@@ -29,13 +29,16 @@ let
       "one-small-step-for-vimkind-nvim"
       "portal-nvim"
       "quickselect-nvim"
+      "replua-nvim"
       "sessions-nvim"
       "telescope-all-recent"
       "telescope-changes"
       "telescope-env"
+      "telescope-gitsigns-nvim"
       "telescope-lazy-nvim"
       "telescope-live-grep-args-nvim"
       "telescope-luasnip"
+      "telescope-gitsigns-nvim"
       "telescope-menufacture"
       "telescope-tabs"
       "telescope-undo"
@@ -77,6 +80,9 @@ let
     };
     telescope-live-grep-args-nvim = vp.telescope-live-grep-args-nvim.overrideAttrs {
       dependencies = with up; [ plenary-nvim telescope-nvim ];
+    };
+    telescope-gitsigns-nvim = vp.telescope-gitsigns-nvim.overrideAttrs {
+      dependencies = with up; [ gitsigns-nvim plenary-nvim telescope-nvim ];
     };
     browser-bookmarks-nvim = vp.browser-bookmarks-nvim.overrideAttrs {
       dependencies = with up; [ sqlite-lua ];

@@ -197,6 +197,15 @@ return {
       vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
       vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
 
+      -- Incremental Select
+      vim.keymap.set({ 'x', 'o', 'n' }, '<BS>', function()
+        require 'vim.treesitter._select'.select_child(vim.v.count1)
+      end, { desc = 'Select child node' })
+
+      vim.keymap.set({ 'x' , 'o', 'n'}, '<CR>', function()
+        require 'vim.treesitter._select'.select_parent(vim.v.count1)
+      end, { desc = 'Select parent node' })
+
     end,
   },
 

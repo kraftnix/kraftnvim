@@ -65,9 +65,9 @@ in
         nixd
         nixfmt
         gopls
-        nodePackages.bash-language-server
+        bash-language-server
         pyright
-        nodePackages.yaml-language-server
+        yaml-language-server
         dockerfile-language-server
         docker-compose-language-service
         zk
@@ -94,6 +94,8 @@ in
 
         oil-nvim
         nvim-web-devicons
+        vim-suda # sudo write on current file
+        guess-indent-nvim # guess indent on files
 
         ## UI
         snacks-nvim # A collection of QoL plugins for Neovim 
@@ -119,6 +121,7 @@ in
         lspsaga-nvim # LSP extra functions
         trouble-nvim # LSP extra functions
         nvim-luadev # repl you can run in neovim for lua code
+        replua-nvim # run command in a lua repl
         vim-doge # documentation generation (lua)
         neogen # better annotation generation
         nvim-devdocs # open devdocs.io from vim
@@ -225,6 +228,7 @@ in
           telescope-live-grep-args-nvim # use rg for search
           telescope-manix # nix manix manual search
           telescope-cheat-nvim # cheatsheet (cheat.sh)
+          telescope-gitsigns-nvim # picker got gitsigns
           telescope-tabs # tabs
           telescope-env # host ENV vars
           telescope-zoxide # lookup and use host zoxide
@@ -271,6 +275,12 @@ in
           portal-nvim # jump around lists with keys
           neoscroll-nvim # animated/speed scrolling (laggy over SSH tho)
           nvim-surround # autopairs ()[]<>{} completion (with treesitter magic)
+          grapple-nvim # jump around (successor to portal)
+
+          # ai
+          gen-nvim
+          minuet-ai-nvim
+          codecompanion-nvim
         ];
         extra = with pkgs.vimPlugins; [
           fidget-nvim

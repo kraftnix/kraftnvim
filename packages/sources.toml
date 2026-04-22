@@ -108,6 +108,14 @@ fetch.github = "linrongbin16/gitlinker.nvim"
 # fetch.github = "kraftnix/gitlinker.nvim"
 # src.branch = "clipboard_override"
 
+[replua-nvim]
+src.git = "https://github.com/mghaight/replua.nvim"
+fetch.github = "mghaight/replua.nvim"
+
+[telescope-gitsigns-nvim]
+src.git = "https://github.com/radyz/telescope-gitsigns"
+fetch.github = "radyz/telescope-gitsigns"
+
 [tree-sitter-d2]
 src.git = "https://github.com/ravsii/tree-sitter-d2"
 fetch.github = "ravsii/tree-sitter-d2"
