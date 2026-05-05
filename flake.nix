@@ -1,76 +1,72 @@
 {
-  description = "Kraftnix's neovim configuration";
+  description = "Flake exporting a configured neovim package";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixCats.url = "github:BirdeeHub/nixCats-nvim";
-    flake-compat.url = "github:edolstra/flake-compat";
-    flake-compat.flake = false;
-
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
+    wrappers.inputs.nixpkgs.follows = "nixpkgs";
+    # Demo on fetching plugins from outside nixpkgs
+    plugins-lze = {
+      url = "github:BirdeeHub/lze";
+      flake = false;
+    };
+    # These 2 are already in nixpkgs, however this ensures you always fetch the most up to date version!
+    plugins-lzextras = {
+      url = "github:BirdeeHub/lzextras";
+      flake = false;
     };
   };
-
-  # see :help nixCats.flake.outputs
-  outputs = { self, nixpkgs, nixCats, ... }@inputs: let
-    inherit (nixCats) utils;
-    systems = [ "x86_64-linux" "aarch64-linux" ];
-    luaPath = "${./.}";
-    forEachSystem = utils.eachSystem systems;
-    # will not apply to module imports
-    extra_pkg_config = {
-      # allowUnfree = true;
+  outputs =
+    {
+      self,
+      nixpkgs,
+      wrappers,
+      ...
+    }@inputs:
+    let
+      forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all;
+      module = nixpkgs.lib.modules.importApply ./module.nix inputs;
+      wrapper = wrappers.lib.evalModule module;
+    in
+    # for demonstration purposes, we will set up all the outputs.
+    {
+      wrapperModules = {
+        neovim = module;
+        default = self.wrapperModules.neovim;
+      };
+      wrappers = {
+        neovim = wrapper.config;
+        default = self.wrappers.neovim;
+      };
+      overlays = {
+        neovim = final: prev: { neovim = self.wrappers.neovim.wrap { pkgs = final; }; };
+        default = self.overlays.neovim;
+      };
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in
+        {
+          neovim = self.wrappers.neovim.wrap { inherit pkgs; };
+          default = self.packages.${system}.neovim;
+        }
+      );
+      # home manager and nixos modules
+      # `wrappers.neovim.enable = true`
+      # You can set any of the options.
+      # But that is how you enable it.
+      nixosModules = {
+        default = self.nixosModules.neovim;
+        neovim = wrappers.lib.getInstallModule {
+          name = "neovim";
+          value = module;
+        };
+      };
+      homeModules = {
+        default = self.homeModules.neovim;
+        # they produce generically importable modules
+        neovim = self.nixosModules.neovim;
+      };
     };
-
-    packages = import ./packages { inherit inputs; lib = inputs.nixpkgs.lib; };
-    config = import ./config.nix (inputs // { inherit packages; });
-    defaultPackageName = "kraftnvim";
-    inherit (config) dependencyOverlays categoryDefinitions packageDefinitions;
-  in
-  # NOTE: BOILERPLATE BELOW
-  forEachSystem (system: let
-    nixCatsBuilder = utils.baseBuilder luaPath {
-      inherit nixpkgs system dependencyOverlays extra_pkg_config;
-    } categoryDefinitions packageDefinitions;
-    defaultPackage = nixCatsBuilder defaultPackageName;
-    pkgs = import nixpkgs { inherit system; };
-  in
-  {
-    vimPlugins = packages.vimPlugins.${system};
-    packages = utils.mkAllWithDefault defaultPackage;
-    devShells.default = pkgs.mkShell {
-      name = defaultPackageName;
-      packages = [ defaultPackage pkgs.nvfetcher ];
-      inputsFrom = [ ];
-      shellHook = ''
-      '';
-    };
-    checks = self.packages.${system} // self.vimPlugins.${system};
-  }) // (let
-    # we also export a nixos module to allow reconfiguration from configuration.nix
-    nixosModule = utils.mkNixosModules {
-      inherit defaultPackageName dependencyOverlays luaPath
-        categoryDefinitions packageDefinitions extra_pkg_config nixpkgs;
-    };
-    # and the same for home manager
-    homeModule = utils.mkHomeModules {
-      inherit defaultPackageName dependencyOverlays luaPath
-        categoryDefinitions packageDefinitions extra_pkg_config nixpkgs;
-    };
-  in {
-    overlays = utils.makeOverlays luaPath {
-      inherit nixpkgs dependencyOverlays extra_pkg_config;
-    } categoryDefinitions packageDefinitions defaultPackageName // packages.overlays;
-
-    nixosModules.default = nixosModule;
-    homeModules.default = homeModule;
-
-    inherit utils;
-    passthru = {
-      inherit packageDefinitions categoryDefinitions luaPath defaultPackageName extra_pkg_config nixpkgs dependencyOverlays;
-    };
-    inherit (utils) templates;
-  });
 }

@@ -1,7 +1,6 @@
--- NOTE: These 2 need to be set up before any plugins are loaded.
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-vim.o.showtabline = 2
+-- allow .nvim.lua in current dir and parents (project config)
+vim.o.exrc = false
+
 vim.o.background = "dark"
 
 if os.getenv('WAYLAND_DISPLAY') and vim.fn.exepath('wl-copy') ~= "" then
@@ -20,11 +19,8 @@ if os.getenv('WAYLAND_DISPLAY') and vim.fn.exepath('wl-copy') ~= "" then
 end
 
 -- Sets how neovim will display certain whitespace characters in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
 vim.opt.list = true
 vim.opt.listchars = { tab = '→→', trail = '●', nbsp = '○' }
-
 
 -- Set highlight on search
 vim.opt.hlsearch = true
@@ -42,26 +38,32 @@ vim.wo.number = true
 -- Enable mouse mode
 vim.o.mouse = 'a'
 
+-- -- NOTE: mine
+-- -- Indent
+-- vim.o.smarttab = true
+-- vim.opt.cpoptions:append('I')
+-- --
+-- -- tab width
+-- vim.o.shiftwidth = 2
+-- vim.o.tabstop = 2
+-- vim.o.softtabstop = 2
+-- vim.o.expandtab = true
+-- -- vim.o.noexpandtab = true
+-- vim.o.smartindent = true
+-- -- vim.o.autoindent = true
+
 -- Indent
-vim.o.smarttab = true
 vim.opt.cpoptions:append('I')
---
--- tab width
-vim.o.shiftwidth = 2
-vim.o.tabstop = 2
-vim.o.softtabstop = 2
 vim.o.expandtab = true
--- vim.o.noexpandtab = true
-vim.o.smartindent = true
--- vim.o.autoindent = true
+vim.o.showtabline = 2
 
 -- stops line wrapping from being confusing
 vim.o.breakindent = true
 
 -- Save undo history
 vim.o.undofile = true
-vim.o.undolevels = 10000
-vim.o.undoreload = 10000
+vim.o.undolevels = 2000
+vim.o.undoreload = 2000
 
 -- Case-insensitive searching UNLESS \C or capital in search
 vim.o.ignorecase = true
@@ -81,12 +83,6 @@ vim.o.completeopt = 'menu,preview,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
-
--- -- fold
--- -- vim.g.nofoldenable = true
--- vim.o.foldlevel = 4
--- vim.o.foldmethod = "indent"
--- vim.o.foldnestmax = 10
 
 -- [[ Disable auto comment on enter ]]
 -- See :help formatoptions
@@ -111,7 +107,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.g.netrw_liststyle=0
 vim.g.netrw_banner=0
 
-
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
@@ -123,12 +118,16 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = 'Scroll Up' })
 vim.keymap.set("n", "n", "nzzzv", { desc = 'Next Search Result' })
 vim.keymap.set("n", "N", "Nzzzv", { desc = 'Previous Search Result' })
 
--- TODO: re-enable this under new keymap
--- vim.keymap.set("n", "<leader><leader>[", "<cmd>bprev<CR>", { desc = 'Previous buffer' })
--- vim.keymap.set("n", "<leader><leader>]", "<cmd>bnext<CR>", { desc = 'Next buffer' })
--- vim.keymap.set("n", "<leader><leader>l", "<cmd>b#<CR>", { desc = 'Last buffer' })
--- vim.keymap.set("n", "<leader><leader>d", "<cmd>bdelete<CR>", { desc = 'delete buffer' })
+vim.keymap.set("n", "<leader><leader>[", "<cmd>bprev<CR>", { desc = 'Previous buffer' })
+vim.keymap.set("n", "<leader><leader>]", "<cmd>bnext<CR>", { desc = 'Next buffer' })
+vim.keymap.set("n", "<leader><leader>l", "<cmd>b#<CR>", { desc = 'Last buffer' })
+vim.keymap.set("n", "<leader><leader>d", "<cmd>bdelete<CR>", { desc = 'delete buffer' })
 
+-- Remap for dealing with word wrap
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+--- TODO: move to lsp
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -138,3 +137,10 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous dia
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+
+-- -- You should instead use these keybindings so that they are still easy to use, but dont conflict
+-- vim.keymap.set({"v", "x", "n"}, '<leader>y', '"+y', { noremap = true, silent = true, desc = 'Yank to clipboard' })
+-- vim.keymap.set({"n", "v", "x"}, '<leader>Y', '"+yy', { noremap = true, silent = true, desc = 'Yank line to clipboard' })
+-- vim.keymap.set({'n', 'v', 'x'}, '<leader>p', '"+p', { noremap = true, silent = true, desc = 'Paste from clipboard' })
+-- vim.keymap.set('i', '<C-p>', '<C-r><C-p>+', { noremap = true, silent = true, desc = 'Paste from clipboard from within insert mode' })
+-- vim.keymap.set("x", "<leader>P", '"_dP', { noremap = true, silent = true, desc = 'Paste over selection without erasing unnamed register' })
