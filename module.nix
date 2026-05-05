@@ -8,6 +8,7 @@ inputs:
 }:
 let
   inherit (lib)
+    mkDefault
     mkEnableOption
     mkOption
     types
@@ -16,6 +17,10 @@ let
     inherit description;
     default = true;
     type = types.bool;
+  };
+  mkString = description: default: mkOption {
+    inherit description default;
+    type = types.str;
   };
 in
 {
@@ -63,21 +68,23 @@ in
       }
     );
   };
-  # If you don't want the boilerplate of a whole option in settings, you could just pass stuff
-  config.info.testvalue = {
-    some = "stuff";
-    goes = "here";
-  };
+
+  # `:lua require('lzextras').debug.display(require(vim.g.nix_info_plugin_name))`
   options.settings.snacks = {
     enable = mkEnableTrue "enable snacks integration";
     dashboard = mkEnableTrue "enable snacks dashboard integration";
     terminal = mkEnableOption "enable snacks terminal integration";
   };
-  # and grab it in lua with `require(vim.g.nix_info_plugin_name)(nil, "info", "testvalue", "some") == "stuff"`
-  # Tip: in your nvim command line run:
-  # `:lua require('lzextras').debug.display(require(vim.g.nix_info_plugin_name))`
-  config.settings.anothertestvalue = {
-    settings = "can also accept freeform values";
+  options.settings.languages = {
+    nix.enable = mkEnableTrue "enable nixd integration";
+    lua.enable = mkEnableTrue "enable lua lsp + extra config";
+    java = {
+      enable = mkEnableTrue "enable nvim-java + jdtls";
+      jdtls = mkString "path to jdtls binary" "${pkgs.jdt-language-server}/share/java/jdtls";
+      lombok = mkString "path to lombok jar" "${pkgs.lombok}/share/java/lombok.jar";
+      vscode-java-debug = mkString "path to vscode-java-debug extension" "${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug";
+      vscode-java-test = mkString "path to vscode-java-test extension" "${pkgs.vscode-extensions.vscjava.vscode-java-test}/share/vscode/extensions/vscjava.vscode-java-test";
+    };
   };
 
   # If the defaults are fine, you can just provide the `.data` field
@@ -105,16 +112,34 @@ in
     }
   ];
 
-  # you can name these whatever you want.
+  config.specs.java = {
+    enable = config.settings.languages.java.enable;
+    data = with pkgs.vimPlugins; [
+      # nvim-java
+      (nvim-java.overrideAttrs (oldAttrs: {
+        src = pkgs.fetchFromGitHub {
+          owner = "olisikh";
+          repo = "nvim-java";
+          rev = "4dd43374a5488775e68f0d3548cd9fdea6718307";
+          fetchSubmodules = false;
+          sha256 = "sha256-5wkHJCFYB7pkDKU6EJ3UvTCKvCZiKkdWt7ypne1Yx04=";
+        };
+      }))
+      nvim-jdtls
+    ];
+  };
+
   config.specs.nix = {
+    enable = config.settings.languages.nix.enable;
     data = null;
     extraPackages = with pkgs; [
       nixd
       nixfmt
     ];
   };
-  # You can use the before and after fields to run them before or after other specs or spec of lists of specs
+
   config.specs.lua = {
+    enable = config.settings.languages.lua.enable;
     after = [ "general" ];
     lazy = true;
     data = with pkgs.vimPlugins; [
