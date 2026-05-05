@@ -67,7 +67,7 @@ local lazyLspMaps = function(ev)
   })
 end
 
-return {
+local final = {
 
   { "smjonas/inc-rename.nvim",
     cmd = "IncRename",
@@ -144,7 +144,7 @@ return {
   { 'neovim/nvim-lspconfig',
     -- lazy = false,
     dependencies = {
-      -- 'nvim-java/nvim-java', -- java attempt
+      'nvim-java/nvim-java',
       -- nvim_nu,
       -- cmp
       'hrsh7th/nvim-cmp',
@@ -430,7 +430,72 @@ return {
 
 }
 
+if nixCats('java.enable') then
+  table.insert(final, {
+    'nvim-java/nvim-java',
+    config = function()
+      require('java').setup({
+        checks = {
+          nvim_version = false,        -- Check Neovim version
+          nvim_jdtls_conflict = false, -- Check for nvim-jdtls conflict
+        },
 
+        -- JDTLS configuration
+        jdtls = {
+          auto_install = false,
+          version = '1.54.0',
+          path = nixCats('java.jdtls'),
+        },
+
+        -- Extensions
+        lombok = {
+          enable = true,
+          -- auto_install = false,
+          version = '1.18.42',
+          path = nixCats('java.lombok'),
+        },
+
+        java_test = {
+          enable = false,
+          auto_install = false,
+          version = '0.44.0',
+          path = nixCats('java.vscode-java-test'),
+        },
+
+        java_debug_adapter = {
+          enable = false,
+          version = '0.58.2',
+          path = nixCats('java.vscode-java-debug'),
+        },
+
+        spring_boot_tools = {
+          enable = false,
+          version = '1.55.1',
+        },
+
+        -- JDK installation
+        jdk = {
+          auto_install = false,
+          version = '25',
+        },
+
+        -- Logging
+        log = {
+          use_console = true,
+          use_file = true,
+          level = 'info',
+          log_file = vim.fn.stdpath('state') .. '/nvim-java.log',
+          max_lines = 1000,
+          show_location = false,
+        },
+
+      })
+      vim.lsp.enable('jdtls')
+    end,
+  })
+end
+
+return final
 
 -- WIP lspconfig
 -- lspconfig.setup({

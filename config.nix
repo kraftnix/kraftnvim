@@ -1,7 +1,7 @@
 { self, nixpkgs, nixCats, packages, ... }@inputs:
 let
   inherit (nixCats) utils;
-  categories = {
+  categories = pkgs: {
     general = true;
     gitPlugins = true;
     customPlugins = true;
@@ -28,6 +28,14 @@ let
     colorful-menu = true;
     extra = true;
     always = true;
+
+    java = {
+      enable = true;
+      jdtls = "${pkgs.jdt-language-server}/share/java/jdtls";
+      lombok = "${pkgs.lombok}/share/java/lombok.jar";
+      vscode-java-debug = "${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug";
+      vscode-java-test = "${pkgs.vscode-extensions.vscjava.vscode-java-test}/share/vscode/extensions/vscjava.vscode-java-test";
+    };
 
     have_nerd_font = true;
   };
@@ -112,6 +120,15 @@ in
 
         ## LSP
         nvim-jdtls # java
+        (nvim-java.overrideAttrs (oldAttrs: {
+          src = pkgs.fetchFromGitHub {
+            owner = "olisikh";
+            repo = "nvim-java";
+            rev = "4dd43374a5488775e68f0d3548cd9fdea6718307";
+            fetchSubmodules = false;
+            sha256 = "sha256-5wkHJCFYB7pkDKU6EJ3UvTCKvCZiKkdWt7ypne1Yx04=";
+          };
+        })) # java
         nvim-lspconfig # configure LSPs
         neodev-nvim # configure lua + neovim projects
         nvim-nu # old-school null-ls nushell LSP
@@ -378,7 +395,7 @@ in
       settings.wrapRc = true;
       settings.configDirName = "kraftnvim";
       settings.neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
-      categories = categories // {
+      categories = (categories pkgs) // {
         configDirName = "kraftnvim";
       };
     };
@@ -386,21 +403,21 @@ in
       settings.wrapRc = false;
       # settings.configDirName = "kraftnvim";
       settings.neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
-      categories = categories // {
+      categories = (categories pkgs) // {
         local = true;
       };
     };
-    kraftnvimStable = { ... }: {
+    kraftnvimStable = { pkgs, ... }: {
       settings.wrapRc = true;
       settings.configDirName = "kraftnvim";
-      categories = categories // {
+      categories = (categories pkgs) // {
         configDirName = "kraftnvim";
       };
     };
-    kraftnvimStableLocal = { ... }: {
+    kraftnvimStableLocal = { pkgs, ... }: {
       settings.wrapRc = false;
       # settings.configDirName = "kraftnvimStable";
-      categories = categories // {
+      categories = (categories pkgs) // {
         local = true;
       };
     };
