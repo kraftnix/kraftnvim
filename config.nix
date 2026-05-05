@@ -264,6 +264,7 @@ in
           gitsigns-nvim # git signs in the columns
           diffview-nvim # Diif/Merge view UI
           neogit # new Magit based Git UI
+          gitlineage-nvim # Find previously commits that modified specific lines
 
           # Movement / buffer mgmt
           treesj # fancy split/join of TS objects
