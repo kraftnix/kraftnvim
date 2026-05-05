@@ -97,6 +97,8 @@ vim.g.maplocalleader = ' '
 
 require('general')
 
+-- nixInfo.lze.load("plugins.search.snacks")
+
 -- NOTE: You will likely want to break this up into more files.
 -- You can call this more than once.
 -- You can also include other files from within the specs via an `import` spec.
@@ -135,7 +137,7 @@ nixInfo.lze.load {
     auto_enable = true,
     colorscheme = "moonfly",
   },
-
+  { import = "plugins.search.snacks" },
   {
     "nvim-lspconfig",
     auto_enable = true,
@@ -722,5 +724,3 @@ nixInfo.lze.load {
     end,
   },
 }
-
-nixInfo.lze.load("plugins.search.snacks")

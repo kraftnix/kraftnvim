@@ -6,6 +6,18 @@ inputs:
   pkgs,
   ...
 }:
+let
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    types
+    ;
+  mkEnableTrue = description: mkOption {
+    inherit description;
+    default = true;
+    type = types.bool;
+  };
+in
 {
   imports = [ wlib.wrapperModules.neovim ];
   # NOTE: see the tips and tricks section or the bottom of this file + flake inputs to understand this value
@@ -55,6 +67,11 @@ inputs:
   config.info.testvalue = {
     some = "stuff";
     goes = "here";
+  };
+  options.settings.snacks = {
+    enable = mkEnableTrue "enable snacks integration";
+    dashboard = mkEnableTrue "enable snacks dashboard integration";
+    terminal = mkEnableOption "enable snacks terminal integration";
   };
   # and grab it in lua with `require(vim.g.nix_info_plugin_name)(nil, "info", "testvalue", "some") == "stuff"`
   # Tip: in your nvim command line run:

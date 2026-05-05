@@ -73,7 +73,7 @@ return {
   after = function(plugin)
     -- I also like this color
     vim.api.nvim_set_hl(0, "MySnacksIndent", { fg = "#32a88f" })
-    require('snacks').setup({
+    local opts = {
       bigfile = { enabled = true, },
       explorer = { replace_netrw = true, },
       picker = {
@@ -129,7 +129,118 @@ return {
           },
         },
       },
-    })
+    }
+
+    -- settings.snacks.dashboard
+    if nixInfo(false, "settings", "snacks", "dashboard") then
+      opts.dashboard = {
+        preset = {
+          keys = {
+            { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+            { icon = "",  key = "w", desc = "Open flake.nix", action = ":e flake.nix" },
+            { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+            { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+            { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+            { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+            { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+            { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+          }
+        },
+        formats = {
+          key = function(item)
+            return { { "[", hl = "special" }, { item.key, hl = "key" }, { "]", hl = "special" } }
+          end,
+        },
+        sections = {
+          -- { section = "header" },
+          { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1, cwd = true },
+          { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
+          {
+            icon = " ",
+            title = "Git Status",
+            section = "terminal",
+            enabled = function()
+              return Snacks.git.get_root() ~= nil
+            end,
+            cmd = "git status --short --branch --renames",
+            height = 5,
+            padding = 1,
+            ttl = 5 * 60,
+            indent = 2,
+          },
+          {
+            title = "Last run commands",
+            width = 100,
+            icon = " ",
+            section = "terminal",
+            cmd = "nu -c 'if (which atuin) != [] { atuin search --limit 5 -c . --format `{time} -\t{duration}\t: {command}` } else { history | last 5 | get command | str join (char newline) }'",
+            -- cmd = 'atuin search --limit 5 -c . --human --format "{time} -\t[{duration}]\t- {command}"',
+            -- cmd = 'nu -c \'atuin search --limit 5 -c . --human --format "{time}\t[{duration}]\t{command}" | lines | each {parse "{date}\t[{time}]\t{cmd}"} | flatten\'',
+            height = 7,
+            padding = 1,
+            indent = 1,
+          },
+          { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+          -- { section = "startup" }, -- breaks: https://github.com/folke/snacks.nvim/issues/1778
+        },
+      }
+    end
+
+    -- settings.snacks.terminal
+    if nixInfo(false, "settings", "snacks", "terminal") then
+      vim.api.nvim_set_keymap('n', ':lua Snacks.terminal.toggle()', [[<C-q>]], { noremap = true, desc = 'Toggle snacks terminal' })
+      vim.api.nvim_set_keymap('n', ':lua Snacks.terminal.list()', '<leader>sT', { desc = 'List snacks terminals' })
+      opts.terminal = {
+        win = {
+          keys = {
+            q = "hide",
+            term_toggle = {
+              '<c-q>',
+              -- h.lr('snacks', 'terminal', 'toggle'),
+              function (self)
+                -- Snacks.terminal.toggle()
+                self:hide()
+                -- return "<c-\\><c-n><c-q>"
+              end,
+              mode = 't',
+              expr = true,
+              -- noremap = true,
+              desc = "Toggle terminal"
+            },
+            gf = function(self)
+              local f = vim.fn.findfile(vim.fn.expand("<cfile>"), "**")
+              if f == "" then
+                Snacks.notify.warn("No file under cursor")
+              else
+                self:hide()
+                vim.schedule(function()
+                  vim.cmd("e " .. f)
+                end)
+              end
+            end,
+            term_normal = {
+              "<esc>",
+              function(self)
+                self.esc_timer = self.esc_timer or (vim.uv or vim.loop).new_timer()
+                if self.esc_timer:is_active() then
+                  self.esc_timer:stop()
+                  vim.cmd("stopinsert")
+                else
+                  self.esc_timer:start(500, 0, function() end)
+                  return "<esc>"
+                end
+              end,
+              mode = "t",
+              expr = true,
+              desc = "Double escape to normal mode",
+            },
+          }
+        }
+      }
+    end
+
+    require('snacks').setup(opts)
+
     -- Handle the backend of those remote commands.
     -- hopefully this can be removed one day
     nixInfo.lazygit_fix = function(path, line)
@@ -160,4 +271,5 @@ return {
       end
     end
   end
+
 }
