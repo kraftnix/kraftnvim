@@ -25,8 +25,16 @@
     }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all;
-      module = nixpkgs.lib.modules.importApply ./module.nix inputs;
+      packages = import ./packages { inherit inputs; lib = inputs.nixpkgs.lib; };
+      module = nixpkgs.lib.modules.importApply ./module.nix { inherit inputs packages; };
       wrapper = wrappers.lib.evalModule module;
+      mkPkgs = system: import nixpkgs {
+        inherit system;
+        config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
+          "diagram.nvim" # doesn't have any license
+          "terminal.nvim" # doesn't have any license
+        ];
+      };
     in
     # for demonstration purposes, we will set up all the outputs.
     {
@@ -45,17 +53,12 @@
       packages = forAllSystems (
         system:
         let
-          pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
-              "diagram.nvim" # doesn't have any license
-              "terminal.nvim" # doesn't have any license
-            ];
-          };
+          pkgs = mkPkgs system;
         in
         {
           neovim = self.wrappers.neovim.wrap { inherit pkgs; };
           default = self.packages.${system}.neovim;
+          vimPlugins = packages.vimPlugins.${system};
         }
       );
       # home manager and nixos modules
@@ -74,5 +77,20 @@
         # they produce generically importable modules
         neovim = self.nixosModules.neovim;
       };
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = mkPkgs system;
+        in
+        {
+          default = pkgs.mkShell {
+            packages = [ pkgs.nvfetcher ];
+            inputsFrom = [ ];
+            shellHook = ''
+
+            '';
+          };
+        }
+      );
     };
 }

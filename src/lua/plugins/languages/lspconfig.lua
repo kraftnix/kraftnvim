@@ -28,8 +28,8 @@ return {
         nmap('gr', function() Snacks.picker.lsp_references() end, '[G]oto [R]eferences')
         nmap('gi', vim.lsp.buf.implementation, '[G]oto [i]mplementation')
         nmap('gI', function() Snacks.picker.lsp_implementations() end, '[G]oto [I]mplementation (snacks)')
-        nmap('<leader>ds', function() Snacks.picker.lsp_symbols() end, '[D]ocument [S]ymbols')
-        nmap('<leader>ws', function() Snacks.picker.lsp_workspace_symbols() end, '[W]orkspace [S]ymbols')
+        nmap('<leader>ss', function() Snacks.picker.lsp_symbols() end, '[D]ocument [S]ymbols')
+        nmap('<leader>sS', function() Snacks.picker.lsp_workspace_symbols() end, '[W]orkspace [S]ymbols')
 
         -- See `:help K` for why this keymap
         nmap('K', vim.lsp.buf.hover, 'Hover Documentation')

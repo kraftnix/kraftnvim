@@ -1,0 +1,99 @@
+{ inputs, lib, ... }:
+let
+  inherit (lib)
+    mapAttrs
+    ;
+
+  getPkgs = system: inputs.nixpkgs.legacyPackages.${system};
+
+  replaceDots = mapAttrs (name: plugin: plugin // {
+    # required for lazy-loading to work properly for downstreams
+    pname = plugin.src.repo;
+  });
+
+  allVimPlugins =
+    nixpkgs: sources:
+    (import ./vim-plugin.nix nixpkgs sources [
+      # "nvim-nu"
+      "browser-bookmarks-nvim"
+      "d2-vim"
+      "easypick-nvim"
+      "replua-nvim"
+      "telescope-all-recent"
+      "telescope-changes"
+      "telescope-env"
+      "telescope-luasnip"
+      "telescope-gitsigns-nvim"
+      "telescope-menufacture"
+      "telescope-tabs"
+      "terminal-nvim"
+      "tree-sitter-d2"
+    ]) // {
+      gitlinker-nvim = nixpkgs.vimUtils.buildVimPlugin (
+        sources.gitlinker-nvim // {
+          version = builtins.substring 0 8 sources.gitlinker-nvim.version;
+          dependencies = [ nixpkgs.vimPlugins.plenary-nvim ];
+          patchPhase = ''
+            substituteInPlace spec_init.lua \
+              --replace-fail \
+              'os.getenv("PLENARY_DIR") or "/tmp/plenary.nvim"' \
+              '"${nixpkgs.vimPlugins.plenary-nvim}"'
+          '';
+        }
+      );
+    };
+  getVimSources = prev: replaceDots (prev.callPackage (import ./_sources/generated.nix) { });
+  vimPlugins = final: prev: let 
+    vp = allVimPlugins prev (getVimSources final);
+    up = final.vimPlugins;
+    filterTreesitter = plugins: lib.pipe plugins [
+      (lib.filterAttrs (n: p: !(builtins.elem n [
+        # "tree-sitter-razor" # broken
+      ])))
+    ];
+    tree-sitter-d2-grammar = prev.tree-sitter.buildGrammar {
+      language = "d2";
+      version = vp.tree-sitter-d2.version;
+      src = vp.tree-sitter-d2.src;
+      generate = true;
+    };
+  in vp // {
+    telescope-live-grep-args-nvim = vp.telescope-live-grep-args-nvim.overrideAttrs {
+      dependencies = with up; [ plenary-nvim telescope-nvim ];
+    };
+    telescope-gitsigns-nvim = vp.telescope-gitsigns-nvim.overrideAttrs {
+      dependencies = with up; [ gitsigns-nvim plenary-nvim telescope-nvim ];
+    };
+    browser-bookmarks-nvim = vp.browser-bookmarks-nvim.overrideAttrs {
+      dependencies = with up; [ sqlite-lua ];
+    };
+    easypick-nvim = vp.easypick-nvim.overrideAttrs {
+      dependencies = with up; [ plenary-nvim telescope-nvim ];
+    };
+    telescope-all-recent = vp.telescope-all-recent.overrideAttrs {
+      dependencies = with up; [ plenary-nvim telescope-nvim sqlite-lua ];
+    };
+    telescope-tabs = vp.telescope-tabs.overrideAttrs {
+      dependencies = with up; [ plenary-nvim telescope-nvim ];
+    };
+    tree-sitter-all = prev.tree-sitter.withPlugins (p: (builtins.attrValues (filterTreesitter p)) ++ [
+      tree-sitter-d2-grammar
+    ]);
+    nvim-treesitter-all = up.nvim-treesitter.withPlugins (
+      plugins:
+      up.nvim-treesitter.allGrammars
+      ++ [ tree-sitter-d2-grammar ] # you had an extra buildGrammar here
+    );
+  };
+  systems = [ "x86_64-linux" ];
+in
+{
+  overlays = {
+    vimPlugins = final: prev: {
+      vimPluginsSources = getVimSources prev;
+      vimPlugins = prev.vimPlugins // (vimPlugins final prev);
+    };
+  };
+
+  vimPlugins = lib.genAttrs systems (system: vimPlugins (getPkgs system) (getPkgs system));
+}

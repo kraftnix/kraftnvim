@@ -1,4 +1,7 @@
-inputs:
+{
+  inputs,
+  packages,
+}:
 {
   config,
   wlib,
@@ -13,6 +16,7 @@ let
     mkOption
     types
     ;
+  localPlugins = packages.vimPlugins.${pkgs.stdenv.hostPlatform.system};
   mkEnableTrue = description: mkOption {
     inherit description;
     default = true;
@@ -22,6 +26,7 @@ let
     inherit description default;
     type = types.str;
   };
+  telescope = config.settings.telescope;
 in
 {
   imports = [ wlib.wrapperModules.neovim ];
@@ -189,7 +194,7 @@ in
     data = with pkgs.vimPlugins; [
       lazydev-nvim
       nvim-luadev
-      # replua # TODO(packages):
+      localPlugins.replua-nvim
     ];
     extraPackages = with pkgs; [
       lua-language-server
@@ -220,9 +225,65 @@ in
       image-nvim
       diagram-nvim
     ] ++ (lib.optionals config.settings.diagrams.d2 [
-      # tree-sitter-d2
+      localPlugins.tree-sitter-d2
+      localPlugins.d2-vim
     ]);
-    extraPackages = [ pkgs.imagemagick ];
+    extraPackages = with pkgs; [
+      imagemagick
+    ] ++ (lib.optionals config.settings.diagrams.d2 [
+      d2
+    ]);
+  };
+
+  config.info.git.enable = true;
+  config.specs.git = {
+    enable = config.info.git.enable;
+    lazy = true;
+    data = with pkgs.vimPlugins; [
+      gitsigns-nvim # git signs in the columns
+      diffview-nvim # Diif/Merge view UI
+      neogit # new Magit based Git UI
+      vim-fugitive # tpope git core plugin
+      gitlineage-nvim # Find previously commits that modified specific lines
+    ];
+    extraPackages = [ pkgs.git ];
+  };
+
+  options.settings.telescope = {
+    enable = mkEnableTrue "enable telescope";
+    bookmarks = mkEnableTrue "enable browser-bookmarks picker";
+  };
+  config.specs.telescope = {
+    enable = telescope.enable;
+    lazy = true;
+    data = with pkgs.vimPlugins; [
+      telescope-nvim # picker
+      # telescope-all-recent # frecency sorting for telescope pickers
+      telescope-cheat-nvim # cheatsheet (cheat.sh)
+      localPlugins.telescope-env # host ENV vars
+      telescope-file-browser-nvim # file browser
+      telescope-fzf-native-nvim # use fzf-native for faster search
+      telescope-live-grep-args-nvim # use rg for search
+      telescope-manix # nix manix manual search
+      localPlugins.telescope-menufacture # nice submenus in some core builtins
+      telescope-project-nvim # search git repos in your home dir + cwd to them
+      localPlugins.telescope-tabs # tabs
+      telescope-undo-nvim # undo history
+      telescope-zoxide # lookup and use host zoxide
+      localPlugins.easypick-nvim # quickly make telescope pickers for external cli calls
+    ] ++ (lib.optionals telescope.bookmarks [
+      localPlugins.browser-bookmarks-nvim # firefox browser lookup
+    ]) ++ (lib.optionals config.info.git.enable [
+      localPlugins.telescope-gitsigns-nvim # picker got gitsigns
+    # ]) ++ (lib.optionals config.settings.snippets.luasnip.enable [
+    #   telescope-luasnip # luasnip snippet lookup + use
+    ]);
+    extraPackages = with pkgs; [
+      fd
+      ripgrep
+      manix
+      zoxide
+    ];
   };
 
   config.info.terminal-manager = "toggleterm";
@@ -284,6 +345,7 @@ in
       # misc
       vim-startuptime
       which-key-nvim # popups for key combos
+      plenary-nvim # toolbox/lib for many libs
     ];
   };
 
