@@ -208,6 +208,23 @@ in
     ];
   };
 
+  options.settings.diagrams.enable = mkEnableTrue "Enable image + diagrams plugins";
+  options.settings.diagrams.d2 = mkEnableOption "Enable d2 diagrams";
+  config.settings.nvim_lua_env = lp: [
+    lp.magick
+  ];
+  config.specs.diagrams = {
+    enable = config.settings.diagrams.enable;
+    lazy = true;
+    data = with pkgs.vimPlugins; [
+      image-nvim
+      diagram-nvim
+    ] ++ (lib.optionals config.settings.diagrams.d2 [
+      # tree-sitter-d2
+    ]);
+    extraPackages = [ pkgs.imagemagick ];
+  };
+
   config.specs.general = {
     after = [ "lze" ];
     extraPackages = with pkgs; [

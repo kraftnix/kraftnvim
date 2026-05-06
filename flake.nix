@@ -45,7 +45,12 @@
       packages = forAllSystems (
         system:
         let
-          pkgs = import nixpkgs { inherit system; };
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
+              "diagram.nvim" # doesn't have any license
+            ];
+          };
         in
         {
           neovim = self.wrappers.neovim.wrap { inherit pkgs; };
