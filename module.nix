@@ -225,6 +225,23 @@ in
     extraPackages = [ pkgs.imagemagick ];
   };
 
+  config.info.terminal-manager = "toggleterm";
+  config.specs.terminal = {
+    enable = config.info.terminal-manager != "";
+    lazy = true;
+    data = with pkgs.vimPlugins; []
+      ++ (
+        lib.optional
+        (config.info.terminal-manager == "toggleterm")
+        toggleterm-nvim # toggle terminals in floating windows (old)
+      )
+      ++ (
+        lib.optional
+        (config.info.terminal-manager == "terminal-nvim")
+        terminal-nvim # toggle terminals
+      );
+  };
+
   config.specs.general = {
     after = [ "lze" ];
     extraPackages = with pkgs; [
