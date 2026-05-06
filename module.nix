@@ -232,6 +232,10 @@ in
       fidget-nvim # lsp messages in hover
       tokyonight-nvim # required by noice atm
       nvim-colorizer-lua # highlight hex codes with their colour
+      rainbow-delimiters-nvim # fancy rainbow brackets
+      # neoscroll-nvim # animated/speed scrolling (laggy over SSH tho)
+      urlview-nvim # picker (ui.select support) for URLs
+      todo-comments-nvim # highlight comments
 
       # LSP / code
       nvim-lspconfig
