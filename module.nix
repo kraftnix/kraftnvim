@@ -53,7 +53,7 @@ in
     type = lib.types.str;
     default = "onedark_dark";
   };
-  config.settings.colorscheme = "moonfly"; # <- just demonstrating that it is an option
+  config.settings.colorscheme = "tokyonight-night";
   # and grab it in lua with `require(vim.g.nix_info_plugin_name)("onedark_dark", "settings", "colorscheme") == "moonfly"`
   config.specs.colorscheme = {
     lazy = true;
@@ -62,6 +62,7 @@ in
       {
         "onedark_dark" = onedarkpro-nvim;
         "onedark_vivid" = onedarkpro-nvim;
+        "tokyonight-night" = tokyonight-nvim;
         "onedark" = onedarkpro-nvim;
         "onelight" = onedarkpro-nvim;
         "moonfly" = vim-moonfly-colors;
@@ -92,8 +93,8 @@ in
       blink-compat # compat for cmp
       cmp-cmdline # wilder equiv
       cmp-cmdline-history # include history of commands/searchs
-      lspkind-nvim # icons
-      nvim-web-devicons # icons
+      lspkind-nvim # LSP Icons (can use in cmp)
+      nvim-web-devicons # nerd fonts for nvim
     ];
     extraPackages = with pkgs; [
       ripgrep
@@ -196,7 +197,7 @@ in
     ];
   };
 
-  options.settings.noice.enable = mkEnableOption "Enable noice UI improvements";
+  options.settings.noice.enable = mkEnableTrue "Enable noice UI improvements";
   config.specs.noice = {
     enable = config.settings.noice.enable;
     lazy = true;
@@ -223,26 +224,28 @@ in
         lazy = false;
       }
       snacks-nvim
-      nvim-lspconfig
-      nvim-surround
-      vim-startuptime
+
+      # UI
       colorful-menu-nvim
       lualine-nvim
       gitsigns-nvim
-      which-key-nvim
       fidget-nvim # lsp messages in hover
+      tokyonight-nvim # required by noice atm
+      nvim-colorizer-lua # highlight hex codes with their colour
+
+      # LSP / code
+      nvim-lspconfig
+      nvim-surround # autopairs ()[]<>{} completion (with treesitter magic)
       nvim-lint # nicer linting
       conform-nvim #nicer formatting
-      nvim-treesitter-textobjects
-      # treesitter + grammars
+
+      # treesitter
       nvim-treesitter.withAllGrammars
-      # This is for if you only want some of the grammars
-      # (nvim-treesitter.withPlugins (
-      #   plugins: with plugins; [
-      #     nix
-      #     lua
-      #   ]
-      # ))
+      nvim-treesitter-textobjects
+
+      # misc
+      vim-startuptime
+      which-key-nvim # popups for key combos
     ];
   };
 

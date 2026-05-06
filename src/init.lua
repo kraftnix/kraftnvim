@@ -116,7 +116,7 @@ nixInfo.lze.load {
     load = function(_name)
       -- schedule so it runs after VimEnter
       vim.schedule(function()
-        vim.cmd.colorscheme(nixInfo("onedark_dark", "settings", "colorscheme"))
+        vim.cmd.colorscheme(nixInfo("tokyonight-night", "settings", "colorscheme"))
         vim.schedule(function()
           -- I like this color. Use vim.schedule again to set it after the colorscheme is finished
           vim.cmd([[hi LineNr guifg=#bb9af7]])
@@ -124,21 +124,8 @@ nixInfo.lze.load {
       end)
     end
   },
-  {
-    -- NOTE: view these names in the info plugin!
-    -- :lua nixInfo.lze.debug.display(nixInfo.plugins)
-    -- The display function is from lzextras
-    "onedarkpro.nvim",
-    auto_enable = true, -- <- auto enable is useful here
-    colorscheme = { "onedark", "onedark_dark", "onedark_vivid", "onelight" },
-  },
-  {
-    "vim-moonfly-colors",
-    auto_enable = true,
-    colorscheme = "moonfly",
-  },
   { import = "plugins.snacks" },
-  { import = "plugins.lualine" },
+  { import = "plugins.ui" },
 
   -- {
   --   "nvim-lint",
