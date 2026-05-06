@@ -69,6 +69,37 @@ in
     );
   };
 
+  options.settings.completion = {
+    default = mkOption {
+      description = "Default completion engine to use.";
+      default = "blink";
+      type = types.enum [ "blink" ];
+    };
+    commandline = mkOption {
+      description = "Commandline completion engine to use.";
+      default = "blink";
+      type = types.enum [ "blink" ];
+    };
+  };
+
+  config.specs.blink = {
+    enable = config.settings.completion.default == "blink" || config.settings.completion.commandline == "blink";
+    data = with pkgs.vimPlugins; [
+      blink-ripgrep-nvim # provider: ripgrep / rg
+      blink-cmp-conventional-commits # provider: git commits
+      colorful-menu-nvim
+      blink-cmp # compat for cmp
+      blink-compat # compat for cmp
+      cmp-cmdline # wilder equiv
+      cmp-cmdline-history # include history of commands/searchs
+      lspkind-nvim # icons
+      nvim-web-devicons # icons
+    ];
+    extraPackages = with pkgs; [
+      ripgrep
+    ];
+  };
+
   # `:lua require('lzextras').debug.display(require(vim.g.nix_info_plugin_name))`
   options.settings.snacks = {
     enable = mkEnableTrue "enable snacks integration";
@@ -78,8 +109,10 @@ in
   options.settings.languages = {
     nix.enable = mkEnableTrue "enable nixd integration";
     lua.enable = mkEnableTrue "enable lua lsp + extra config";
+    rust.enable = mkEnableTrue "enable rust via rust-analyzer + add cargo config";
     java = {
-      enable = mkEnableTrue "enable nvim-java + jdtls";
+      # enable = mkEnableTrue "enable nvim-java + jdtls";
+      enable = mkEnableOption "enable nvim-java + jdtls";
       jdtls = mkString "path to jdtls binary" "${pkgs.jdt-language-server}/share/java/jdtls";
       lombok = mkString "path to lombok jar" "${pkgs.lombok}/share/java/lombok.jar";
       vscode-java-debug = mkString "path to vscode-java-debug extension" "${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug";
@@ -111,6 +144,16 @@ in
       # '';
     }
   ];
+
+  config.specs.rust = {
+    enable = config.settings.languages.rust.enable;
+    data = null;
+    extraPackages = with pkgs; [
+      cargo
+      gcc
+      rust-analyzer
+    ];
+  };
 
   config.specs.java = {
     enable = config.settings.languages.java.enable;
@@ -144,10 +187,23 @@ in
     lazy = true;
     data = with pkgs.vimPlugins; [
       lazydev-nvim
+      nvim-luadev
+      # replua # TODO(packages):
     ];
     extraPackages = with pkgs; [
       lua-language-server
       stylua
+    ];
+  };
+
+  options.settings.noice.enable = mkEnableOption "Enable noice UI improvements";
+  config.specs.noice = {
+    enable = config.settings.noice.enable;
+    lazy = true;
+    data = with pkgs.vimPlugins; [
+      noice-nvim # meta UI plugin, message routing, lsp, cmdline, etc.
+      nui-nvim # UI library (noice + dap-ui)
+      nvim-notify # notification handler (used by noice)
     ];
   };
 
@@ -170,16 +226,13 @@ in
       nvim-lspconfig
       nvim-surround
       vim-startuptime
-      blink-cmp
-      blink-compat
-      cmp-cmdline
       colorful-menu-nvim
       lualine-nvim
       gitsigns-nvim
       which-key-nvim
-      fidget-nvim
-      nvim-lint
-      conform-nvim
+      fidget-nvim # lsp messages in hover
+      nvim-lint # nicer linting
+      conform-nvim #nicer formatting
       nvim-treesitter-textobjects
       # treesitter + grammars
       nvim-treesitter.withAllGrammars

@@ -26,7 +26,8 @@ return {
         nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
         nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
         nmap('gr', function() Snacks.picker.lsp_references() end, '[G]oto [R]eferences')
-        nmap('gI', function() Snacks.picker.lsp_implementations() end, '[G]oto [I]mplementation')
+        nmap('gi', vim.lsp.buf.implementation, '[G]oto [i]mplementation')
+        nmap('gI', function() Snacks.picker.lsp_implementations() end, '[G]oto [I]mplementation (snacks)')
         nmap('<leader>ds', function() Snacks.picker.lsp_symbols() end, '[D]ocument [S]ymbols')
         nmap('<leader>ws', function() Snacks.picker.lsp_workspace_symbols() end, '[W]orkspace [S]ymbols')
 
@@ -41,6 +42,8 @@ return {
         nmap('<leader>Wl', function()
           print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end, '[W]orkspace [L]ist Folders')
+
+        nmap('<leader>rf', function () vim.lsp.buf.format { async = true } end, '[G]oto [i]mplementation')
 
         -- Create a command `:Format` local to the LSP buffer
         vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
