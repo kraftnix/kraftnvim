@@ -7,7 +7,7 @@ function GitCurrentBranchName()
   end
 end
 
-local gitEnabled = nixInfo(false, 'info', 'git', 'enable') and vim.fn.executable("git") == 1
+local gitEnabled = nixInfo(false, 'settings', 'git', 'enable') and vim.fn.executable("git") == 1
 return {
 
   --- not as nice as the in built quickfix list + next hunk jumping

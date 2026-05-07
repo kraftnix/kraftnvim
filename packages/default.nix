@@ -32,6 +32,7 @@ let
       gitlinker-nvim = nixpkgs.vimUtils.buildVimPlugin (
         sources.gitlinker-nvim // {
           version = builtins.substring 0 8 sources.gitlinker-nvim.version;
+          # not a dependency, but is required due to spec_init
           dependencies = [ nixpkgs.vimPlugins.plenary-nvim ];
           patchPhase = ''
             substituteInPlace spec_init.lua \

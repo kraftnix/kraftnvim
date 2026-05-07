@@ -33,10 +33,6 @@ fetch.github = "nyngwang/NeoZoom.lua"
 src.git = "https://github.com/natecraddock/sessions.nvim"
 fetch.github = "natecraddock/sessions.nvim"
 
-[fm-nvim]
-src.git = "https://github.com/is0n/fm-nvim"
-fetch.github = "is0n/fm-nvim"
-
 [telescope-tabs]
 src.git = "https://github.com/LukasPietzschmann/telescope-tabs"
 fetch.github = "LukasPietzschmann/telescope-tabs"

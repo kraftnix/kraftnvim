@@ -77,6 +77,9 @@ vim.keymap.set('n', '<leader>ww', ':Telescope buffers<cr>', { desc = '[w]: Get b
 vim.keymap.set('n', '<leader>wx', ':sp<cr>', { desc = '[x]: Split window horizontally' })
 vim.keymap.set('n', '<leader>re', ':e!<cr>', { desc = '[r][e]load (forced) current buffer' })
 
+-- lze
+vim.keymap.set('n', '<leader>llp', ':lua nixInfo.lze.debug.display(nixInfo.plugins)<CR>', { desc = '[l]ze [l]ist [p]lugins' })
+
 -- SSH
 ---Updates internal neovim SSH_AUTH_SOCK variable
 local h = require('utils.helper')

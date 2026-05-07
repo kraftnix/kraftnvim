@@ -54,18 +54,6 @@
     };
     date = "2025-04-26";
   };
-  fm-nvim = {
-    pname = "fm-nvim";
-    version = "8e6a77049330e7c797eb9e63affd75eb796fe75e";
-    src = fetchFromGitHub {
-      owner = "is0n";
-      repo = "fm-nvim";
-      rev = "8e6a77049330e7c797eb9e63affd75eb796fe75e";
-      fetchSubmodules = false;
-      sha256 = "sha256-I29p08P4Wh/LLTDZIQ2TkYy5Kdj0G8loU6k3eFM+iVE=";
-    };
-    date = "2022-10-10";
-  };
   gitlinker-nvim = {
     pname = "gitlinker-nvim";
     version = "d7adb5e4ba5bab4fd443a3f4c46af3f4c864685d";

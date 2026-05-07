@@ -236,9 +236,23 @@ in
     ]);
   };
 
-  config.info.git.enable = true;
+  options.settings.git = {
+    enable = mkEnableTrue "Enable git related plugins";
+    gitlinker_callbacks = mkOption {
+      description = ''
+        Extra callbacks to add to gitlinker defaults. Provide a set of (url -> callback_type)
+
+        Useful for adding extra forgejo/gitea/gitlab self-hosted instances.
+      '';
+      default = { };
+      type = types.attrsOf types.str;
+      example = {
+        "forgejo.home.lan" = "forgejo";
+      };
+    };
+  };
   config.specs.git = {
-    enable = config.info.git.enable;
+    enable = config.settings.git.enable;
     lazy = true;
     data = with pkgs.vimPlugins; [
       gitsigns-nvim # git signs in the columns
@@ -246,6 +260,7 @@ in
       neogit # new Magit based Git UI
       vim-fugitive # tpope git core plugin
       gitlineage-nvim # Find previously commits that modified specific lines
+      localPlugins.gitlinker-nvim # open/copy external git forge links (GBrowse replacement)
     ];
     extraPackages = [ pkgs.git ];
   };
@@ -283,7 +298,7 @@ in
       localPlugins.easypick-nvim # quickly make telescope pickers for external cli calls
     ] ++ (lib.optionals telescope.bookmarks [
       localPlugins.browser-bookmarks-nvim # firefox browser lookup
-    ]) ++ (lib.optionals config.info.git.enable [
+    ]) ++ (lib.optionals config.settings.git.enable [
       localPlugins.telescope-gitsigns-nvim # picker got gitsigns
     # ]) ++ (lib.optionals config.settings.snippets.luasnip.enable [
     #   telescope-luasnip # luasnip snippet lookup + use
@@ -311,6 +326,24 @@ in
         (config.info.terminal-manager == "terminal-nvim")
         terminal-nvim # toggle terminals
       );
+  };
+
+  config.info.oil.enable = true;
+  config.specs.oil = {
+    enable = config.info.oil.enable;
+    data = with pkgs.vimPlugins; [
+      oil-nvim # buffer based file management
+      oil-git-nvim # git status alongside on files
+      oil-lsp-diagnostics-nvim # lsp diagnostics icons on files
+    ];
+  };
+  config.info.yazi.enable = true;
+  config.specs.yazi = {
+    enable = config.info.oil.enable;
+    data = with pkgs.vimPlugins; [
+      yazi-nvim # integrate yazi + nvim
+    ];
+    extraPackages = [ pkgs.yazi ];
   };
 
   config.specs.general = {
@@ -341,6 +374,7 @@ in
       # neoscroll-nvim # animated/speed scrolling (laggy over SSH tho)
       urlview-nvim # picker (ui.select support) for URLs
       todo-comments-nvim # highlight comments
+      neo-tree-nvim # tree-based file structure in side panel
 
       # LSP / code
       nvim-lspconfig

@@ -2,7 +2,8 @@ return {
   { "image.nvim",
     enabled = nixInfo(false, "settings", "diagrams", "enable"),
     ft = { "markdown" }, -- complains a lot otherwise
-    dep_of = { 'diagrams.nvim' },
+    dep_of = { 'diagram.nvim' },
+    event = 'DeferredUIEnter',
     after = function ()
       require('image').setup({
         backend = "kitty",
@@ -53,6 +54,7 @@ return {
     enabled = nixInfo(false, "settings", "diagrams", "enable"),
     -- TODO: fixup
     ft = { "markdown" }, -- causes complaints due to image.nvim / tmux passthrough on some machines, so enforce only for markdown for now
+    event = 'DeferredUIEnter',
     keys = {
       -- didnt work
       { '<leader>ldd',

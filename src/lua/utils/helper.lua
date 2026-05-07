@@ -64,13 +64,6 @@ M.FmDir = function (cmd)
   vim.cmd (string.format(":%s %s", cmd, parent))
 end
 
--- call fm-nvim on current directory
-M.FmDirWrap = function (cmd)
-  return function ()
-    return M.FmDir(cmd)
-  end
-end
-
 -- transforms `project/name` -> `name`
 M.NameFromRepo = function (repo)
   return repo:match('/(.-)$')

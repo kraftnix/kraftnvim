@@ -131,7 +131,9 @@ nixInfo.lze.load {
   { import = "plugins.which-key" },
   { import = "plugins.telescope" },
   { import = "plugins.git" },
+  { import = "plugins.gitlinker" },
   { import = "plugins.clipboard" },
+  { import = "plugins.file-manager" },
 
   -- {
   --   "nvim-lint",

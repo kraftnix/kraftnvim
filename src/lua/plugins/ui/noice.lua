@@ -48,7 +48,7 @@ return {
       { '<leader>nlc', ':Noice config<CR>', desc = '[n]oice [l]ist [c]onfig'},
     },
     -- event = "VeryLazy",
-    event = "DeferredUIEnter",
+    event = "UIEnter",
     after = function ()
       require('noice').setup({
         -- debug = true,
