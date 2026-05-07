@@ -401,7 +401,6 @@ in
       vim-startuptime
       which-key-nvim # popups for key combos
       plenary-nvim # toolbox/lib for many libs
-      nvim-spectre # hardcore find replace
       harpoon # mark buffers and jump between them
       localPlugins.portal-nvim # jump around lists with keys
       grapple-nvim # jump around (successor to portal)
@@ -409,6 +408,14 @@ in
       vim-suda # sudo write on current file
       treesj # fancy split/join of TS objects
       comment-nvim # toggle comments on visual selection
+      dial-nvim # smart increment/decrement
+      localPlugins.quickselect-nvim # jump to matches like wezterm quickselect mode
+
+
+      # find/replace
+      ssr-nvim # treesitter-based structural search
+      inc-rename-nvim # incremental rename
+      nvim-spectre # hardcore find replace
     ];
   };
 

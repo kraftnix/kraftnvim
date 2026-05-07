@@ -20,6 +20,7 @@ let
       "nvim-devdocs"
       "easypick-nvim"
       "portal-nvim"
+      "quickselect-nvim"
       "replua-nvim"
       "telescope-all-recent"
       "telescope-changes"
