@@ -133,7 +133,7 @@ return {
     }
 
     -- settings.snacks.dashboard
-    if nixInfo(false, "settings", "snacks", "dashboard") then
+    if nixInfo(false, "settings", "snacks", "startpage") then
       opts.dashboard = {
         preset = {
           keys = {

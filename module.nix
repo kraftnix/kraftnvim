@@ -106,10 +106,12 @@ in
     ];
   };
 
-  # `:lua require('lzextras').debug.display(require(vim.g.nix_info_plugin_name))`
+  options.settings.mini = {
+    startpage = mkEnableTrue "enable mini startpage integration";
+  };
   options.settings.snacks = {
     enable = mkEnableTrue "enable snacks integration";
-    dashboard = mkEnableTrue "enable snacks dashboard integration";
+    startpage = mkEnableTrue "enable snacks dashboard integration";
     terminal = mkEnableOption "enable snacks terminal integration";
   };
   options.settings.languages = {
@@ -362,6 +364,7 @@ in
         lazy = false;
       }
       snacks-nvim
+      mini-nvim # mini tools (lots of things)
 
       # UI
       colorful-menu-nvim
@@ -375,6 +378,7 @@ in
       urlview-nvim # picker (ui.select support) for URLs
       todo-comments-nvim # highlight comments
       neo-tree-nvim # tree-based file structure in side panel
+      render-markdown-nvim # markdown preview
 
       # LSP / code
       nvim-lspconfig
