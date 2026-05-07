@@ -78,6 +78,18 @@
     };
     date = "2024-04-18";
   };
+  nvim-devdocs = {
+    pname = "nvim-devdocs";
+    version = "1ab982d3e069d191d9157b897c8b70cf48b7f77a";
+    src = fetchFromGitHub {
+      owner = "luckasRanarison";
+      repo = "nvim-devdocs";
+      rev = "1ab982d3e069d191d9157b897c8b70cf48b7f77a";
+      fetchSubmodules = false;
+      sha256 = "sha256-NvxsUAl+FKrT60xmrVBh/EVLuWrGaLWWwFsWYrr7QKc=";
+    };
+    date = "2024-04-11";
+  };
   nvim-guess-indent = {
     pname = "nvim-guess-indent";
     version = "84a4987ff36798c2fc1169cbaff67960aed9776f";

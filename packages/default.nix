@@ -17,7 +17,9 @@ let
       # "nvim-nu"
       "browser-bookmarks-nvim"
       "d2-vim"
+      "nvim-devdocs"
       "easypick-nvim"
+      "portal-nvim"
       "replua-nvim"
       "telescope-all-recent"
       "telescope-changes"
@@ -59,6 +61,9 @@ let
       generate = true;
     };
   in vp // {
+    nvim-devdocs = vp.nvim-devdocs.overrideAttrs {
+      dependencies = with up; [ plenary-nvim telescope-nvim ];
+    };
     telescope-live-grep-args-nvim = vp.telescope-live-grep-args-nvim.overrideAttrs {
       dependencies = with up; [ plenary-nvim telescope-nvim ];
     };

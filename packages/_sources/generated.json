@@ -125,6 +125,27 @@
         },
         "version": "c97a0197548c1e9b559e4fa41ab3f7782c93e613"
     },
+    "nvim-devdocs": {
+        "cargoLock": null,
+        "date": "2024-04-11",
+        "extract": null,
+        "name": "nvim-devdocs",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "luckasRanarison",
+            "repo": "nvim-devdocs",
+            "rev": "1ab982d3e069d191d9157b897c8b70cf48b7f77a",
+            "sha256": "sha256-NvxsUAl+FKrT60xmrVBh/EVLuWrGaLWWwFsWYrr7QKc=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "1ab982d3e069d191d9157b897c8b70cf48b7f77a"
+    },
     "nvim-guess-indent": {
         "cargoLock": null,
         "date": "2025-03-25",

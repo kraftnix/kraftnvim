@@ -330,6 +330,8 @@ in
       );
   };
 
+  config.info.flash.enable = true;
+
   config.info.oil.enable = true;
   config.specs.oil = {
     enable = config.info.oil.enable;
@@ -365,6 +367,7 @@ in
       }
       snacks-nvim
       mini-nvim # mini tools (lots of things)
+      flash-nvim # jump around with f,t,s
 
       # UI
       colorful-menu-nvim
@@ -381,10 +384,14 @@ in
       render-markdown-nvim # markdown preview
 
       # LSP / code
-      nvim-lspconfig
+      nvim-lspconfig # easier lsp config
       nvim-surround # autopairs ()[]<>{} completion (with treesitter magic)
       nvim-lint # nicer linting
-      conform-nvim #nicer formatting
+      conform-nvim # nicer formatting
+      # docs
+      neogen # better annotation generation
+      # vim-doge # documentation generation (lua)
+      localPlugins.nvim-devdocs # open devdocs.io from vim
 
       # treesitter
       nvim-treesitter.withAllGrammars
@@ -394,6 +401,10 @@ in
       vim-startuptime
       which-key-nvim # popups for key combos
       plenary-nvim # toolbox/lib for many libs
+      nvim-spectre # hardcore find replace
+      harpoon # mark buffers and jump between them
+      localPlugins.portal-nvim # jump around lists with keys
+      grapple-nvim # jump around (successor to portal)
     ];
   };
 

@@ -7,6 +7,10 @@ fetch.github = "FeiyouG/commander.nvim"
 src.git = "https://github.com/cbochs/portal.nvim"
 fetch.github = "cbochs/portal.nvim"
 
+[nvim-devdocs]
+src.git = "https://github.com/luckasRanarison/nvim-devdocs"
+fetch.github = "luckasRanarison/nvim-devdocs"
+
 # not using nix packaged version atm
 [one-small-step-for-vimkind-nvim]
 src.git = "https://github.com/jbyuki/one-small-step-for-vimkind"
