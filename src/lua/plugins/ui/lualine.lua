@@ -144,9 +144,9 @@ return {
           lualine_x = {
 
             -- -- show notify messages in lualine
-            -- { require("noice").api.status.message.get_hl,
-            --   cond = require("noice").api.status.message.has,
-            -- },
+            { require("noice").api.status.message.get_hl,
+              cond = require("noice").api.status.message.has,
+            },
 
             -- show command / keys
             { require("noice").api.status.command.get,
@@ -160,7 +160,7 @@ return {
               color = { fg = colors.red },
             },
 
-            -- lazy show bool if there are updates
+            -- -- lazy show bool if there are updates
             -- { require("lazy.status").updates,
             --   clond = require("lazy.status").has_updates,
             --   color = { fg = "#ff9e64" },

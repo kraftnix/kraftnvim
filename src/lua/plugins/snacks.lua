@@ -87,7 +87,8 @@ return {
       terminal = {},
       scope = {},
       notifier = {
-        enabled = true,
+        -- enabled = true,
+        enabled = false, -- causes issues with lze + early errors in keys
         timeout = 3000,
       },
       image = { enabled = true, },

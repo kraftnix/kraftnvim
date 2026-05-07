@@ -12,6 +12,12 @@ vim.keymap.set("n", "<leader><leader>]", "<cmd>bnext<CR>", { desc = 'Next buffer
 vim.keymap.set("n", "<leader><leader>l", "<cmd>b#<CR>", { desc = 'Last buffer' })
 vim.keymap.set("n", "<leader><leader>d", "<cmd>bdelete<CR>", { desc = 'delete buffer' })
 
+-- clipbaord
+-- vim.keymap.set({"n", "v", "x"}, '<C-a>', 'gg0vG$', { noremap = true, silent = true, desc = 'Select all' })
+vim.keymap.set({'n', 'v', 'x'}, '<leader>p', '"+p', { noremap = true, silent = true, desc = 'Paste from clipboard' })
+vim.keymap.set('i', '<C-p>', '<C-r><C-p>+', { noremap = true, silent = true, desc = 'Paste from clipboard from within insert mode' })
+vim.keymap.set("x", "<leader>P", '"_dP', { noremap = true, silent = true, desc = 'Paste over selection without erasing unnamed register' })
+
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -51,6 +57,13 @@ vim.keymap.set('n', '<leader>wh', ':wincmd h<cr>', { desc = 'Move cursor to buff
 vim.keymap.set('n', '<leader>wj', ':wincmd j<cr>', { desc = 'Move cursor to buffer below', silent = true })
 vim.keymap.set('n', '<leader>wk', ':wincmd k<cr>', { desc = 'Move cursor to buffer above', silent = true })
 vim.keymap.set('n', '<leader>wl', ':wincmd l<cr>', { desc = 'Move cursor to buffer right', silent = true })
+vim.keymap.set('n', '<leader>wH', ':tabm -1<cr>', { desc = 'Move tab one to left', silent = true })
+vim.keymap.set('n', '<leader>wl', ':tabm +1<cr>', { desc = 'Move tab one to right', silent = true })
+-- NOTE: doesn't work as expected
+vim.keymap.set('n', '<leader>w.', function ()
+  local input = tonumber(vim.fn.input('New index: ')) - 1
+  vim.cmd(':tabm ' + tostring(input) + '<CR>')
+end, { desc = 'Move tab to specified index', silent = true })
 
 -- Buffer Management
 vim.keymap.set('n', '<leader>wD', ':Bclose!<cr>', { desc = '[D]elete buffer aggressively' })

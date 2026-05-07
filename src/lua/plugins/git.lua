@@ -16,7 +16,6 @@ return {
     keys = {
       { '<leader>ggf', ":Telescope git_signs<CR>", desc = '[gg]it [f]ind signs' },
     },
-    on_plugin = { 'telescope.nvim' },
     after = function ()
       require'telescope'.load_extension 'git_signs'
     end

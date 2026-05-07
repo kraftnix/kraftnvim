@@ -5,6 +5,7 @@ end
 return {
 
   { "nvim-notify",
+    enabled = nixInfo(false, "settings", "noice", "enable"),
     keys = {
       { "<leader>nu",
         function()
@@ -26,8 +27,7 @@ return {
     end
   },
 
-  {
-    'nui.nvim',
+  { 'nui.nvim',
     auto_enable = nixInfo(false, "settings", "noice", "enable"),
     on_plugin = { "noice.nvim" },
     load = nixInfo.lze.loaders.with_after,
@@ -75,13 +75,13 @@ return {
         },
 
         routes = {
-          -- { -- reroute long notifications to splits
-          --   filter = {
-          --     event = "notify",
-          --     min_height = 15
-          --   },
-          --   view = 'split'
-          -- },
+          { -- reroute long notifications to splits
+            view = 'split',
+            filter = {
+              event = "notify",
+              min_height = 15
+            },
+          },
           { -- filter out treesitter errors
             view = 'split',
             filter = {

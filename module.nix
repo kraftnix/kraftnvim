@@ -203,6 +203,7 @@ in
   };
 
   options.settings.noice.enable = mkEnableTrue "Enable noice UI improvements";
+  # options.settings.noice.enable = mkEnableOption "Enable noice UI improvements";
   config.specs.noice = {
     enable = config.settings.noice.enable;
     lazy = true;
@@ -247,6 +248,15 @@ in
       gitlineage-nvim # Find previously commits that modified specific lines
     ];
     extraPackages = [ pkgs.git ];
+  };
+
+  config.info.oscyank.enable = true;
+  config.specs.oscyank = {
+    enable = config.info.oscyank.enable;
+    lazy = true;
+    data = with pkgs.vimPlugins; [
+      nvim-osc52 # yank out of neovim through ssh/tmux with OSC52 escape
+    ];
   };
 
   options.settings.telescope = {

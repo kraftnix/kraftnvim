@@ -2,6 +2,7 @@ return {
   { "image.nvim",
     enabled = nixInfo(false, "settings", "diagrams", "enable"),
     ft = { "markdown" }, -- complains a lot otherwise
+    dep_of = { 'diagrams.nvim' },
     after = function ()
       require('image').setup({
         backend = "kitty",

@@ -18,6 +18,7 @@ return {
 
   { 'telescope.nvim',
     cmd = 'Telescope',
+    event = "DeferredUIEnter",
     keys = {
 
       -- Telescope Main
