@@ -14,13 +14,13 @@ return {
   { 'nvim-devdocs',
     cmd = { 'DevdocsOpen', 'DevdocsInstall', 'DevdocsUpdate', 'DevdocsOpenCurrentFloat' },
     keys = {
-      { '<leader>lfd', 'DevdocsOpenCurrentFloat', desc = 'lookup devdocs for current filetype', group = 'Documentation' },
-      { '<leader>fdd', 'DevdocsOpen', desc = '[d]evdocs documentation lookup', group = 'Documentation' },
-      { '<leader>fdi', 'DevdocsInstall', desc = '[d]evdocs [i]nstall', group = 'Documentation' },
-      { '<leader>fdu', 'DevdocsUpdate', desc = '[d]evdocs [u]pdate', group = 'Documentation' },
+      { '<leader>lfd', 'DevdocsOpenCurrentFloat', desc = 'lookup devdocs for current filetype' },
+      { '<leader>fdd', 'DevdocsOpen', desc = '[d]evdocs documentation lookup' },
+      { '<leader>fdi', 'DevdocsInstall', desc = '[d]evdocs [i]nstall' },
+      { '<leader>fdu', 'DevdocsUpdate', desc = '[d]evdocs [u]pdate' },
     },
     after = function ()
-      require('devdocs').setup({
+      require('nvim-devdocs').setup({
         mappings = { -- keymaps for the doc buffer
           open_in_browser = "<C-F><C-F>"
         },

@@ -405,6 +405,10 @@ in
       harpoon # mark buffers and jump between them
       localPlugins.portal-nvim # jump around lists with keys
       grapple-nvim # jump around (successor to portal)
+      guess-indent-nvim # guess indent on files
+      vim-suda # sudo write on current file
+      treesj # fancy split/join of TS objects
+      comment-nvim # toggle comments on visual selection
     ];
   };
 

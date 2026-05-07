@@ -32,12 +32,12 @@ return {
 
 
       -- Neovim related
-      { '<leader>fvh', ':Telescope help_tags<CR>', desc = 'Neovim manpages search', group = 'Neovim' },--essential
-      { '<leader>fvH', ':Telescope highlights<CR>', desc = 'Neovim highlights search', group = 'Neovim' },
-      { '<leader>fvl', ':Telescope lazy<CR>', desc = '[f]ind [l]azy installed plugins', group = 'Neovim' }, --nice
-      { '<leader>fvk', ':Telescope keymaps<CR>', desc = '[f]ind mapped [k]ey bindings', group = 'Neovim' },--gd
-      { '<leader>fvo', ':Telescope vim_options<CR>', desc = 'find (neo)vim options', group = 'Neovim' },
-      { '<leader>fvj', ':Telescope jumplist<CR>', desc = 'find vim jumplist', group = 'Neovim' },
+      { '<leader>fvh', ':Telescope help_tags<CR>', desc = 'Neovim manpages search' },--essential
+      { '<leader>fvH', ':Telescope highlights<CR>', desc = 'Neovim highlights search' },
+      { '<leader>fvl', ':Telescope lazy<CR>', desc = '[f]ind [l]azy installed plugins' }, --nice
+      { '<leader>fvk', ':Telescope keymaps<CR>', desc = '[f]ind mapped [k]ey bindings' },--gd
+      { '<leader>fvo', ':Telescope vim_options<CR>', desc = 'find (neo)vim options' },
+      { '<leader>fvj', ':Telescope jumplist<CR>', desc = 'find vim jumplist' },
 
       -- Telescope Ops
       { '<leader>fr', ':Telescope resume<CR>', desc = '[f]ind [r]esume (last command)' },--gd
