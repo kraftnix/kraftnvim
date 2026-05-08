@@ -1,6 +1,7 @@
 local h = require('utils.helper')
 return {
   { "nvim-dap",
+    enabled = nixInfo(false, 'settings', 'dap', 'enable'),
     lazy = false,
     after = function()
       local dap = require("dap")
@@ -36,6 +37,7 @@ return {
   },
 
   { "one-small-step-for-vimkind",
+    enabled = nixInfo(false, 'settings', 'dap', 'enable'),
     dep_of = { 'nvim-dap' },
   }
 }

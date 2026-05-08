@@ -49,6 +49,10 @@ return {
     enabled = nixInfo("", "settings", "completion", "default") == "blink",
     event = "InsertEnter",
     after = function (_)
+      local snippetsConf = vim.empty_dict()
+      if nixInfo(false, 'settings', 'snippets', 'enable') then
+        snippetsConf = { preset = 'luasnip' }
+      end
       require("blink.cmp").setup({
         -- See :h blink-cmp-config-keymap for configuring keymaps
         keymap =  {
@@ -89,9 +93,7 @@ return {
           ['<A-9>'] = { function(cmp) cmp.accept({ index = 9 }) end },
           ['<A-0>'] = { function(cmp) cmp.accept({ index = 10 }) end },
         },
-        snippets = {
-          preset = 'luasnip'
-        },
+        snippets = snippetsConf,
         appearance = {
           use_nvim_cmp_as_default = true,
           nerd_font_variant = 'mono'

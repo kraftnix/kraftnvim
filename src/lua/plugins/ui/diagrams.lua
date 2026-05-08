@@ -41,11 +41,14 @@ return {
     end
   },
 
-  { 'd2-vim',
-    enabled = nixInfo(false, "settings", "diagrams", "enable") and nixInfo(false, "settings", "diagrams", "d2"),
-    ft = 'd2',
-  },
+  -- not required if working tree-sitter-d2
+  -- { 'd2-vim',
+  --   enabled = nixInfo(false, "settings", "diagrams", "enable") and nixInfo(false, "settings", "diagrams", "d2"),
+  --   ft = 'd2',
+  --   dep_of = 'tree-sitter-d2'
+  -- },
 
+  -- WARN: This works but reports an error due to ./lua/tree-sitter-d2/init.lua attempting
   { 'tree-sitter-d2',
     enabled = nixInfo(false, "settings", "diagrams", "enable") and nixInfo(false, "settings", "diagrams", "d2"),
   },

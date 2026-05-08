@@ -2,6 +2,7 @@ local h = require('utils.helper')
 return {
   -- documentation generation
   { "neogen",
+    auto_enable = nixInfo(false, "settings", "docs", "enable"),
     keys = {
       { '<leader>dgd', h.lr('neogen', 'generate'), desc = '[d]ocumentation [g]eneration ([d]efault)', grou = 'Documentation' }
     },
@@ -12,6 +13,7 @@ return {
 
   -- documentation lookup
   { 'nvim-devdocs',
+    auto_enable = nixInfo(false, "settings", "docs", "enable"),
     cmd = { 'DevdocsOpen', 'DevdocsInstall', 'DevdocsUpdate', 'DevdocsOpenCurrentFloat' },
     keys = {
       { '<leader>lfd', 'DevdocsOpenCurrentFloat', desc = 'lookup devdocs for current filetype' },

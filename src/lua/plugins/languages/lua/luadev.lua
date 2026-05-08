@@ -1,5 +1,7 @@
 return {
   'nvim-luadev',
+  enabled = nixInfo(false, "settings", "languages", "lsp", "enable"),
+  for_cat = "lua",
   cmd = 'Luadev',
   keys = {
     { '<leader>rl', '<cmd>Luadev<cr>',                       noremap = false, silent = false, mode = "v", desc = 'Open Luadev terminal' },

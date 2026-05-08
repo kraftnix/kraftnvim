@@ -1,5 +1,6 @@
 return {
   { 'lspsaga.nvim',
+    for_cat = 'lsp',
     cmd = 'Lspsaga',
     dep_of = 'nvim-lspconfig',
     after = function()
@@ -12,12 +13,26 @@ return {
   },
 
   { 'nvim-lspconfig',
+    for_cat = 'lsp',
     auto_enable = true,
 
     lsp = function(plugin)
       vim.lsp.config(plugin.name, plugin.lsp or {})
       vim.lsp.enable(plugin.name)
     end,
+
+    -- Telescope commands
+    keys = {
+      { '<leader>lss', "Telescope lsp_document_symbols",          desc = '[l]ist LSP Document [s]ymbols (Telescope)' },
+      { '<leader>lws', "Telescope lsp_workspace_symbols",         desc = '[l]ist LSP Document [s]ymbols (Telescope)' },
+      { '<leader>lwS', "Telescope lsp_dynamic_workspace_symbols", desc = '[l]ist Telescope LSP Document [s]ymbols (Telescope)' },
+      { '<leader>lt',  "Telescope lsp_type_definitions",          desc = '[l]ist [t]ype definitions (telescope)' },
+      { '<leader>li',  "Telescope lsp_implementations",           desc = '[l]ist [i]mplementations (telescope)' },
+      { '<leader>lso', "Telescope lsp_outgoing_calls",            desc = '[ls]: list [o]utgoing calls (telescope)' },
+      { '<leader>lsi', "Telescope lsp_incoming_calls",            desc = '[ls]: list [i]ncoming calls (telescope)' },
+      { '<leader>lsd', "Telescope lsp_definitions",               desc = '[ls]: list [d]efinitions (telescope)' },
+      { '<leader>lsr', "Telescope lsp_references",                desc = '[ls]: list [r]eferences (telescope)' },
+    },
 
     -- set up our on_attach function once before the spec loads
     before = function(_)
@@ -112,18 +127,5 @@ return {
     end
 
   },
-
-  -- Telescope commands
-  keys = {
-    { '<leader>lss', "Telescope lsp_document_symbols",          desc = '[l]ist LSP Document [s]ymbols (Telescope)' },
-    { '<leader>lws', "Telescope lsp_workspace_symbols",         desc = '[l]ist LSP Document [s]ymbols (Telescope)' },
-    { '<leader>lwS', "Telescope lsp_dynamic_workspace_symbols", desc = '[l]ist Telescope LSP Document [s]ymbols (Telescope)' },
-    { '<leader>lt',  "Telescope lsp_type_definitions",          desc = '[l]ist [t]ype definitions (telescope)' },
-    { '<leader>li',  "Telescope lsp_implementations",           desc = '[l]ist [i]mplementations (telescope)' },
-    { '<leader>lso', "Telescope lsp_outgoing_calls",            desc = '[ls]: list [o]utgoing calls (telescope)' },
-    { '<leader>lsi', "Telescope lsp_incoming_calls",            desc = '[ls]: list [i]ncoming calls (telescope)' },
-    { '<leader>lsd', "Telescope lsp_definitions",               desc = '[ls]: list [d]efinitions (telescope)' },
-    { '<leader>lsr', "Telescope lsp_references",                desc = '[ls]: list [r]eferences (telescope)' },
-  }
 
 }

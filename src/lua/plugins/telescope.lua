@@ -2,26 +2,43 @@ local h = require('utils.helper')
 local th = require('utils.telescope')
 local defaults = require('utils.telescope.defaults')
 local enabled = nixInfo(false, 'settings', 'telescope', 'enable')
-return {
+local fullDependencies = {}
+local fullKeys = {}
+local profile = nixInfo('minimal', 'settings', 'telescope', 'profile')
+if profile == 'full' then
+  fullDependencies = {
+    { 'telescope-cheat.nvim' },
+    { 'telescope-env.nvim' },
+    { 'telescope-file-browser.nvim' },
+    { 'telescope-manix' },
+    { 'telescope-project.nvim' },
+    { 'telescope-tabs' },
+    { 'telescope-undo.nvim' },
+    { 'telescope-zoxide' },
+  }
+  fullKeys = {
+    -- Extra
+    { '<leader>f-', ':Telescope file_browser<CR>', desc = '[f-] Telescope File Browser' }, --dunno how to use
+    { '<leader>fE', ':Telescope env<CR>', desc = '[f]ind [E]nvironment Variables (ENV)' }, --notwork
+    { '<leader>fZ', ':Telescope cheat<CR>', desc = '[fz] find cheatsheets' }, --notwork
+    { '<leader>fz', ':Telescope zoxide list<CR>', desc = '[f]ind [z]oxide links' }, --nice
+    { '<leader>fp', ':Telescope project display_type=full<CR>', desc = '[f]ind [p]rojects' }, --nice
+    { '<leader>fu', ':Telescope undo<CR>', desc = '[f]ind [u]ndo tree' }, --hmm
+  }
+end
 
-  { 'telescope-cheat.nvim' },
-  { 'telescope-env.nvim' },
-  { 'telescope-file-browser.nvim' },
+return vim.list_extend(fullDependencies, {
   { 'telescope-fzf-native.nvim' },
   { 'telescope-live-grep-args.nvim' },
-  { 'telescope-manix' },
   { 'telescope-menufacture' },
-  { 'telescope-project.nvim' },
-  { 'telescope-tabs' },
-  { 'telescope-undo.nvim' },
-  { 'telescope-zoxide' },
   { 'telescope-luasnip.nvim', enabled = nixInfo(false, 'settings', 'snippets', 'enable'), },
 
   { 'telescope.nvim',
+    -- enabled = nixInfo(false, 'settings', 'telescope', 'enable'),
+    for_cat = 'telescope',
     cmd = 'Telescope',
     event = "DeferredUIEnter",
-    keys = {
-
+    keys = vim.list_extend(fullKeys, {
       -- Telescope Main
       { '<leader><space>', ':Legendary<CR>', desc = '[ ] Open Legendary' },
       { '<leader><C-space>', ':Telescope commander<CR>', desc = '[ ] Open commander' },
@@ -49,14 +66,6 @@ return {
       { '<leader>fg', h.lr('telescope', 'extensions.menufacture.live_grep'), desc = '[fg] fuzzy search whole project' },
       { '<leader>fw', h.lr('telescope', 'extensions.menufacture.grep_string'), desc = '[f]uzzy search [w]ord under your cursor' },
 
-      -- Extra
-      { '<leader>f-', ':Telescope file_browser<CR>', desc = '[f-] Telescope File Browser' }, --dunno how to use
-      { '<leader>fE', ':Telescope env<CR>', desc = '[f]ind [E]nvironment Variables (ENV)' }, --notwork
-      { '<leader>fZ', ':Telescope cheat<CR>', desc = '[fz] find cheatsheets' }, --notwork
-      { '<leader>fz', ':Telescope zoxide list<CR>', desc = '[f]ind [z]oxide links' }, --nice
-      { '<leader>fp', ':Telescope project display_type=full<CR>', desc = '[f]ind [p]rojects' }, --nice
-      { '<leader>fu', ':Telescope undo<CR>', desc = '[f]ind [u]ndo tree' }, --hmm
-
       -- Code / File Search
       { '<leader>fe', ':Telescope diagnostics<CR>', desc = '[f]ind [e]rrors / diagnostics' },
       { '<leader>fq', ':Telescope quickfix<CR>', desc = '[f]ind [q]uickfix list' },
@@ -71,10 +80,12 @@ return {
         desc = '[fJ] Fuzzy search in current directory'
       },
       { '<leader>fj',
-        th.tb('current_buffer_fuzzy_find', h.lr('telescope.themes', 'get_dropdown', {
-          winblend = 20,
-          previewer = false,
-        })()),
+        function ()
+          th.tb('current_buffer_fuzzy_find', h.lr('telescope.themes', 'get_dropdown', {
+            winblend = 20,
+            previewer = false,
+          })())
+        end,
         desc = '[fj] Fuzzily search in current buffer'
       },
 
@@ -88,7 +99,7 @@ return {
 
       -- Project
       -- -- vim.keymap.set('n', '<leader>fp', builtin.project, { desc = 'Search projects' })
-    },
+    }),
 
     after = function ()
       local opts = {
@@ -225,13 +236,15 @@ return {
 
       telescope.setup(opts)
 
-      telescope.load_extension "cheat"
-      telescope.load_extension "env"
-      telescope.load_extension "file_browser"
+      if profile == 'full' then
+        telescope.load_extension "cheat"
+        telescope.load_extension "env"
+        telescope.load_extension "file_browser"
+        telescope.load_extension "manix"
+        telescope.load_extension "undo"
+      end
       telescope.load_extension "live_grep_args"
-      telescope.load_extension "manix"
       telescope.load_extension 'menufacture'
-      telescope.load_extension "undo"
       if nixInfo(false, 'settings', 'snippets', 'enable') then
         telescope.load_extension 'luasnip'
       end
@@ -243,6 +256,8 @@ return {
   },
 
   { 'easypick.nvim',
+    enabled = profile == 'full',
+    for_cat = 'telescope',
     cmd = 'Easypick',
     on_plugin = { 'telescope.nvim' },
     keys = {
@@ -320,8 +335,8 @@ return {
       -- })
     end
   },
+})
 
-}
 -- requires nix plugin, sqlite.lua must be installed via nix
 -- {
 --   'prochri/telescope-all-recent.nvim',

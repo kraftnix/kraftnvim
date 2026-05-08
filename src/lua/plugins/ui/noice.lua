@@ -5,7 +5,7 @@ end
 return {
 
   { "nvim-notify",
-    enabled = nixInfo(false, "settings", "noice", "enable"),
+    for_cat = 'noice',
     keys = {
       { "<leader>nu",
         function()
@@ -28,13 +28,13 @@ return {
   },
 
   { 'nui.nvim',
-    auto_enable = nixInfo(false, "settings", "noice", "enable"),
+    for_cat = 'noice',
     on_plugin = { "noice.nvim" },
     load = nixInfo.lze.loaders.with_after,
   },
 
   { "noice.nvim",
-    enabled = nixInfo(false, "settings", "noice", "enable"),
+    for_cat = 'noice',
     dep_of = { "lualine.nvim" },
     keys = {
       -- { '<leader>nn', 'Noice', 'ope[n] [n]oice', cmd_gen_skip = true },

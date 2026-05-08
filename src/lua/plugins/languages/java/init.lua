@@ -1,6 +1,6 @@
 return {
   'nvim-java',
-  enabled = nixInfo(false, "settings", "languages", "java", "enable"),
+  enabled = nixInfo(false, "settings", "languages", "lsp", "enable"),
   for_cat = "java",
   after = function()
     require('java').setup({

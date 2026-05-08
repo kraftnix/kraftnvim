@@ -1,5 +1,6 @@
 return {
   "conform.nvim",
+  for_cat = 'lsp',
   auto_enable = true,
   -- cmd = { "" },
   -- event = "",

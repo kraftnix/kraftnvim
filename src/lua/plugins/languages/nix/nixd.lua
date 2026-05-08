@@ -4,7 +4,7 @@ local config_flake = '(builtins.getFlake "git+file:///home/'..user..'/config")'
 local curr_flake_let_in = 'let currFlake = builtins.getFlake ("git+file://" + toString ./.); in'
 return {
   "nixd",
-  enabled = nixInfo(false, "settings", "languages", "nix", "enable"),
+  enabled = nixInfo(false, "settings", "languages", "lsp", "enable"),
   for_cat = "nix",
   lsp = {
     cmd = { "nixd", "--inlay-hints=true", "--semantic-tokens=true", },

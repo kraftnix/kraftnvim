@@ -59,6 +59,22 @@
           neovim = self.wrappers.neovim.wrap { inherit pkgs; };
           default = self.packages.${system}.neovim;
           vimPlugins = packages.vimPlugins.${system};
+          minimal = self.packages.${system}.neovim.wrap {
+            settings.dap.enable = false;
+            settings.diagrams.enable = false;
+            settings.docs.enable = false;
+            settings.languages.lsp.enable = false;
+            settings.languages.java.enable = false;
+            settings.languages.rust.enable = false;
+            settings.noice.enable = false;
+            settings.snacks.startpage = false;
+            settings.snippets.enable = false;
+            settings.telescope.profile = "minimal";
+          };
+          # d2 dependencies are huge, so not included in main
+          neovim-d2 = self.packages.${system}.neovim.wrap {
+            settings.diagrams.d2 = true;
+          };
         }
       );
       # home manager and nixos modules

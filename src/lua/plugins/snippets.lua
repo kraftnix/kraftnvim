@@ -42,6 +42,7 @@ return {
   },
 
   { 'nvim-scissors',
+    for_cat = 'snippets',
     lazy = false,
     -- dep_of = 'blink.cmp',
     keys = {

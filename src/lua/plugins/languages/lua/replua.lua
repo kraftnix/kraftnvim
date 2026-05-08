@@ -1,5 +1,7 @@
 return {
   'replua.nvim',
+  enabled = nixInfo(false, "settings", "languages", "lsp", "enable"),
+  for_cat = "lua",
   after = function (...)
     require('replua').setup({
       print_prefix = "-- -> ",

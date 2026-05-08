@@ -1,7 +1,7 @@
 return {
   -- name of the lsp
   "lua_ls",
-  enabled = nixInfo(false, "settings", "languages", "lua", "enable"),
+  enabled = nixInfo(false, "settings", "languages", "lsp", "enable"),
   for_cat = "lua",
   -- provide a table containing filetypes,
   -- and then whatever your functions defined in the function type specs expect.

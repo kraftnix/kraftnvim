@@ -17,16 +17,18 @@ let
     types
     ;
   localPlugins = packages.vimPlugins.${pkgs.stdenv.hostPlatform.system};
-  mkEnableTrue = description: mkOption {
-    inherit description;
-    default = true;
+  mkEnableDefault = description: default: mkOption {
+    inherit description default;
     type = types.bool;
   };
+  mkEnableTrue = description: mkEnableDefault description true;
   mkString = description: default: mkOption {
     inherit description default;
     type = types.str;
   };
   telescope = config.settings.telescope;
+  lspEnabled = config.settings.languages.lsp.enable;
+  d2Enabled = config.settings.diagrams.d2;
 in
 {
   imports = [ wlib.wrapperModules.neovim ];
@@ -75,6 +77,31 @@ in
     );
   };
 
+  # If the defaults are fine, you can just provide the `.data` field
+  # In this case, a list of specs, instead of a single plugin like above
+  config.specs.lze = [
+    # if defaults is fine, you can just provide the `.data` field
+    config.nvim-lib.neovimPlugins.lze
+    # but these can be specs too!
+    {
+      # these ones can't take lists though
+      data = config.nvim-lib.neovimPlugins.lzextras;
+      # things can target any spec that has a name.
+      name = "lzextras";
+      # now something else can be after = [ "lzextras" ]
+      # the spec name is not the plugin name.
+      # to override the plugin name, use `pname`
+      # You could run something before your main init.lua like this
+      # before = [ "INIT_MAIN" ];
+      # You can include configuration and translated nix values here as well!
+      # type = "lua"; # | "fnl" | "vim"
+      # info = { };
+      # config = ''
+      #   local info, pname, lazy = ...
+      # '';
+    }
+  ];
+
   options.settings.completion = {
     default = mkOption {
       description = "Default completion engine to use.";
@@ -115,11 +142,11 @@ in
     terminal = mkEnableOption "enable snacks terminal integration";
   };
   options.settings.languages = {
-    nix.enable = mkEnableTrue "enable nixd integration";
-    lua.enable = mkEnableTrue "enable lua lsp + extra config";
-    rust.enable = mkEnableTrue "enable rust via rust-analyzer + add cargo config";
+    lsp.enable = mkEnableTrue "enable lspconfig and lsps";
+    nix.enable = mkEnableDefault "enable nixd integration" lspEnabled;
+    lua.enable = mkEnableDefault "enable lua lsp + extra config" lspEnabled;
+    rust.enable = mkEnableDefault "enable rust via rust-analyzer + add cargo config" lspEnabled;
     java = {
-      # enable = mkEnableTrue "enable nvim-java + jdtls";
       enable = mkEnableOption "enable nvim-java + jdtls";
       jdtls = mkString "path to jdtls binary" "${pkgs.jdt-language-server}/share/java/jdtls";
       lombok = mkString "path to lombok jar" "${pkgs.lombok}/share/java/lombok.jar";
@@ -127,31 +154,18 @@ in
       vscode-java-test = mkString "path to vscode-java-test extension" "${pkgs.vscode-extensions.vscjava.vscode-java-test}/share/vscode/extensions/vscjava.vscode-java-test";
     };
   };
-
-  # If the defaults are fine, you can just provide the `.data` field
-  # In this case, a list of specs, instead of a single plugin like above
-  config.specs.lze = [
-    # if defaults is fine, you can just provide the `.data` field
-    config.nvim-lib.neovimPlugins.lze
-    # but these can be specs too!
-    {
-      # these ones can't take lists though
-      data = config.nvim-lib.neovimPlugins.lzextras;
-      # things can target any spec that has a name.
-      name = "lzextras";
-      # now something else can be after = [ "lzextras" ]
-      # the spec name is not the plugin name.
-      # to override the plugin name, use `pname`
-      # You could run something before your main init.lua like this
-      # before = [ "INIT_MAIN" ];
-      # You can include configuration and translated nix values here as well!
-      # type = "lua"; # | "fnl" | "vim"
-      # info = { };
-      # config = ''
-      #   local info, pname, lazy = ...
-      # '';
-    }
-  ];
+  config.specs.lsp = {
+    enable = config.settings.languages.lsp.enable;
+    lazy = true;
+    data = with pkgs.vimPlugins; [
+      # LSP / code
+      nvim-lspconfig # easier lsp config
+      nvim-surround # autopairs ()[]<>{} completion (with treesitter magic)
+      nvim-lint # nicer linting
+      conform-nvim # nicer formatting
+      lspsaga-nvim # LSP extra functions
+    ];
+  };
 
   config.specs.rust = {
     enable = config.settings.languages.rust.enable;
@@ -228,7 +242,7 @@ in
 
   options.settings.diagrams.enable = mkEnableTrue "Enable image + diagrams plugins";
   options.settings.diagrams.d2 = mkEnableOption "Enable d2 diagrams";
-  config.settings.nvim_lua_env = lp: [
+  config.settings.nvim_lua_env = lp: lib.optionals config.settings.diagrams.enable [
     lp.magick
   ];
   config.specs.diagrams = {
@@ -239,7 +253,7 @@ in
       diagram-nvim
     ] ++ (lib.optionals config.settings.diagrams.d2 [
       localPlugins.tree-sitter-d2
-      localPlugins.d2-vim
+      # localPlugins.d2-vim
     ]);
     extraPackages = with pkgs; [
       imagemagick
@@ -288,6 +302,12 @@ in
 
   options.settings.telescope = {
     enable = mkEnableTrue "enable telescope";
+    profile = mkOption {
+      description = "Profile to use for telescope";
+      default = "full";
+      type = types.enum [ "full" "minimal" ];
+      example = "minimal";
+    };
     bookmarks = mkEnableTrue "enable browser-bookmarks picker";
   };
   config.specs.telescope = {
@@ -295,32 +315,34 @@ in
     lazy = true;
     data = with pkgs.vimPlugins; [
       telescope-nvim # picker
-      # telescope-all-recent # frecency sorting for telescope pickers
-      telescope-cheat-nvim # cheatsheet (cheat.sh)
-      localPlugins.telescope-env # host ENV vars
-      telescope-file-browser-nvim # file browser
       telescope-fzf-native-nvim # use fzf-native for faster search
       telescope-live-grep-args-nvim # use rg for search
-      telescope-manix # nix manix manual search
+      localPlugins.telescope-env # host ENV vars
       localPlugins.telescope-menufacture # nice submenus in some core builtins
+    ] ++ (lib.optionals (telescope.profile == "full") [
+      # telescope-all-recent # frecency sorting for telescope pickers
+      telescope-cheat-nvim # cheatsheet (cheat.sh)
+      telescope-file-browser-nvim # file browser
+      telescope-manix # nix manix manual search
       telescope-project-nvim # search git repos in your home dir + cwd to them
-      localPlugins.telescope-tabs # tabs
       telescope-undo-nvim # undo history
       telescope-zoxide # lookup and use host zoxide
+      localPlugins.telescope-tabs # tabs
       localPlugins.easypick-nvim # quickly make telescope pickers for external cli calls
-    ] ++ (lib.optionals telescope.bookmarks [
+    ]) ++ (lib.optionals telescope.bookmarks [
       localPlugins.browser-bookmarks-nvim # firefox browser lookup
     ]) ++ (lib.optionals config.settings.git.enable [
       localPlugins.telescope-gitsigns-nvim # picker got gitsigns
-    # ]) ++ (lib.optionals config.settings.snippets.luasnip.enable [
-    #   telescope-luasnip # luasnip snippet lookup + use
+    ]) ++ (lib.optionals config.settings.snippets.enable [
+      localPlugins.telescope-luasnip # luasnip snippet lookup + use
     ]);
     extraPackages = with pkgs; [
       fd
       ripgrep
+    ] ++ (lib.optionals (telescope.profile == "full") [
       manix
       zoxide
-    ];
+    ]);
   };
 
   config.info.terminal-manager = "toggleterm";
@@ -361,7 +383,6 @@ in
       # snippets
       luasnip # luasnip snippets
       friendly-snippets # extra snippet source
-      localPlugins.telescope-luasnip # luasnip snippet lookup + use
       nvim-scissors # edit + create snippets
       sniprun # run snippets with a binding (lua + rust)
     ];
@@ -387,21 +408,28 @@ in
     extraPackages = [ pkgs.yazi ];
   };
 
+  options.settings.docs.enable = mkEnableTrue "enable docs generation integration";
+  config.specs.docs = {
+    enable = config.settings.docs.enable;
+    lazy = true;
+    data = with pkgs.vimPlugins; [
+      # docs
+      neogen # better annotation generation
+      # vim-doge # documentation generation (lua)
+      localPlugins.nvim-devdocs # open devdocs.io from vim
+    ];
+  };
+
   config.specs.general = {
     after = [ "lze" ];
     extraPackages = with pkgs; [
       lazygit
-      tree-sitter
+      (if d2Enabled then localPlugins.tree-sitter-all else tree-sitter)
     ];
     lazy = true;
     # here we chose a DAL of plugins, but we can also pass a single plugin, or null
     # plugins are of type wlib.types.stringable
     data = with pkgs.vimPlugins; [
-      {
-        data = vim-sleuth;
-        # You can override defaults from the parent spec here
-        lazy = false;
-      }
       snacks-nvim
       mini-nvim # mini tools (lots of things)
       flash-nvim # jump around with f,t,s
@@ -409,7 +437,6 @@ in
       # UI
       colorful-menu-nvim
       lualine-nvim
-      gitsigns-nvim
       fidget-nvim # lsp messages in hover
       tokyonight-nvim # required by noice atm
       nvim-colorizer-lua # highlight hex codes with their colour
@@ -420,20 +447,8 @@ in
       neo-tree-nvim # tree-based file structure in side panel
       render-markdown-nvim # markdown preview
 
-      # LSP / code
-      nvim-lspconfig # easier lsp config
-      nvim-surround # autopairs ()[]<>{} completion (with treesitter magic)
-      nvim-lint # nicer linting
-      conform-nvim # nicer formatting
-      lspsaga-nvim # LSP extra functions
-
-      # docs
-      neogen # better annotation generation
-      # vim-doge # documentation generation (lua)
-      localPlugins.nvim-devdocs # open devdocs.io from vim
-
       # treesitter
-      nvim-treesitter.withAllGrammars
+      (if d2Enabled then localPlugins.nvim-treesitter-all else nvim-treesitter.withAllGrammars)
       nvim-treesitter-textobjects
 
       # misc
