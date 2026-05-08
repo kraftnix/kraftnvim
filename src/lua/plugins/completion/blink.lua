@@ -45,12 +45,9 @@ return {
     on_plugin = { "blink.cmp" },
   },
 
-  -- -- snippets
-  -- { 'luasnip' },             -- write custom snippets
-  -- { 'friendly-snippets' }, -- snippets collection
   { 'blink.cmp',
     enabled = nixInfo("", "settings", "completion", "default") == "blink",
-    event = "DeferredUIEnter",
+    event = "InsertEnter",
     after = function (_)
       require("blink.cmp").setup({
         -- See :h blink-cmp-config-keymap for configuring keymaps
@@ -93,7 +90,7 @@ return {
           ['<A-0>'] = { function(cmp) cmp.accept({ index = 10 }) end },
         },
         snippets = {
-          -- preset = 'luasnip'
+          preset = 'luasnip'
         },
         appearance = {
           use_nvim_cmp_as_default = true,
@@ -264,11 +261,7 @@ return {
               -- timeout_ms = 5000,
               score_offset = 20
             },
-            snippets = {
-              opts = {
-                search_paths = { vim.fn.expand("$HOME/.config/nvim/lua/kraftnix/snippets") },
-              },
-            },
+            snippets = snippets,
             ripgrep = {
               module = "blink-ripgrep",
               name = "Ripgrep",

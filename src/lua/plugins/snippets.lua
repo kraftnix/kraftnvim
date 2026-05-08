@@ -21,22 +21,29 @@ return {
   },
   { 'luasnip',
     enabled = nixInfo(false, 'settings', 'snippets', 'enable'),
-    keys = {
-    },
-    after = function (_, opts)
-      require('luasnip').setup(opts)
-      require('luasnip.loaders.from_vscode').lazy_load()
-      if not (localPaths == '') then
-        require('luasnip.loaders.from_lua').lazy_load({ paths = localPaths })
+    keys = keys,
+    dep_of = 'blink.cmp',
+    after = function ()
+      local ls = require('luasnip')
+      ls.log.set_loglevel("info")
+      local embeddedSnippets = nixInfo('', 'settings', 'snippets', 'embeddedPaths')
+      if embeddedSnippets ~= '' then
+        require('luasnip.loaders.from_lua').lazy_load({ paths = embeddedSnippets })
+        require('luasnip.loaders.from_vscode').lazy_load({ paths = embeddedSnippets })
       end
+      if localPaths ~= '' then
+        require('luasnip.loaders.from_lua').lazy_load({ paths = localPaths })
+        require('luasnip.loaders.from_vscode').lazy_load({ paths = localPaths })
+      end
+      require('luasnip').setup({ })
       -- allow loading from current dir
       -- require("luasnip.loaders.from_lua").load({paths = {vim.fn.getcwd() .. "/.luasnippets/"}})
-
-      require('telescope').load_extension "luasnip"
     end
   },
 
   { 'nvim-scissors',
+    lazy = false,
+    -- dep_of = 'blink.cmp',
     keys = {
       { "<leader>Se", function() require("scissors").editSnippet() end, desc = "Snippet: Edit" },
       { "<leader>Sa", function() require("scissors").addNewSnippet() end,
@@ -54,7 +61,7 @@ return {
           },
         },
         -- this really doesn't work nicely with nix
-        snippetDir = vim.fn.expand("$HOME/.config/nvim/" + localPaths),
+        snippetDir = vim.fn.expand("$HOME/.config/nvim/" .. localPaths),
         snippetSelection = {
           picker = "auto", ---@type "auto"|"telescope"|"snacks"|"vim.ui.select"
 

@@ -340,15 +340,23 @@ in
       );
   };
 
-  options.snippets.enable = mkEnableTrue "enable snippets integration";
-  options.snippets.localPath = mkOption {
-    description = "Local path (relative to .config/nvim) on host to search for snippets, if empty, not searched";
-    default = "";
-    type = types.str;
-    example = "snippets";
+  options.settings.snippets = {
+    enable = mkEnableTrue "enable snippets integration";
+    embeddedPaths = mkOption {
+      description = "Embedded snippets from this repo";
+      default = ./src/lua/luasnippets;
+      type = types.path;
+    };
+    localPath = mkOption {
+      description = "Local path (relative to .config/nvim) on host to search for snippets, if empty, not searched";
+      default = "";
+      type = types.str;
+      example = "snippets";
+    };
   };
   config.specs.snippets = {
-    enable = config.snippets.enable;
+    enable = config.settings.snippets.enable;
+    lazy = true;
     data = with pkgs.vimPlugins; [
       # snippets
       luasnip # luasnip snippets

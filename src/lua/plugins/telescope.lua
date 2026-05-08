@@ -15,6 +15,7 @@ return {
   { 'telescope-tabs' },
   { 'telescope-undo.nvim' },
   { 'telescope-zoxide' },
+  { 'telescope-luasnip.nvim', enabled = nixInfo(false, 'settings', 'snippets', 'enable'), },
 
   { 'telescope.nvim',
     cmd = 'Telescope',
@@ -231,6 +232,9 @@ return {
       telescope.load_extension "manix"
       telescope.load_extension 'menufacture'
       telescope.load_extension "undo"
+      if nixInfo(false, 'settings', 'snippets', 'enable') then
+        telescope.load_extension 'luasnip'
+      end
       -- telescope.load_extension "smart_history" -- better defaults
       -- Enable telescope fzf native, if installed
       pcall(telescope.load_extension, 'fzf')
