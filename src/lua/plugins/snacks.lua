@@ -8,8 +8,8 @@ return {
   priority = 1000,
   keys = {
     -- scratch
-    { '<leader>.', function() Snacks.scratch.toggle() end, desc = "Toggle Scratch Buffer" },
-    { '<leader>S', function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
+    { '<leader>SS.', function() Snacks.scratch.toggle() end, desc = "Toggle Scratch Buffer" },
+    { '<leader>SSS', function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
     -- picker
     { '<leader>sf', function() Snacks.picker.files() end, desc = "Snack picker all" },
     { '<leader>Ff', function() Snacks.picker.smart() end, desc = "[F]ind [f]iles (smart picker)" },

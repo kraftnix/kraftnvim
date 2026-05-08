@@ -65,14 +65,10 @@ return {
   -- TODO: debug why not adding SudaWrite cmd
   -- use `!!` to use sudo to write as root
   { 'suda.vim',
-    event = 'DeferredUIEnter',
     cmd = { 'SudaWrite', 'SudaRead' },
     keys = {
-      { 'w!!', ':SudaWrite<CR>', desc = "Escalate privileges with sudo and write current buffer", modes = { 'n', 'c' }, silent = true },
+      { 'w!!', ':SudaWrite<CR>', desc = "Escalate privileges with sudo and write current buffer", mode = { 'n', 'c' }, silent = true },
     },
-    -- after = function ()
-    --   require('suda.vim').setup()
-    -- end
   },
 
     -- "gc" to comment visual regions/lines

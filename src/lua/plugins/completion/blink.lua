@@ -57,12 +57,12 @@ return {
         keymap =  {
           preset = 'default',
           ['<CR>'] = { 'select_and_accept', 'fallback' },
-          ['<A-y>'] = {
-            function(cmp)
-              cmp.show { providers = { 'minuet' } }
-            end,
-            'fallback'
-          },
+          -- ['<A-y>'] = {
+          --   function(cmp)
+          --     cmp.show { providers = { 'minuet' } }
+          --   end,
+          --   'fallback'
+          -- },
           ['<C-space>'] = {
             function(cmp)
               if cmp.is_visible() then

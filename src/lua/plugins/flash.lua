@@ -9,8 +9,8 @@ return {
     end,
     keys = {
 
-      { "<c-s><c-s>", h.lr('flash', 'jump'), desc = "Flash Jump", modes = { "n", "x", "o" } },
-      { "<c-s><c-k>", h.lr('flash', 'treesitter'), desc = "Flash Treesitter", modes = { "n", "x", "o" } },
+      { "<c-s><c-s>", h.lr('flash', 'jump'), desc = "Flash Jump", mode = { "n", "x", "o" } },
+      { "<c-s><c-k>", h.lr('flash', 'treesitter'), desc = "Flash Treesitter", mode = { "n", "x", "o" } },
       { '<c-s><c-r>', h.lr('flash', 'jump', {continue=true}), desc = 'Flash: continue search' }, -- awesome
 
       -- awesome

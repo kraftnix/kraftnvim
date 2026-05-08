@@ -44,12 +44,12 @@ return {
           end
         end,
         desc = "[t]erm: [s]end current line/selection to term",
-        modes = { "v", "n" }
+        mode = { "v", "n" }
       },
       { '<C-Q>',
         function () require('terminal.mappings').toggle() end,
         desc = 'Toggle terminal into a tab',
-        modes = { "n", "v" },
+        mode = { "n", "v" },
       },
       { "<leader>tr",
         function () require('terminal.mappings').run() end,

@@ -3,7 +3,7 @@ return {
   auto_enable = true,
   event = "DeferredUIEnter",
   keys = {
-    { '<C-E>', ':WhichKey<CR>', desc = 'Open WhichKey', modes = { 'n', 'v', 't' } }
+    { '<C-E>', ':WhichKey<CR>', desc = 'Open WhichKey', mode = { 'n', 'v', 't' } }
   },
   before = function()
     vim.o.timeout = true

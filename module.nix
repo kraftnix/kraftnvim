@@ -107,7 +107,7 @@ in
   };
 
   options.settings.mini = {
-    startpage = mkEnableTrue "enable mini startpage integration";
+    startpage = mkEnableOption "enable mini startpage integration";
   };
   options.settings.snacks = {
     enable = mkEnableTrue "enable snacks integration";
@@ -213,6 +213,16 @@ in
       noice-nvim # meta UI plugin, message routing, lsp, cmdline, etc.
       nui-nvim # UI library (noice + dap-ui)
       nvim-notify # notification handler (used by noice)
+    ];
+  };
+
+  options.settings.dap.enable = mkEnableTrue "Enable dap plugins";
+  config.specs.dap = {
+    enable = config.settings.dap.enable;
+    lazy = false;
+    data = with pkgs.vimPlugins; [
+      nvim-dap
+      one-small-step-for-vimkind
     ];
   };
 
@@ -330,6 +340,25 @@ in
       );
   };
 
+  options.snippets.enable = mkEnableTrue "enable snippets integration";
+  options.snippets.localPath = mkOption {
+    description = "Local path (relative to .config/nvim) on host to search for snippets, if empty, not searched";
+    default = "";
+    type = types.str;
+    example = "snippets";
+  };
+  config.specs.snippets = {
+    enable = config.snippets.enable;
+    data = with pkgs.vimPlugins; [
+      # snippets
+      luasnip # luasnip snippets
+      friendly-snippets # extra snippet source
+      localPlugins.telescope-luasnip # luasnip snippet lookup + use
+      nvim-scissors # edit + create snippets
+      sniprun # run snippets with a binding (lua + rust)
+    ];
+  };
+
   config.info.flash.enable = true;
 
   config.info.oil.enable = true;
@@ -388,6 +417,8 @@ in
       nvim-surround # autopairs ()[]<>{} completion (with treesitter magic)
       nvim-lint # nicer linting
       conform-nvim # nicer formatting
+      lspsaga-nvim # LSP extra functions
+
       # docs
       neogen # better annotation generation
       # vim-doge # documentation generation (lua)

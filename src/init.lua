@@ -139,6 +139,8 @@ nixInfo.lze.load {
   { import = "plugins.flash" },
   { import = "plugins.docs" },
   { import = "plugins.harpoon" },
+  { import = "plugins.dap" },
+  { import = "plugins.snippets" },
 
   -- {
   --   "nvim-lint",
