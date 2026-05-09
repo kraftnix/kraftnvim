@@ -29,6 +29,9 @@ let
   telescope = config.settings.telescope;
   lspEnabled = config.settings.languages.lsp.enable;
   d2Enabled = config.settings.diagrams.d2;
+  profile = config.settings.profile;
+  isFullProfile = profile == "full";
+  allLanguages = isFullProfile || profile == "all-languages";
 in
 {
   imports = [ wlib.wrapperModules.neovim ];
@@ -102,6 +105,12 @@ in
     }
   ];
 
+  options.settings.profile = mkOption {
+    description = "Profile to use for base config of the module";
+    default = "full";
+    type = types.enum [ "full" "minimal" "all-languages" ];
+  };
+
   options.settings.completion = {
     default = mkOption {
       description = "Default completion engine to use.";
@@ -117,6 +126,7 @@ in
 
   config.specs.blink = {
     enable = config.settings.completion.default == "blink" || config.settings.completion.commandline == "blink";
+    lazy = true;
     data = with pkgs.vimPlugins; [
       blink-ripgrep-nvim # provider: ripgrep / rg
       blink-cmp-conventional-commits # provider: git commits
@@ -138,16 +148,23 @@ in
   };
   options.settings.snacks = {
     enable = mkEnableTrue "enable snacks integration";
-    startpage = mkEnableTrue "enable snacks dashboard integration";
+    startpage = mkEnableDefault "enable snacks dashboard integration" isFullProfile;
     terminal = mkEnableOption "enable snacks terminal integration";
   };
   options.settings.languages = {
-    lsp.enable = mkEnableTrue "enable lspconfig and lsps";
-    nix.enable = mkEnableDefault "enable nixd integration" lspEnabled;
-    lua.enable = mkEnableDefault "enable lua lsp + extra config" lspEnabled;
-    rust.enable = mkEnableDefault "enable rust via rust-analyzer + add cargo config" lspEnabled;
+    lsp.enable = mkEnableDefault "enable lspconfig and lsps" isFullProfile;
+    bash.enable = mkEnableDefault "enable bashls lsp" (lspEnabled && isFullProfile);
+    docker.enable = mkEnableDefault "enable docker + docker-compose lsp" (lspEnabled && isFullProfile);
+    nix.enable = mkEnableDefault "enable nixd integration" (lspEnabled && isFullProfile);
+    lua.enable = mkEnableDefault "enable lua lsp + extra config" (lspEnabled && isFullProfile);
+    rust.enable = mkEnableDefault "enable rust via rust-analyzer + add cargo config" (lspEnabled && isFullProfile);
+    python.enable = mkEnableDefault "enable python lsp" (lspEnabled && isFullProfile);
+    go.enable = mkEnableDefault "enable gopls lsp" (lspEnabled && isFullProfile);
+    nushell.enable = mkEnableDefault "enable nu lsp via own binary" (lspEnabled && isFullProfile);
+    yaml.enable = mkEnableDefault "enable yamlls" (lspEnabled && isFullProfile);
+    zk.enable = mkEnableOption "enable zk / zettelkasten tool";
     java = {
-      enable = mkEnableOption "enable nvim-java + jdtls";
+      enable = mkEnableDefault "enable nvim-java + jdtls" (lspEnabled && allLanguages);
       jdtls = mkString "path to jdtls binary" "${pkgs.jdt-language-server}/share/java/jdtls";
       lombok = mkString "path to lombok jar" "${pkgs.lombok}/share/java/lombok.jar";
       vscode-java-debug = mkString "path to vscode-java-debug extension" "${pkgs.vscode-extensions.vscjava.vscode-java-debug}/share/vscode/extensions/vscjava.vscode-java-debug";
@@ -165,20 +182,93 @@ in
       conform-nvim # nicer formatting
       lspsaga-nvim # LSP extra functions
     ];
+    extraPackages = with pkgs; [
+      stdenv.cc.cc
+    ];
+  };
+
+  config.specs.bash = {
+    enable = config.settings.languages.bash.enable;
+    lazy = true;
+    data = null;
+    extraPackages = with pkgs; [
+      bash-language-server
+    ];
+  };
+
+  config.hosts.python3.withPackages = lib.mkIf config.specs.python.enable (
+    ps: [
+      ps.ruff
+    ]
+  );
+  config.specs.python = {
+    enable = config.settings.languages.python.enable;
+    lazy = true;
+    data = null;
+    extraPackages = with pkgs; [
+      ty
+    ];
+  };
+
+  config.specs.yaml = {
+    enable = config.settings.languages.yaml.enable;
+    lazy = true;
+    data = null;
+    extraPackages = with pkgs; [
+      yaml-language-server
+    ];
+  };
+
+  config.specs.docker = {
+    enable = config.settings.languages.docker.enable;
+    lazy = true;
+    data = null;
+    extraPackages = with pkgs; [
+      docker-ls
+      docker-compose-language-service
+    ];
+  };
+
+  config.specs.nushell = {
+    enable = config.settings.languages.nushell.enable;
+    data = null;
+    extraPackages = with pkgs; [
+      nushell
+    ];
+  };
+
+  config.specs.zk = {
+    enable = config.settings.languages.zk.enable;
+    data = null;
+    extraPackages = with pkgs; [
+      zk
+    ];
   };
 
   config.specs.rust = {
     enable = config.settings.languages.rust.enable;
+    lazy = true;
     data = null;
     extraPackages = with pkgs; [
       cargo
       gcc
+      rustc
       rust-analyzer
+    ];
+  };
+
+  config.specs.go = {
+    enable = config.settings.languages.go.enable;
+    lazy = true;
+    data = null;
+    extraPackages = with pkgs; [
+      gopls
     ];
   };
 
   config.specs.java = {
     enable = config.settings.languages.java.enable;
+    lazy = true;
     data = with pkgs.vimPlugins; [
       # nvim-java
       (nvim-java.overrideAttrs (oldAttrs: {
@@ -196,6 +286,7 @@ in
 
   config.specs.nix = {
     enable = config.settings.languages.nix.enable;
+    lazy = true;
     data = null;
     extraPackages = with pkgs; [
       nixd
@@ -218,8 +309,8 @@ in
     ];
   };
 
+  # options.settings.noice.enable = mkEnableDefault "Enable noice UI improvements" isFullProfile;
   options.settings.noice.enable = mkEnableTrue "Enable noice UI improvements";
-  # options.settings.noice.enable = mkEnableOption "Enable noice UI improvements";
   config.specs.noice = {
     enable = config.settings.noice.enable;
     lazy = true;
@@ -230,7 +321,7 @@ in
     ];
   };
 
-  options.settings.dap.enable = mkEnableTrue "Enable dap plugins";
+  options.settings.dap.enable = mkEnableDefault "Enable dap plugins" isFullProfile;
   config.specs.dap = {
     enable = config.settings.dap.enable;
     lazy = false;
@@ -240,7 +331,7 @@ in
     ];
   };
 
-  options.settings.diagrams.enable = mkEnableTrue "Enable image + diagrams plugins";
+  options.settings.diagrams.enable = mkEnableDefault "Enable image + diagrams plugins" isFullProfile;
   options.settings.diagrams.d2 = mkEnableOption "Enable d2 diagrams";
   config.settings.nvim_lua_env = lp: lib.optionals config.settings.diagrams.enable [
     lp.magick
@@ -257,6 +348,7 @@ in
     ]);
     extraPackages = with pkgs; [
       imagemagick
+      mermaid-cli
     ] ++ (lib.optionals config.settings.diagrams.d2 [
       d2
     ]);
@@ -304,7 +396,7 @@ in
     enable = mkEnableTrue "enable telescope";
     profile = mkOption {
       description = "Profile to use for telescope";
-      default = "full";
+      default = if profile == "all-languages" then "full" else profile;
       type = types.enum [ "full" "minimal" ];
       example = "minimal";
     };
@@ -363,7 +455,7 @@ in
   };
 
   options.settings.snippets = {
-    enable = mkEnableTrue "enable snippets integration";
+    enable = mkEnableDefault "enable snippets integration" isFullProfile;
     embeddedPaths = mkOption {
       description = "Embedded snippets from this repo";
       default = ./src/lua/luasnippets;
@@ -393,6 +485,7 @@ in
   config.info.oil.enable = true;
   config.specs.oil = {
     enable = config.info.oil.enable;
+    lazy = true;
     data = with pkgs.vimPlugins; [
       oil-nvim # buffer based file management
       oil-git-nvim # git status alongside on files
@@ -402,13 +495,14 @@ in
   config.info.yazi.enable = true;
   config.specs.yazi = {
     enable = config.info.oil.enable;
+    lazy = true;
     data = with pkgs.vimPlugins; [
       yazi-nvim # integrate yazi + nvim
     ];
     extraPackages = [ pkgs.yazi ];
   };
 
-  options.settings.docs.enable = mkEnableTrue "enable docs generation integration";
+  options.settings.docs.enable = mkEnableDefault "enable docs generation integration" isFullProfile;
   config.specs.docs = {
     enable = config.settings.docs.enable;
     lazy = true;

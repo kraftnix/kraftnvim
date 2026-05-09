@@ -12,6 +12,108 @@ return {
     end
   },
 
+  -- bash
+  { 'bashls',
+    for_cat = 'bash',
+    lsp = {
+      filetypes = { "bash", "sh" },
+    },
+  },
+
+  -- python
+  { 'ruff',
+    for_cat = 'python',
+    lsp = {
+      filetypes = { 'python' },
+      settings = {
+        ruff = {
+          cmd = { "ruff", "server" },
+          filetypes = { 'python' },
+          root_markers = { 'pyproject.toml', 'ruff.toml', '.ruff.toml', '.git' },
+        }
+      }
+    }
+  },
+  { 'ty',
+    for_cat = 'python',
+    lsp = {
+      filetypes = { 'python' },
+      settings = {
+        ty = {
+          configuration = {
+            rules = {
+              ["unresolved-reference"] = "warn"
+            }
+          }
+        }
+      }
+    }
+  },
+
+  -- go
+  { 'gopls',
+    for_cat = 'go',
+    lsp = {
+      filetypes = { "go", "gomod", "gowork", "gotmpl", "templ", },
+    },
+  },
+
+  -- nushell
+  { 'nushell',
+    for_cat = 'nushell',
+    lsp = {
+      cmd = { "nu", "--lsp" }
+    },
+  },
+
+  -- rust
+  { 'rust_analyzer',
+    for_cat = 'rust',
+    lsp = {
+      cmd = { "rust-analyzer" },
+      settings = {
+        ["rust-analyzer"] = {
+          imports = {
+            granularity = {
+              group = "module",
+            },
+            prefix = "self",
+          },
+          cargo = {
+            buildScripts = {
+              enable = true,
+            },
+          },
+          procMacro = {
+            enable = true
+          },
+        }
+      },
+    },
+  },
+
+  -- yaml
+  { 'yamlls',
+    for_cat = 'yaml',
+    lsp = { }
+  },
+
+  -- docker
+  { 'dockerls',
+    for_cat = 'docker',
+    lsp = { }
+  },
+  { 'docker_compose_language_service',
+    for_cat = 'docker',
+    lsp = { }
+  },
+
+  -- zk / zettelkasten tool
+  { 'zk',
+    for_cat = 'zk',
+    lsp = { }
+  },
+
   { 'nvim-lspconfig',
     for_cat = 'lsp',
     auto_enable = true,
@@ -86,44 +188,11 @@ return {
     end,
 
     after = function(_)
-      -- bash
-      vim.lsp.enable('bashls')
-      vim.lsp.config('bashls', {
-        cmd = { "bash-language-server" },
-      })
-
-      vim.lsp.enable('gopls')
-      vim.lsp.config('gopls', {
-        cmd = { "gopls" },
-      })
-
-      vim.lsp.enable('nushell')
-      vim.lsp.config('nushell', {
-        cmd = { "nu", "--lsp" }
-      })
-
       -- python
-      vim.lsp.enable('pyright')
-      vim.lsp.config('pyright', {
-        -- cmd = { "pyright" },
-      })
-      vim.lsp.enable('ruff')
-      vim.lsp.config('ruff', {
-        cmd = { "ruff", "server" },
-        filetypes = { 'python' },
-        root_markers = { 'pyproject.toml', 'ruff.toml', '.ruff.toml', '.git' },
-      })
-
-      -- rust
-      vim.lsp.enable('rust_analyzer')
-      vim.lsp.config('rust_analyzer', {
-        cmd = { "rust-analyzer" },
-      })
-
-      vim.lsp.enable('dockerls')                        -- dockerfile
-      vim.lsp.enable('docker_compose_language_service') -- docker-compose
-      vim.lsp.enable('yamlls')                          -- yaml
-      vim.lsp.enable('zk')                              -- zk / zettelkasten plugin
+      -- vim.lsp.enable('pyright')
+      -- vim.lsp.config('pyright', {
+      --   -- cmd = { "pyright" },
+      -- })
     end
 
   },

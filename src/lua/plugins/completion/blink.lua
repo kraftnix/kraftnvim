@@ -2,33 +2,39 @@ return {
   -- cmp
   {
     "cmp-cmdline",
+    for_cat = 'blink',
     auto_enable = true,
     on_plugin = { "blink.cmp" },
     load = nixInfo.lze.loaders.with_after,
   },
   {
     "cmp-cmdline-history",
+    for_cat = 'blink',
     auto_enable = true,
     on_plugin = { "blink.cmp" },
     load = nixInfo.lze.loaders.with_after,
   },
   {
     "blink-cmp-conventional-commits",
+    for_cat = 'blink',
     auto_enable = true,
-    dep_of = { "cmp-cmdline" },
+    dep_of = { "blink.cmp" },
   },
   {
-    "blink-ripgrep",
+    "blink-ripgrep.nvim",
+    for_cat = 'blink',
     auto_enable = true,
-    dep_of = { "cmp-cmdline" },
+    dep_of = { "blink.cmp" },
   },
   {
     "blink.compat",
+    for_cat = 'blink',
     auto_enable = true,
-    dep_of = { "cmp-cmdline" },
+    dep_of = { "cmp-cmdline", "blink.cmp" },
   },
   {
     "colorful-menu.nvim",
+    for_cat = 'blink',
     auto_enable = true,
     on_plugin = { "blink.cmp" },
   },
@@ -36,17 +42,20 @@ return {
   -- icons
   {
     "lspkind.nvim",
+    for_cat = 'blink',
     auto_enable = true,
     on_plugin = { "blink.cmp" },
   },
   {
     "nvim-web-devicons",
+    for_cat = 'blink',
     auto_enable = true,
     on_plugin = { "blink.cmp" },
   },
 
   { 'blink.cmp',
     enabled = nixInfo("", "settings", "completion", "default") == "blink",
+    for_cat = 'blink',
     event = "InsertEnter",
     after = function (_)
       local snippetsConf = vim.empty_dict()

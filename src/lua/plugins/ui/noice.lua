@@ -28,8 +28,9 @@ return {
   },
 
   { 'nui.nvim',
+    enabled = nixInfo(false, 'settings', 'noice', 'enable') or nixInfo(false, 'settings', 'languages', 'lsp', 'enable'),
     for_cat = 'noice',
-    on_plugin = { "noice.nvim" },
+    on_plugin = { "noice.nvim", "nvim-java" },
     load = nixInfo.lze.loaders.with_after,
   },
 
