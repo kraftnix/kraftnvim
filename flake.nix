@@ -5,6 +5,10 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
     wrappers.inputs.nixpkgs.follows = "nixpkgs";
+    flake-compat = {
+      url = "github:NixOS/flake-compat";
+      flake = false;
+    };
     # Demo on fetching plugins from outside nixpkgs
     plugins-lze = {
       url = "github:BirdeeHub/lze";
@@ -59,14 +63,15 @@
           neovim = self.wrappers.neovim.wrap { inherit pkgs; };
           default = self.packages.${system}.neovim;
           vimPlugins = packages.vimPlugins.${system};
-          neovim-minimal = self.packages.${system}.neovim.wrap {
+          kraftnvim-minimal = self.packages.${system}.neovim.wrap {
+            binName = "kraftnvim-minimal";
             settings.profile = "minimal";
           };
-          neovim-all-languages = self.packages.${system}.neovim.wrap {
-            settings.profile = "all-languages";
+          kraftnvim-all-languages = self.packages.${system}.neovim.wrap {
+            settings.languages.enableAll = true;
           };
           # d2 dependencies are huge, so not included in main
-          neovim-d2 = self.packages.${system}.neovim.wrap {
+          kraftnvim-d2 = self.packages.${system}.neovim.wrap {
             settings.diagrams.d2 = true;
           };
         }
@@ -76,16 +81,16 @@
       # You can set any of the options.
       # But that is how you enable it.
       nixosModules = {
-        default = self.nixosModules.neovim;
-        neovim = wrappers.lib.getInstallModule {
-          name = "neovim";
+        default = self.nixosModules.kraftnvim;
+        kraftnvim = wrappers.lib.getInstallModule {
+          name = "kraftnvim";
           value = module;
         };
       };
       homeModules = {
-        default = self.homeModules.neovim;
+        default = self.homeModules.kraftnvim;
         # they produce generically importable modules
-        neovim = self.nixosModules.neovim;
+        kraftnvim = self.nixosModules.kraftnvim;
       };
       devShells = forAllSystems (
         system:

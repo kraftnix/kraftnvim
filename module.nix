@@ -27,11 +27,12 @@ let
     type = types.str;
   };
   telescope = config.settings.telescope;
-  lspEnabled = config.settings.languages.lsp.enable;
   d2Enabled = config.settings.diagrams.d2;
   profile = config.settings.profile;
   isFullProfile = profile == "full";
-  allLanguages = isFullProfile || profile == "all-languages";
+  lspEnabled = config.settings.languages.lsp.enable;
+  allLanguages = isFullProfile || config.settings.languages.enableAll;
+  enabledInFull = lspEnabled && isFullProfile;
 in
 {
   imports = [ wlib.wrapperModules.neovim ];
@@ -55,7 +56,7 @@ in
   config.settings.dont_link = true;
 
   # and make sure these dont share values:
-  # config.binName = "nvim";
+  config.binName = "kraftnvim";
   # config.settings.aliases = [ ];
 
   # You can declare your own options!
@@ -108,7 +109,7 @@ in
   options.settings.profile = mkOption {
     description = "Profile to use for base config of the module";
     default = "full";
-    type = types.enum [ "full" "minimal" "all-languages" ];
+    type = types.enum [ "full" "minimal" ];
   };
 
   options.settings.completion = {
@@ -152,17 +153,18 @@ in
     terminal = mkEnableOption "enable snacks terminal integration";
   };
   options.settings.languages = {
-    lsp.enable = mkEnableDefault "enable lspconfig and lsps" isFullProfile;
-    bash.enable = mkEnableDefault "enable bashls lsp" (lspEnabled && isFullProfile);
-    docker.enable = mkEnableDefault "enable docker + docker-compose lsp" (lspEnabled && isFullProfile);
-    nix.enable = mkEnableDefault "enable nixd integration" (lspEnabled && isFullProfile);
-    lua.enable = mkEnableDefault "enable lua lsp + extra config" (lspEnabled && isFullProfile);
-    rust.enable = mkEnableDefault "enable rust via rust-analyzer + add cargo config" (lspEnabled && isFullProfile);
-    python.enable = mkEnableDefault "enable python lsp" (lspEnabled && isFullProfile);
-    go.enable = mkEnableDefault "enable gopls lsp" (lspEnabled && isFullProfile);
-    nushell.enable = mkEnableDefault "enable nu lsp via own binary" (lspEnabled && isFullProfile);
-    yaml.enable = mkEnableDefault "enable yamlls" (lspEnabled && isFullProfile);
-    zk.enable = mkEnableOption "enable zk / zettelkasten tool";
+    enableAll = mkEnableOption "enable all languages";
+    lsp.enable = mkEnableDefault "enable lspconfig and lsps" allLanguages;
+    bash.enable = mkEnableDefault "enable bashls lsp" enabledInFull;
+    docker.enable = mkEnableDefault "enable docker + docker-compose lsp" enabledInFull;
+    nix.enable = mkEnableDefault "enable nixd integration" enabledInFull;
+    lua.enable = mkEnableDefault "enable lua lsp + extra config" enabledInFull;
+    rust.enable = mkEnableDefault "enable rust via rust-analyzer + add cargo config" enabledInFull;
+    python.enable = mkEnableDefault "enable python lsp" enabledInFull;
+    go.enable = mkEnableDefault "enable gopls lsp" enabledInFull;
+    nushell.enable = mkEnableDefault "enable nu lsp via own binary" enabledInFull;
+    yaml.enable = mkEnableDefault "enable yamlls" enabledInFull;
+    zk.enable = mkEnableDefault "enable zk / zettelkasten tool" (lspEnabled && allLanguages);
     java = {
       enable = mkEnableDefault "enable nvim-java + jdtls" (lspEnabled && allLanguages);
       jdtls = mkString "path to jdtls binary" "${pkgs.jdt-language-server}/share/java/jdtls";
@@ -396,7 +398,7 @@ in
     enable = mkEnableTrue "enable telescope";
     profile = mkOption {
       description = "Profile to use for telescope";
-      default = if profile == "all-languages" then "full" else profile;
+      default = profile;
       type = types.enum [ "full" "minimal" ];
       example = "minimal";
     };

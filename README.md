@@ -1,25 +1,15 @@
 # Kraftnix's neovim configuration
 
-Uses [NixCats](https://github.com/BirdeeHub/nixCats-nvim) to generate Neovim configurations.
-  - [NixCats Docs](https://nixcats.org/TOC.html)
-  - [NixCats `lazy.nvim` wrapper](https://nixcats.org/nixCats_luaUtils.html)
-
-Currently uses the `lazy.nvim` wrapper.
+Uses [nix-wrapper-modules](https://github.com/BirdeeHub/nix-wrapper-modules) to generate Neovim configurations.
+  - [nix-wrapper-modules Neovim Docs](https://birdeehub.github.io/nix-wrapper-modules/wrapperModules/neovim.html)
+  - [lze plugin manager](https://github.com/BirdeeHub/lze)
 
 ## Exposed Configurations
 
 There are multiple neovim configurations exposed from this flake:
-  - `kraftnvim`: standalone neovim nightly, with bundled lua configuration
-  - `kraftnvimLocal`: neovim nightly, uses host lua configuration
-  - `kraftnvimStable`: standalone neovim from nixpkgs, with bundled lua configuration
-  - `kraftnvimStableLocal`: neovim from nixpkgs, uses host lua configuration
-
-The `Local` flavours of the packages use `$XDG_CONFIG/nvim` by default.
-Since neovim 0.9, you can use `$NVIM_APPNAME` to change the location in `$XDG_CONFIG` to use for neovim configuration.
-
-However `nixCats` always sets `NVIM_APPNAME` to whatever is set in `settings.configDirName`.
-While this is useful, sometimes you actually want to override this (for maybe testing local changes _not_ in `$XDG_CONFIG/{configDirName}`)
-So I added a `KRAFTNVIM_NAME` to overriding the `nixCats` setting at runtime.
+  - `neovim`: full neovim profile for development
+  - `neovim-minimal`: minimal neovim profile for servers / headless
+  - `neovim-d2`: full neovim profile with d2 plugin (large dependencies)
 
 Usage:
 ```sh
