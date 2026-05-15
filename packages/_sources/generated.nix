@@ -18,6 +18,18 @@
     };
     date = "2024-03-26";
   };
+  canola-nvim = {
+    pname = "canola-nvim";
+    version = "88af183e96724cca98a4602511061662cd5e88f3";
+    src = fetchFromGitHub {
+      owner = "barrettruth";
+      repo = "canola.nvim";
+      rev = "88af183e96724cca98a4602511061662cd5e88f3";
+      fetchSubmodules = false;
+      sha256 = "sha256-OIqMXKwLWpNRbalP5af61a8/iT7GiWDLVm58UY8WS6U=";
+    };
+    date = "2026-05-09";
+  };
   commander-nvim = {
     pname = "commander-nvim";
     version = "84101e8eb1613a72bbdec655b734f891d8a00694";
@@ -56,15 +68,15 @@
   };
   gitlinker-nvim = {
     pname = "gitlinker-nvim";
-    version = "d7adb5e4ba5bab4fd443a3f4c46af3f4c864685d";
+    version = "5e8d9f0deb34b079baf84ffe0abbe0475a6b5372";
     src = fetchFromGitHub {
       owner = "linrongbin16";
       repo = "gitlinker.nvim";
-      rev = "d7adb5e4ba5bab4fd443a3f4c46af3f4c864685d";
+      rev = "5e8d9f0deb34b079baf84ffe0abbe0475a6b5372";
       fetchSubmodules = false;
-      sha256 = "sha256-jWoxp/Ux/fb7Diu5b3UaoTKv9a4WOlV9WLQ9TYUjJoI=";
+      sha256 = "sha256-NE1zRmAp+yufWqWm/ScEx3XW7ueVOa8WcZp/hEgNOqo=";
     };
-    date = "2026-04-07";
+    date = "2026-05-12";
   };
   neozoom-nvim = {
     pname = "neozoom-nvim";

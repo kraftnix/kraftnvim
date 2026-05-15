@@ -32,6 +32,10 @@ fetch.github = "axkirillov/easypick.nvim"
 src.git = "https://github.com/nyngwang/NeoZoom.lua"
 fetch.github = "nyngwang/NeoZoom.lua"
 
+[canola-nvim]
+src.git = "https://github.com/barrettruth/canola.nvim"
+fetch.github = "barrettruth/canola.nvim"
+
 # not using atm
 [sessions-nvim]
 src.git = "https://github.com/natecraddock/sessions.nvim"

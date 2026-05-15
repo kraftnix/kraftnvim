@@ -1,9 +1,13 @@
 -- native file-manager with support for remotes
+local plugin = 'oil.nvim'
+if nixInfo(false, 'info', 'oil', 'useCanola') then
+  plugin = 'canola.nvim'
+end
 return {
   -- Oil
   { 'oil-git.nvim' },
   { 'oil-lsp-diagnostics.nvim' },
-  { 'oil.nvim',
+  { plugin,
     enabled = nixInfo(false, 'info', 'oil', 'enable'),
     lazy = false,
     keys = {

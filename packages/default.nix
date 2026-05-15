@@ -16,6 +16,7 @@ let
     (import ./vim-plugin.nix nixpkgs sources [
       # "nvim-nu"
       "browser-bookmarks-nvim"
+      "canola-nvim"
       "d2-vim"
       "nvim-devdocs"
       "easypick-nvim"

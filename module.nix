@@ -485,11 +485,15 @@ in
   config.info.flash.enable = true;
 
   config.info.oil.enable = true;
+  config.info.oil.useCanola = true; # maintained version
   config.specs.oil = {
     enable = config.info.oil.enable;
     lazy = true;
     data = with pkgs.vimPlugins; [
-      oil-nvim # buffer based file management
+      (if config.info.oil.useCanola
+        then localPlugins.canola-nvim # maintained fork of oil-nvim
+        else oil-nvim # buffer based file management
+      )
       oil-git-nvim # git status alongside on files
       oil-lsp-diagnostics-nvim # lsp diagnostics icons on files
     ];
