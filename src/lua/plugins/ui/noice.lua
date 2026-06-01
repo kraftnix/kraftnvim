@@ -4,6 +4,21 @@ if vim.g.enable_cmp_cmdline then
 end
 return {
 
+  -- behaves strangely, not sure about this plugin
+  { "inc-rename.nvim",
+    cmd = "IncRename",
+    keys = {
+      { '<leader>rrr', ':IncRename ', desc = 'Incremental Rename', mode = 'n' },
+      { '<leader>rrn', function() return ':IncRename '..vim.fn.expand('<cword>') end, desc = 'Incremental Rename current word', mode = 'n', expr = true }
+    },
+    after = function ()
+      require('inc_rename').setup({
+        preview_empty_name = true,
+      })
+      -- vim.keymap.set('n', '<leader>rni', ':IncRename ', { desc = 'Incremental Rename' })
+    end
+  },
+
   { "nvim-notify",
     for_cat = 'noice',
     keys = {

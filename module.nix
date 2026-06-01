@@ -138,6 +138,7 @@ in
       cmp-cmdline-history # include history of commands/searchs
       lspkind-nvim # LSP Icons (can use in cmp)
       nvim-web-devicons # nerd fonts for nvim
+      trouble-nvim # pretty lists for diaganostics / lsp / quickfix etc.
     ];
     extraPackages = with pkgs; [
       ripgrep
@@ -524,6 +525,7 @@ in
     after = [ "lze" ];
     extraPackages = with pkgs; [
       lazygit
+      fzf # for bqf
       (if d2Enabled then localPlugins.tree-sitter-all else tree-sitter)
     ];
     lazy = true;
@@ -533,6 +535,8 @@ in
       snacks-nvim
       mini-nvim # mini tools (lots of things)
       flash-nvim # jump around with f,t,s
+      nvim-bqf # better quickfix list
+      fzf-wrapper # fzf wrapper for junegunn/fzf
 
       # UI
       colorful-menu-nvim

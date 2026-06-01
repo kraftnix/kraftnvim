@@ -6,22 +6,67 @@ return {
   { import = 'plugins.languages.lspconfig' },
   { import = 'plugins.languages.treesitter' },
   { import = 'plugins.languages.treesitter-textobjects' },
-  { "inc-rename.nvim",
-    cmd = "IncRename",
-    keys = {
-      { '<leader>rN<space>', ':IncRename<cr>', 'Incremntal Rename' }
-    }
-  },
   { "trouble.nvim",
-    enable = false,
+    cmd = "Trouble",
     keys = {
       { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)", },
       { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)", },
       { "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)", },
       { "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "LSP Definitions / references / ... (Trouble)", },
       { "<leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location List (Trouble)" },
-      { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List (Trouble)" },
-    }
+      { "<leader>xq", "<cmd>Trouble quickfix_preview toggle<cr>", desc = "Quickfix List (Trouble)" },
+    },
+    after = function ()
+      require('trouble').setup({
+        follow = false,
+        keys = {
+          ["<c-t>"] = 'jump_tab',
+        },
+        preview = {
+          type = "float",
+          relative = "editor",
+          border = "rounded",
+          title = "Preview",
+          title_pos = "center",
+          position = { 0, -2 },
+          size = { width = 0.3, height = 0.3 },
+          zindex = 200,
+        },
+        modes = {
+          diaganostic_preview = {
+            mode = "diagnostics",
+            preview = {
+              type = "split",
+              relative = "win",
+              position = "right",
+              size = 0.3,
+            },
+          },
+          quickfix_preview = {
+            mode = "quickfix",
+            preview = {
+              type = "split",
+              relative = "win",
+              position = "right",
+              size = 0.3,
+            },
+          },
+          quickfix_preview_float = {
+            mode = "quickfix",
+            preview = {
+              type = "float",
+              relative = "editor",
+              border = "rounded",
+              title = "Preview",
+              title_pos = "center",
+              position = { 0, -2 },
+              size = { width = 0.3, height = 0.3 },
+              zindex = 200,
+            },
+          },
+        },
+      })
+    end
   },
 
   -- custom highlights for comments

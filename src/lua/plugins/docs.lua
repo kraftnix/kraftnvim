@@ -4,7 +4,7 @@ return {
   { "neogen",
     auto_enable = nixInfo(false, "settings", "docs", "enable"),
     keys = {
-      { '<leader>dgd', h.lr('neogen', 'generate'), desc = '[d]ocumentation [g]eneration ([d]efault)', grou = 'Documentation' }
+      { '<leader>dgd', h.lr('neogen', 'generate'), desc = '[d]ocumentation [g]eneration ([d]efault)', group = 'Documentation' }
     },
     after = function ()
       require('neogen').setup({})

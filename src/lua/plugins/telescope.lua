@@ -69,6 +69,7 @@ return vim.list_extend(fullDependencies, {
       -- Code / File Search
       { '<leader>fe', ':Telescope diagnostics<CR>', desc = '[f]ind [e]rrors / diagnostics' },
       { '<leader>fq', ':Telescope quickfix<CR>', desc = '[f]ind [q]uickfix list' },
+      { '<leader>fQ', ':Telescope quickfixhistory<CR>', desc = '[f]ind [Q]uickfix history' },
       { '<leader>fl', th.tb('live_grep', { grep_open_files=true }), desc = '[f] Fuzzy search in a[l]l open buffers' },
       { '<leader>f~', th.tb('find_files', { search_dirs={'~'} }), desc = '[f~] Fuzzy search in home directory' },
       { '<leader>f.', th.tb_wrap('find_files', '%:p:h'), desc = '[f.] Fuzzy search in current directory' },

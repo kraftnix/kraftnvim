@@ -134,6 +134,7 @@ nixInfo.lze.load {
   { import = "plugins.gitlinker" },
   { import = "plugins.clipboard" },
   { import = "plugins.file-manager" },
+  { import = "plugins.quickfix" },
   { import = "plugins.mini" },
   { import = "plugins.misc" },
   { import = "plugins.flash" },
