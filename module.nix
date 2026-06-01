@@ -140,7 +140,7 @@ in
       nvim-web-devicons # nerd fonts for nvim
       trouble-nvim # pretty lists for diaganostics / lsp / quickfix etc.
     ];
-    extraPackages = with pkgs; [
+    runtimePkgs = with pkgs; [
       ripgrep
     ];
   };
@@ -185,7 +185,7 @@ in
       conform-nvim # nicer formatting
       lspsaga-nvim # LSP extra functions
     ];
-    extraPackages = with pkgs; [
+    runtimePkgs = with pkgs; [
       stdenv.cc.cc
     ];
   };
@@ -194,7 +194,7 @@ in
     enable = config.settings.languages.bash.enable;
     lazy = true;
     data = null;
-    extraPackages = with pkgs; [
+    runtimePkgs = with pkgs; [
       bash-language-server
     ];
   };
@@ -208,7 +208,7 @@ in
     enable = config.settings.languages.python.enable;
     lazy = true;
     data = null;
-    extraPackages = with pkgs; [
+    runtimePkgs = with pkgs; [
       ty
     ];
   };
@@ -217,7 +217,7 @@ in
     enable = config.settings.languages.yaml.enable;
     lazy = true;
     data = null;
-    extraPackages = with pkgs; [
+    runtimePkgs = with pkgs; [
       yaml-language-server
     ];
   };
@@ -226,7 +226,7 @@ in
     enable = config.settings.languages.docker.enable;
     lazy = true;
     data = null;
-    extraPackages = with pkgs; [
+    runtimePkgs = with pkgs; [
       docker-ls
       docker-compose-language-service
     ];
@@ -235,7 +235,7 @@ in
   config.specs.nushell = {
     enable = config.settings.languages.nushell.enable;
     data = null;
-    extraPackages = with pkgs; [
+    runtimePkgs = with pkgs; [
       nushell
     ];
   };
@@ -243,7 +243,7 @@ in
   config.specs.zk = {
     enable = config.settings.languages.zk.enable;
     data = null;
-    extraPackages = with pkgs; [
+    runtimePkgs = with pkgs; [
       zk
     ];
   };
@@ -252,7 +252,7 @@ in
     enable = config.settings.languages.rust.enable;
     lazy = true;
     data = null;
-    extraPackages = with pkgs; [
+    runtimePkgs = with pkgs; [
       cargo
       gcc
       rustc
@@ -264,7 +264,7 @@ in
     enable = config.settings.languages.go.enable;
     lazy = true;
     data = null;
-    extraPackages = with pkgs; [
+    runtimePkgs = with pkgs; [
       gopls
     ];
   };
@@ -291,7 +291,7 @@ in
     enable = config.settings.languages.nix.enable;
     lazy = true;
     data = null;
-    extraPackages = with pkgs; [
+    runtimePkgs = with pkgs; [
       nixd
       nixfmt
     ];
@@ -306,7 +306,7 @@ in
       nvim-luadev
       localPlugins.replua-nvim
     ];
-    extraPackages = with pkgs; [
+    runtimePkgs = with pkgs; [
       lua-language-server
       stylua
     ];
@@ -349,7 +349,7 @@ in
       localPlugins.tree-sitter-d2
       # localPlugins.d2-vim
     ]);
-    extraPackages = with pkgs; [
+    runtimePkgs = with pkgs; [
       imagemagick
       mermaid-cli
     ] ++ (lib.optionals config.settings.diagrams.d2 [
@@ -383,7 +383,7 @@ in
       gitlineage-nvim # Find previously commits that modified specific lines
       localPlugins.gitlinker-nvim # open/copy external git forge links (GBrowse replacement)
     ];
-    extraPackages = [ pkgs.git ];
+    runtimePkgs = [ pkgs.git ];
   };
 
   config.info.oscyank.enable = true;
@@ -431,7 +431,7 @@ in
     ]) ++ (lib.optionals config.settings.snippets.enable [
       localPlugins.telescope-luasnip # luasnip snippet lookup + use
     ]);
-    extraPackages = with pkgs; [
+    runtimePkgs = with pkgs; [
       fd
       ripgrep
     ] ++ (lib.optionals (telescope.profile == "full") [
@@ -506,7 +506,7 @@ in
     data = with pkgs.vimPlugins; [
       yazi-nvim # integrate yazi + nvim
     ];
-    extraPackages = [ pkgs.yazi ];
+    runtimePkgs = [ pkgs.yazi ];
   };
 
   options.settings.docs.enable = mkEnableDefault "enable docs generation integration" isFullProfile;
@@ -523,7 +523,7 @@ in
 
   config.specs.general = {
     after = [ "lze" ];
-    extraPackages = with pkgs; [
+    runtimePkgs = with pkgs; [
       lazygit
       fzf # for bqf
       (if d2Enabled then localPlugins.tree-sitter-all else tree-sitter)
@@ -603,16 +603,16 @@ in
       # config.runtimeDeps = lib.mkDefault (parentSpec.runtimeDeps or false);
       # config.pluginDeps = lib.mkDefault (parentSpec.pluginDeps or false);
       # or something more interesting like:
-      # add an extraPackages field to the specs themselves
-      options.extraPackages = lib.mkOption {
+      # add an runtimePkgs field to the specs themselves
+      options.runtimePkgs = lib.mkOption {
         type = lib.types.listOf wlib.types.stringable;
         default = [ ];
-        description = "a extraPackages spec field to put packages to suffix to the PATH";
+        description = "a runtimePkgs spec field to put packages to suffix to the PATH";
       };
       # You could do this too
       # config.before = lib.mkDefault [ "INIT_MAIN" ];
     };
-  config.extraPackages = config.specCollect (acc: v: acc ++ (v.extraPackages or [ ])) [ ];
+  config.runtimePkgs = config.specCollect (acc: v: acc ++ (v.runtimePkgs or [ ])) [ ];
 
   # Inform our lua of which top level specs are enabled
   options.settings.cats = lib.mkOption {
