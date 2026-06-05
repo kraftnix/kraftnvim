@@ -113,6 +113,10 @@ return {
           -- Text object
           map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select git hunk' })
 
+          -- next/prev git hunk
+          map('n', '[g', ':Gitsigns prev_hunk wrap=false<CR>', { desc = 'Git Hunk previous' })
+          map('n', ']g', ':Gitsigns next_hunk wrap=false<CR>', { desc = 'Git Hunk next' })
+
           vim.cmd([[hi GitSignsAdd guifg=#04de21]])
           vim.cmd([[hi GitSignsChange guifg=#83fce6]])
           vim.cmd([[hi GitSignsDelete guifg=#fa2525]])
