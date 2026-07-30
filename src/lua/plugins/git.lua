@@ -25,7 +25,6 @@ return {
   { 'gitsigns.nvim',
     enabled = gitEnabled,
     event = "DeferredUIEnter",
-    cmd = 'Gitsigns',
     after = function ()
       require('gitsigns').setup({
         -- See `:help gitsigns.txt`
@@ -43,7 +42,7 @@ return {
           changedelete = { text = '~' },
         },
         on_attach = function(bufnr)
-          local gs = package.loaded.gitsigns
+          local gs = require('gitsigns')
 
           local function map(mode, l, r, opts)
             opts = opts or {}
@@ -54,22 +53,18 @@ return {
           -- Navigation
           map({ 'n', 'v' }, ']c', function()
             if vim.wo.diff then
-              return ']g'
+              vim.cmd.normal({']g', bang = true})
+            else
+              gs.nav_hunk('next')
             end
-            vim.schedule(function()
-              gs.next_hunk()
-            end)
-            return '<Ignore>'
           end, { expr = true, desc = 'Jump to next hunk' })
 
           map({ 'n', 'v' }, '[c', function()
             if vim.wo.diff then
-              return '[g'
+              vim.cmd.normal({']g', bang = true})
+            else
+              gs.nav_hunk('prev')
             end
-            vim.schedule(function()
-              gs.prev_hunk()
-            end)
-            return '<Ignore>'
           end, { expr = true, desc = 'Jump to previous hunk' })
 
           -- Actions

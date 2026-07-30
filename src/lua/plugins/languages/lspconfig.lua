@@ -125,15 +125,15 @@ return {
 
     -- Telescope commands
     keys = {
-      { '<leader>lss', "Telescope lsp_document_symbols",          desc = '[l]ist LSP Document [s]ymbols (Telescope)' },
-      { '<leader>lws', "Telescope lsp_workspace_symbols",         desc = '[l]ist LSP Document [s]ymbols (Telescope)' },
-      { '<leader>lwS', "Telescope lsp_dynamic_workspace_symbols", desc = '[l]ist Telescope LSP Document [s]ymbols (Telescope)' },
-      { '<leader>lt',  "Telescope lsp_type_definitions",          desc = '[l]ist [t]ype definitions (telescope)' },
-      { '<leader>li',  "Telescope lsp_implementations",           desc = '[l]ist [i]mplementations (telescope)' },
-      { '<leader>lso', "Telescope lsp_outgoing_calls",            desc = '[ls]: list [o]utgoing calls (telescope)' },
-      { '<leader>lsi', "Telescope lsp_incoming_calls",            desc = '[ls]: list [i]ncoming calls (telescope)' },
-      { '<leader>lsd', "Telescope lsp_definitions",               desc = '[ls]: list [d]efinitions (telescope)' },
-      { '<leader>lsr', "Telescope lsp_references",                desc = '[ls]: list [r]eferences (telescope)' },
+      { '<leader>lss', ":Telescope lsp_document_symbols<CR>",          desc = '[l]ist LSP Document [s]ymbols (Telescope)' },
+      { '<leader>lws', ":Telescope lsp_workspace_symbols<CR>",         desc = '[l]ist LSP Document [s]ymbols (Telescope)' },
+      { '<leader>lwS', ":Telescope lsp_dynamic_workspace_symbols<CR>", desc = '[l]ist Telescope LSP Document [s]ymbols (Telescope)' },
+      { '<leader>lt',  ":Telescope lsp_type_definitions<CR>",          desc = '[l]ist [t]ype definitions (telescope)' },
+      { '<leader>li',  ":Telescope lsp_implementations<CR>",           desc = '[l]ist [i]mplementations (telescope)' },
+      { '<leader>lso', ":Telescope lsp_outgoing_calls<CR>",            desc = '[ls]: list [o]utgoing calls (telescope)' },
+      { '<leader>lsi', ":Telescope lsp_incoming_calls<CR>",            desc = '[ls]: list [i]ncoming calls (telescope)' },
+      { '<leader>lsd', ":Telescope lsp_definitions<CR>",               desc = '[ls]: list [d]efinitions (telescope)' },
+      { '<leader>lsr', ":Telescope lsp_references<CR>",                desc = '[ls]: list [r]eferences (telescope)' },
     },
 
     -- set up our on_attach function once before the spec loads
