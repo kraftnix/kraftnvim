@@ -22,7 +22,8 @@ return {
         },
         options = {
           nixos = {
-            expr = '('..curr_flake_let_in..' if builtins.hasAttr "nixd" currFlake then currFlake.nixd.options.nixos else if (builtins.hasAttr "nixosConfigurations" '..config_flake..') then '..config_flake..'.nixosConfigurations.' .. hostname .. '.options else {})',
+            expr = '('..curr_flake_let_in..' if (builtins.hasAttr "nixd" currFlake) && (builtins.hasAttr "nixos" currFlake.nixd.options) then currFlake.nixd.options.nixos else if (builtins.hasAttr "nixosConfigurations" '..config_flake..') then '..config_flake..'.nixosConfigurations.' .. hostname .. '.options else {})',
+
             -- expr = config_flake..'.nixosConfigurations.'..hostname..'.options',
           },
           -- nixos_currflake = {
