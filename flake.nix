@@ -28,13 +28,14 @@
       ...
     }@inputs:
     let
-      forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all;
-      packages = import ./packages { inherit inputs; lib = inputs.nixpkgs.lib; };
-      module = nixpkgs.lib.modules.importApply ./module.nix { inherit inputs packages; };
+      lib = nixpkgs.lib;
+      forAllSystems = lib.genAttrs lib.platforms.all;
+      packages = import ./packages { inherit inputs lib; };
+      module = lib.modules.importApply ./module.nix { inherit inputs packages; };
       wrapper = wrappers.lib.evalModule module;
       mkPkgs = system: import nixpkgs {
         inherit system;
-        config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
+        config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
           "diagram.nvim" # doesn't have any license
           "terminal.nvim" # doesn't have any license
         ];
@@ -51,6 +52,7 @@
         default = self.wrappers.neovim;
       };
       overlays = {
+        inherit (packages.overlays) vimPlugins;
         neovim = final: prev: { neovim = self.wrappers.neovim.wrap { pkgs = final; }; };
         default = self.overlays.neovim;
       };
@@ -62,7 +64,7 @@
         {
           neovim = self.wrappers.neovim.wrap { inherit pkgs; };
           default = self.packages.${system}.neovim;
-          vimPlugins = packages.vimPlugins.${system};
+          vimPlugins = lib.recurseIntoAttrs packages.vimPlugins.${system};
           kraftnvim-minimal = self.packages.${system}.neovim.wrap {
             binName = "kraftnvim-minimal";
             settings.profile = "minimal";

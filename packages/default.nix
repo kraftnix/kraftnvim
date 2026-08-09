@@ -66,9 +66,6 @@ let
     nvim-devdocs = vp.nvim-devdocs.overrideAttrs {
       dependencies = with up; [ plenary-nvim telescope-nvim ];
     };
-    telescope-live-grep-args-nvim = vp.telescope-live-grep-args-nvim.overrideAttrs {
-      dependencies = with up; [ plenary-nvim telescope-nvim ];
-    };
     telescope-gitsigns-nvim = vp.telescope-gitsigns-nvim.overrideAttrs {
       dependencies = with up; [ gitsigns-nvim plenary-nvim telescope-nvim ];
     };
