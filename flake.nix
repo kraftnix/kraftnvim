@@ -66,7 +66,7 @@
           default = self.packages.${system}.neovim;
           vimPlugins = lib.recurseIntoAttrs packages.vimPlugins.${system};
           kraftnvim-minimal = self.packages.${system}.neovim.wrap {
-            binName = "kraftnvim-minimal";
+            binName = lib.mkForce "kraftnvim-minimal";
             settings.profile = "minimal";
           };
           kraftnvim-all-languages = self.packages.${system}.neovim.wrap {
