@@ -1,19 +1,16 @@
-{ inputs, lib, ... }:
+{ lib, callPackage, vimUtils, vimPlugins, tree-sitter, ... }@pkgs:
 let
   inherit (lib)
     mapAttrs
     ;
 
-  getPkgs = system: inputs.nixpkgs.legacyPackages.${system};
-
   replaceDots = mapAttrs (name: plugin: plugin // {
     # required for lazy-loading to work properly for downstreams
     pname = plugin.src.repo;
   });
+  sources = replaceDots (callPackage (import ./_sources/generated.nix) { });
 
-  allVimPlugins =
-    nixpkgs: sources:
-    (import ./vim-plugin.nix nixpkgs sources [
+  allVimPlugins = (import ./vim-plugin.nix pkgs sources [
       # "nvim-nu"
       "browser-bookmarks-nvim"
       "canola-nvim"
@@ -33,30 +30,29 @@ let
       "terminal-nvim"
       "tree-sitter-d2"
     ]) // {
-      gitlinker-nvim = nixpkgs.vimUtils.buildVimPlugin (
+      gitlinker-nvim = pkgs.vimUtils.buildVimPlugin (
         sources.gitlinker-nvim // {
           version = builtins.substring 0 8 sources.gitlinker-nvim.version;
           # not a dependency, but is required due to spec_init
-          dependencies = [ nixpkgs.vimPlugins.plenary-nvim ];
+          dependencies = [ pkgs.vimPlugins.plenary-nvim ];
           patchPhase = ''
             substituteInPlace spec_init.lua \
               --replace-fail \
               'os.getenv("PLENARY_DIR") or "/tmp/plenary.nvim"' \
-              '"${nixpkgs.vimPlugins.plenary-nvim}"'
+              '"${pkgs.vimPlugins.plenary-nvim}"'
           '';
         }
       );
     };
-  getVimSources = prev: replaceDots (prev.callPackage (import ./_sources/generated.nix) { });
-  vimPlugins = final: prev: let 
-    vp = allVimPlugins prev (getVimSources final);
-    up = final.vimPlugins;
+  vimPlugins = final: prev: let
+    vp = allVimPlugins;
+    up = pkgs.vimPlugins;
     filterTreesitter = plugins: lib.pipe plugins [
       (lib.filterAttrs (n: p: !(builtins.elem n [
         # "tree-sitter-razor" # broken
       ])))
     ];
-    tree-sitter-d2-grammar = prev.tree-sitter.buildGrammar {
+    tree-sitter-d2-grammar = tree-sitter.buildGrammar {
       language = "d2";
       version = vp.tree-sitter-d2.version;
       src = vp.tree-sitter-d2.src;
@@ -81,7 +77,7 @@ let
     telescope-tabs = vp.telescope-tabs.overrideAttrs {
       dependencies = with up; [ plenary-nvim telescope-nvim ];
     };
-    tree-sitter-all = prev.tree-sitter.withPlugins (p: (builtins.attrValues (filterTreesitter p)) ++ [
+    tree-sitter-all = tree-sitter.withPlugins (p: (builtins.attrValues (filterTreesitter p)) ++ [
       tree-sitter-d2-grammar
     ]);
     nvim-treesitter-all = up.nvim-treesitter.withPlugins (
@@ -90,15 +86,9 @@ let
       ++ [ tree-sitter-d2-grammar ] # you had an extra buildGrammar here
     );
   };
-  systems = [ "x86_64-linux" ];
+  initialPackages = self: { };
 in
-{
-  overlays = {
-    vimPlugins = final: prev: {
-      vimPluginsSources = getVimSources prev;
-      vimPlugins = prev.vimPlugins // (vimPlugins final prev);
-    };
-  };
-
-  vimPlugins = lib.genAttrs systems (system: vimPlugins (getPkgs system) (getPkgs system));
-}
+lib.pipe initialPackages [
+  (lib.extends vimPlugins)
+  lib.makeExtensible
+]

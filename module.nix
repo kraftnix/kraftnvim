@@ -16,7 +16,7 @@ let
     mkOption
     types
     ;
-  localPlugins = packages.vimPlugins.${pkgs.stdenv.hostPlatform.system};
+  localPlugins = packages.${pkgs.stdenv.hostPlatform.system}.vimPlugins;
   mkEnableDefault = description: default: mkOption {
     inherit description default;
     type = types.bool;

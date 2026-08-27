@@ -30,8 +30,7 @@
     let
       lib = nixpkgs.lib;
       forAllSystems = lib.genAttrs lib.platforms.all;
-      packages = import ./packages { inherit inputs lib; };
-      module = lib.modules.importApply ./module.nix { inherit inputs packages; };
+      module = lib.modules.importApply ./module.nix { inherit inputs; inherit (self) packages; };
       wrapper = wrappers.lib.evalModule module;
       mkPkgs = system: import nixpkgs {
         inherit system;
@@ -52,7 +51,9 @@
         default = self.wrappers.neovim;
       };
       overlays = {
-        inherit (packages.overlays) vimPlugins;
+        vimPlugins = final: prev: {
+          vimPlugins = prev.vimPlugins // self.packages.${final.stdenv.hostPlatform.system}.vimPlugins;
+        };
         neovim = final: prev: { neovim = self.wrappers.neovim.wrap { pkgs = final; }; };
         default = self.overlays.neovim;
       };
@@ -64,7 +65,7 @@
         {
           neovim = self.wrappers.neovim.wrap { inherit pkgs; };
           default = self.packages.${system}.neovim;
-          vimPlugins = lib.recurseIntoAttrs packages.vimPlugins.${system};
+          vimPlugins = lib.recurseIntoAttrs (pkgs.callPackage ./packages/default.nix { });
           kraftnvim-minimal = self.packages.${system}.neovim.wrap {
             binName = lib.mkForce "kraftnvim-minimal";
             settings.profile = "minimal";
