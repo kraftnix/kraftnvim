@@ -66,7 +66,8 @@ return {
         -- See :h blink-cmp-config-keymap for configuring keymaps
         keymap =  {
           preset = 'default',
-          ['<CR>'] = { 'select_and_accept', 'fallback' },
+          -- ['<CR>'] = { 'select_and_accept', 'fallback' },
+          ['<CR>'] = { 'accept', 'fallback' },
           -- ['<A-y>'] = {
           --   function(cmp)
           --     cmp.show { providers = { 'minuet' } }
